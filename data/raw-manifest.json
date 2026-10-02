@@ -218,6 +218,812 @@
         "wrongIds": [],
         "modules": []
       }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p01.png",
+      "kind": "image",
+      "bytes": 82186,
+      "sha256": "dc5a55b4902cfbe2df43bc97df29511134ca7f4c32f883499733e465e3791dac",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p02.png",
+      "kind": "image",
+      "bytes": 59619,
+      "sha256": "47e01d534c8e821058fc241e7c70e7f190e366570f4d4842149d1d633b25dc31",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p03.png",
+      "kind": "image",
+      "bytes": 80290,
+      "sha256": "03ee5cfdae1ebf80367b2cfa0699e799b483493c5f4129ecfc2569082cb0fed4",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p04.png",
+      "kind": "image",
+      "bytes": 39039,
+      "sha256": "bb8d6bf57d51bde9a8ae0288166efe9f2acc4ea15c888da5f6a4e2e0c92541ba",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p05.png",
+      "kind": "image",
+      "bytes": 79348,
+      "sha256": "c7de421f43d1c1d3e89a58998b11ec7df569a491ea5ad3342f30d6c56e39966f",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p06.png",
+      "kind": "image",
+      "bytes": 68724,
+      "sha256": "d83f8bba3b92df41dae60d8278430f1d8059c12f844163e0fac8e29521efc67a",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p07.png",
+      "kind": "image",
+      "bytes": 83961,
+      "sha256": "f8e26ceba2bbb1caf7e3aeb48fe57f3adf99b8a9577e83983ea0f19664056d1e",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p08.png",
+      "kind": "image",
+      "bytes": 54950,
+      "sha256": "f506a465c85b43a6c6c3bdbe73168c2a60d3603680c228200cc99eaa09ba9005",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p09.png",
+      "kind": "image",
+      "bytes": 50124,
+      "sha256": "c0ff252ef4ae699c431db4507cdaf677f0e73c73bcc0add24d6db86d413ea43c",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p10.png",
+      "kind": "image",
+      "bytes": 65123,
+      "sha256": "e9aa89c956995f1e7bcee44752f71a47b771349a84ca158d37a4709649d1de91",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p01.png",
+      "kind": "image",
+      "bytes": 73447,
+      "sha256": "5f361959f25e4071a454cc45c5bb5d00b11c71ac89103194618e0cb974f778a8",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p02.png",
+      "kind": "image",
+      "bytes": 65852,
+      "sha256": "52c46c8174837a1d6490c85f43daa31ecd6a402e7ebc94216a8d610ecab27c57",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p03.png",
+      "kind": "image",
+      "bytes": 43539,
+      "sha256": "f7706c03b7ae32252d8777d2db91c9b0c200dd21061d40eba02aebb1449dacd2",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-p01.png",
+      "kind": "image",
+      "bytes": 84056,
+      "sha256": "525bb8f92ad50b13a649206163d41a83732f48c9174271c0b8b8bbdf4c216047",
+      "width": 860,
+      "height": 1217,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-p02.png",
+      "kind": "image",
+      "bytes": 79629,
+      "sha256": "0c3f8a79746cc2930b004ed1d1009046875293ab3d9b1c1357857f2ee95a05cd",
+      "width": 860,
+      "height": 1217,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p01.png",
+      "kind": "image",
+      "bytes": 228408,
+      "sha256": "c40d3028835dcaeb0047c05ecea9209edc8cc7fce08c3a1110e3d9faa56c5e94",
+      "width": 860,
+      "height": 1217,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p02.png",
+      "kind": "image",
+      "bytes": 259693,
+      "sha256": "8846f33c127c50dc91cf939b941e8f6be536cc57774b9f6eb1aa2ef7a2328864",
+      "width": 860,
+      "height": 1217,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p03.png",
+      "kind": "image",
+      "bytes": 226276,
+      "sha256": "c0e027fefa3b905eb761b89d95dd13eaac69af22996b6defbd214461a64d436b",
+      "width": 860,
+      "height": 1217,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p04.png",
+      "kind": "image",
+      "bytes": 257396,
+      "sha256": "37a00d300468431af20ad78ab4c3e8fd002769128cc9dba885b39549ecef8fe2",
+      "width": 860,
+      "height": 1217,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p01.png",
+      "kind": "image",
+      "bytes": 256355,
+      "sha256": "eeae25fa093721d09f31b70686f69cbe2d2fb121689bffd6341b5fc8d8ae5595",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p02.png",
+      "kind": "image",
+      "bytes": 208044,
+      "sha256": "aa8485bdcc2a51d6e5b5f1b554dfebec70427601ae5aaf2e66b36ead39d7b1f8",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p03.png",
+      "kind": "image",
+      "bytes": 224542,
+      "sha256": "ef9a7f777ed033499d774347c3df41fc70a6e8e8866dcdb359ab4ac1119c5d95",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p04.png",
+      "kind": "image",
+      "bytes": 193265,
+      "sha256": "0930737d8d48bac2a726c51de24e71f4cc0e125eb33b59e8374f819dc72e34ce",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p01.png",
+      "kind": "image",
+      "bytes": 190600,
+      "sha256": "e5fdb7f9e6da2a6da3a9f4e9780dcc1d1c0a018cb8986e513bb8c7cc2a8c057f",
+      "width": 860,
+      "height": 1177,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p02.png",
+      "kind": "image",
+      "bytes": 213559,
+      "sha256": "9cf0573c5b149df14e747b7849f8ee8691d8c813103c228dcdcab6a80fc74b79",
+      "width": 860,
+      "height": 1217,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p03.png",
+      "kind": "image",
+      "bytes": 192689,
+      "sha256": "e8cfdbb3eb6b74e004f46a9d488479ae9afcffae5407d27558314e796f597082",
+      "width": 860,
+      "height": 1112,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p04.png",
+      "kind": "image",
+      "bytes": 238992,
+      "sha256": "66a723e9dd601a907a48b7343c57aa10ba37898ab3b90aadf5332dc6b59e49d9",
+      "width": 860,
+      "height": 1158,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p05.png",
+      "kind": "image",
+      "bytes": 280684,
+      "sha256": "938d3f5f1795ae943ee1d676f54c69b2d33b56952f7170db33a05974fd39794b",
+      "width": 860,
+      "height": 1162,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p01.png",
+      "kind": "image",
+      "bytes": 68272,
+      "sha256": "a48f8df938149b9bee1fce7474386db49dc3f5a4503aceda1903104a76605a26",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p02.png",
+      "kind": "image",
+      "bytes": 78962,
+      "sha256": "97eac0b3db9445e3e700d9f7aea9dc765a39b1e34550b9a2484cf93bc1e14c85",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p03.png",
+      "kind": "image",
+      "bytes": 50638,
+      "sha256": "5576f90d475be87d08e8b7deaa7914084317d2371c036d669da1db1b819044a8",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p04.png",
+      "kind": "image",
+      "bytes": 70856,
+      "sha256": "65bd75f264880bd26d1f3a3c2eb4e5a68b6888a4cb583e2bdd298e41b084c16b",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p05.png",
+      "kind": "image",
+      "bytes": 88108,
+      "sha256": "e2d8270847fa283c842ae1082162aa6dfadb334d607db2eb61c025ed824459ea",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p06.png",
+      "kind": "image",
+      "bytes": 70138,
+      "sha256": "6795ca171d1f326e819dee13da8e35b628d3b6badc62a212a03004515d504ee1",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p07.png",
+      "kind": "image",
+      "bytes": 75269,
+      "sha256": "2fc03d2961adf2581e6c07b22ab334cbc7cf4327a0102c41787257b760471dd6",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p08.png",
+      "kind": "image",
+      "bytes": 84677,
+      "sha256": "257de88c81082a9663f8d10067071f527598f7397dfa7a786381a047ec6f6b77",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p09.png",
+      "kind": "image",
+      "bytes": 88534,
+      "sha256": "90f09ec51302265b7de67358d400468d5c263280d7f90d10f9101b12e66f732b",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p01.png",
+      "kind": "image",
+      "bytes": 88010,
+      "sha256": "395bdb9959be48878acf0d7a45b3e179e354237875cca8cdee3c0ed26a906887",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p02.png",
+      "kind": "image",
+      "bytes": 80064,
+      "sha256": "f2f3d372752b674fdcd65aff11610ee5ff1a5177bd9403bdfef1eca020cda564",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p03.png",
+      "kind": "image",
+      "bytes": 91232,
+      "sha256": "36957dc7103ea66f5020f624d55c6cc664f1f39f8df23d51f32fd92482252f87",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p04.png",
+      "kind": "image",
+      "bytes": 121464,
+      "sha256": "a4ac1655654d8e2c7ab10a7c94df8fd81219b2f12086d1c1db8310c5f5314fa8",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p05.png",
+      "kind": "image",
+      "bytes": 84673,
+      "sha256": "e0fecaa1895f57712d3b0400cc6e34db91383eaaeab32b5307fabb36334d5de1",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p06.png",
+      "kind": "image",
+      "bytes": 89537,
+      "sha256": "57ea385fdc6c3e738ede73f637e1a26d59d86e6379cbdc6ba10f754f3d54b45a",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p07.png",
+      "kind": "image",
+      "bytes": 80445,
+      "sha256": "620c8016d55d0bf858c8cb7275a523dbda2eb4fb3a750b93bab128cd65b82ec7",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p08.png",
+      "kind": "image",
+      "bytes": 119907,
+      "sha256": "764b6e0a2308fea5667fac61b4ecc07f1b3ae00282d7b4774b49fcd42bef138e",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p09.png",
+      "kind": "image",
+      "bytes": 112961,
+      "sha256": "d99f62bab0103cf91c1c5cc7bfdda9b05b5b2ec1d9087696134abc36a63da8eb",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p01.png",
+      "kind": "image",
+      "bytes": 64664,
+      "sha256": "d9fb3e122fe432b8d18b9169b7a4196c324acd5fa40d3d472b64c86761207515",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p02.png",
+      "kind": "image",
+      "bytes": 92062,
+      "sha256": "e5c4165202e9938906fdda7bbf0428cb1c4b876358a7ddf01e2749f1c6eb000c",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p03.png",
+      "kind": "image",
+      "bytes": 66363,
+      "sha256": "3cfa42d1643bd622a7f1596d7acb1a3a2446d87c96a33597b70ace1e87ca5b37",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p04.png",
+      "kind": "image",
+      "bytes": 43931,
+      "sha256": "b6067622560fed8ac159bbbf513092b2c279b19d482e5d8579052a70e156987d",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p05.png",
+      "kind": "image",
+      "bytes": 21148,
+      "sha256": "926f63a07334874aaab557b2e89674cac3fe1e1c93207c2dff94d536793047c0",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p01.png",
+      "kind": "image",
+      "bytes": 74967,
+      "sha256": "f0d23d36d875d943cf10fb1fa1f97f1102e736ebae0e8c64ff3df5b7ac2c7ebc",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p02.png",
+      "kind": "image",
+      "bytes": 91797,
+      "sha256": "8b7e53152f8a751de22fc3dd8b5176d4b7997f4eb624fe3b14259eef5d7434e5",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p03.png",
+      "kind": "image",
+      "bytes": 73570,
+      "sha256": "6b14a04d9c1c148e245ee10baa1b621128c5f0da9e8005eac0e18a4a5ffe02e1",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p04.png",
+      "kind": "image",
+      "bytes": 66083,
+      "sha256": "b6e59ec6bea01fb53c9b978535b033dd5150819d9bf1eed72c6e1960d16c3887",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p05.png",
+      "kind": "image",
+      "bytes": 75623,
+      "sha256": "cd727dd229d3a6175af1d2cac618472c04d8054a52ec3a950eec2f15a3dac1f0",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p06.png",
+      "kind": "image",
+      "bytes": 93230,
+      "sha256": "5e23e452ab489fb3cfd394213aca6b0a11aa908f67bcd1ba3c012c9f998fbc92",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p07.png",
+      "kind": "image",
+      "bytes": 89436,
+      "sha256": "e835734048f5b7749f74d0135534f04d6c29ee1627b250729aac4191941951c9",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p01.png",
+      "kind": "image",
+      "bytes": 98934,
+      "sha256": "3df7088170e64c97ba909324df648e20fc83f1e1166c71da1b2a6ae5fb52be0c",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p02.png",
+      "kind": "image",
+      "bytes": 82184,
+      "sha256": "b852bb07cb7e7dd72ad5deb690936255f750cebdcf0e0a27a07f084449a986bb",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p03.png",
+      "kind": "image",
+      "bytes": 35792,
+      "sha256": "5a1bc1d7a614690b57ff6614b4d28cbe5e0a0a24ac079e917777fda0ccccefde",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p04.png",
+      "kind": "image",
+      "bytes": 98985,
+      "sha256": "e1e7982d1af252c274d2a2b37be109219453fd04c4fe7635fdf21548a2529bb1",
+      "width": 860,
+      "height": 1216,
+      "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
     }
   ]
 }
