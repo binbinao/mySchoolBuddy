@@ -309,16 +309,38 @@ def norm(s):
     return s.strip()
 
 
+def is_filled_wrong_page(text):
+    """这一页是不是已经填了实质内容（人工精修过的骨架也算）。
+
+    **不能拿生成器标记当判据。** 人工精修页往往仍然带标记——脚本先生成骨架、
+    AI 再逐字改出来，标记还留在 <head> 里。2026-10-03 的 q5 精讲页就是这种情况：
+    带标记但五个区块全部填满，若只看标记会被当成空壳重新生成，把人工成果抹掉。
+
+    真正的判据是**内容**：错题精讲页的固定结构里同时出现
+      · 「断点到底在哪」——第 ② 段的标题
+      · 「零跳跃分步讲解」——第 ③ 段的标题
+    且空占位「⚠️ 待补 ·」几乎清空（分值标签的「分值待补」不算占位）。
+    与 exam 侧 build_exam_page 的 filled 判据保持同一套思路。
+    """
+    if "断点到底在哪" not in text or "零跳跃分步讲解" not in text:
+        return False
+    return text.count("待补 ·") <= 1
+
+
 def find_manual_page(out_dir, item, qno):
-    """学科目录下是否已有这道题的人工精讲页。
+    """学科目录下是否已有这道题的人工精讲页（无论是否带生成器标记）。
 
     两条判定依据（任一命中即认为是同一道题）：
       1. 文件名以 q<题号>- 开头 —— 题号对得上
       2. 页面正文里出现本条错题的正确答案或孩子原答案 —— 内容对得上
 
-    带生成器标记的一律不算——那是骨架，可以重生成。
+    带生成器标记**但已填入实质内容**的也算人工成果：脚本只搭骨架，
+    真正的讲解是 AI 逐字对照原卷改出来的，标记不代表内容是空的。
     人工成果优先级高于自动骨架，**绝不能被覆盖**：
-    q19 那页是逐字对照手写过程改出来的，自动生成器只能让路。
+    q19 那页是逐字对照手写过程改出来的，q5 那页是读原卷补全五段的，
+    自动生成器都只能让路。
+
+    只有「带标记且仍是空壳」才允许重新生成——那才是真正该刷新的对象。
     """
     if not os.path.isdir(out_dir):
         return None
@@ -334,8 +356,14 @@ def find_manual_page(out_dir, item, qno):
                 text = f.read()
         except OSError:
             continue
-        if GENERATOR_MARK in text[:4000]:
-            continue  # 骨架，可重生成
+        # 关键：已填实质内容的（哪怕带生成器标记）一律保护
+        if is_filled_wrong_page(text):
+            if fn.startswith(f"q{qno}-") or not keys:
+                return p
+            body = norm(text)
+            if any(k in body for k in keys):
+                return p
+            continue
         if fn.startswith(f"q{qno}-"):
             return p
         body = norm(text)
@@ -1015,17 +1043,25 @@ def main():
             out_dir = os.path.join(ROOT, "docs", "实战表", subject)
             fn = slug_for(qno, title, module)
 
-            # 保护：已有这道题的人工成果页则跳过，绝不覆盖
+            # 保护：已有这道题的人工成果页则跳过，绝不覆盖。
+            # 判据覆盖两种情形——
+            #   a) 人工页文件名与将要生成的名字不同（q19：纯日期命名）
+            #   b) 人工页恰好就在目标路径上，但内容已实质填写（q5）
+            # 少了 (b)，跑一次管道就会把人工精讲成果覆盖成空壳，
+            # 而 pending.json 还留着 done，看着一切正常。
             manual = find_manual_page(out_dir, item, qno)
-            if manual and os.path.basename(manual) != fn:
-                skipped += 1
-                print(f"  · 跳过（已有人工精讲页）：{os.path.relpath(manual, ROOT)}")
-                # 反向登记：让 AI 知道要把内容补进已有页，而不是新开一页
-                tq.add(f"wrong-{wid}", "wrong-refine", os.path.relpath(manual, ROOT),
-                       subject, module,
-                       "教学判断：把该错题的讲解补进已有人工精讲页（保留人工内容，只补空缺段）",
-                       ["steps", "variants", "thinkQuestions"])
-                continue
+            if manual:
+                basename_differs = os.path.basename(manual) != fn
+                if basename_differs or is_filled_wrong_page(
+                        open(manual, encoding="utf-8").read()):
+                    skipped += 1
+                    print(f"  · 跳过（已有人工精讲页）：{os.path.relpath(manual, ROOT)}")
+                    # 反向登记：让 AI 知道要把内容补进已有页，而不是新开一页
+                    tq.add(f"wrong-{wid}", "wrong-refine", os.path.relpath(manual, ROOT),
+                           subject, module,
+                           "教学判断：把该错题的讲解补进已有人工精讲页（保留人工内容，只补空缺段）",
+                           ["steps", "variants", "thinkQuestions"])
+                    continue
 
             out_path = os.path.join(out_dir, fn)
             html_out = build_wrong_page(item, out_path, None, qno)
