@@ -194,7 +194,25 @@ summary:hover{color:var(--ink)}
     </div>
   </details>
 
-<div class="note" style="border-left:3px solid #f59e0b;background:#fff8ec;color:#854f0b"><b>⚠️ 待补 · 题干拆解表</b><br><span style="font-size:14px">拆解是逐句翻译题干的机械工作，但要判断「哪句是陷阱」需要看原卷，由 AI 读照片产出。JSON 里补 breakdown 字段即可自动填入。</span></div>
+  <h3>题干拆成 5 个已知</h3>
+  <table>
+    <thead><tr><th style="width:36%">题干说的</th><th>翻译过来</th></tr></thead>
+    <tbody>
+      <tr><td>点 E、D、F 分别在边 AB、BC、AC 上</td><td>E 在 <b>AB</b>，D 在 <b>BC</b>，F 在 <b>AC</b>。<span class="cross">三个点别放错边</span>——D 是唯一在 BC 上的那个，它决定了后面两次传递的公共顶点</td></tr>
+      <tr><td>DE ∥ AC</td><td>这条平行线推出 <code>BE/BA = BD/BC</code>：<b>AB 上的分比传给 BC</b>，公共顶点是 B</td></tr>
+      <tr><td>DF ∥ AB</td><td>这条平行线推出 <code>CD/CB = CF/CA</code>：<b>BC 上的分比传给 AC</b>，公共顶点是 C</td></tr>
+      <tr><td>AE : EB = 3 : 2</td><td>全题<b>唯一的数值来源</b>。注意它给的是 <b>AB 上的分比</b>，不是 BE 与整体的关系</td></tr>
+      <tr><td><span class="hl">AF : FC</span> 的值是</td><td>求 <b>AC 这条边上</b> AF 与 FC 的比，<b>顺序不能反</b>：先 AF，后 FC</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note blue">
+    <b>最容易漏的是第 4 条。</b><br>
+    它给的是 <b>AB 上的比</b>，你要的是 <b>AC 上的比</b>——中间隔着 <b>两次平行线传递 + 一次换边补数</b>，不是一步能到的。<br>
+    而第 5 条的问法里还埋了第二道关：<b>「AF:FC」是有顺序的</b>，写成 <code>FC:AF</code> 就变成了另一个数。<b>你栽的正是这一行。</b>
+  </div>
+
+  <p class="hint">读原卷的一个说明：这份卷面上<b>红笔既用于他自己的草稿演算，也用于老师批改</b>，所以个别笔迹归属只能按位置判断。能确定的是——<b>括号内黑笔的「A」是他填的，紧挨着的红笔「B」是批改</b>；草图里的 <code>AF=2cm、FC=3cm</code> 与 <code>AE:EB=3:2</code> 两处标注是他解题时用的数据。</p>
 </div><div class="card">
   <div class="note gold">
     <b>先说结论：知识你会，错在读题。</b><br>
@@ -203,30 +221,436 @@ summary:hover{color:var(--ink)}
 </div>
 <div class="card">
   <h2><span class="n">1</span>你已经做对的部分</h2>
-  <div class="note" style="border-left:3px solid #f59e0b;background:#fff8ec;color:#854f0b"><b>⚠️ 待补 · 已做对的部分逐项对照</b><br><span style="font-size:14px">需要读他手写的中间步骤才能填，不能只看最终答案。JSON 里补 doneRight 字段：[步骤描述, 说明] 数组。</span></div>
+    <p class="sub">先把这部分看清楚——这不是安慰，是逐项对照原卷手写过程核出来的。</p>
+
+  <table>
+    <thead><tr><th style="width:40%">他在卷面上做的</th><th style="width:14%">对不对</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>主动重画 △ABC，把 D、E、F 标在对应边上</td><td class="tick">✓</td><td>方法方向完全正确，<b>图形先行</b>是对的</td></tr>
+      <tr><td>在草图上标出 <code>AE:EB = 3:2</code></td><td class="tick">✓</td><td>题目数据搬对了</td></tr>
+      <tr><td>标出 <code>AF = 2cm</code>、<code>FC = 3cm</code></td><td class="tick">✓</td><td><b>这是全题的关键一步</b>，见下面注解</td></tr>
+      <tr><td>标出 <code>DE ∥ AC</code>、<code>DF ∥ AB</code> 的平行关系</td><td class="tick">✓</td><td>两条平行线都标上了，说明知道要用</td></tr>
+      <tr><td>括号里填 <code>A</code>（即 3/2）</td><td class="cross">✗</td><td>他自己算出的数是 <b>2:3</b>，填进去的却是它的<b>倒数</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note green">
+    <b>他在图上得到的比例，恰好就是正确答案。</b><br>
+    <code>AF = 2cm、FC = 3cm</code> 直接就是 <code>AF : FC = 2 : 3</code>——<b>选 B</b>。<br>
+    也就是说：<b>方法没问题，图形关系读对了，连最终比例都算对了。</b>
+    错的只是<b>最后那 0.5 秒的填答动作</b>：把算出的比<b>倒过来</b>填了 A。<br>
+    <b>所以这道题不需要重学相似三角形。</b>
+  </div>
+
+  <div class="note gold">
+    <b>怎么做到「具体长度」这一步的？（这一步也值得学）</b><br>
+    他用的是<b>设具体值</b>的思路：既然 <code>AE:EB = 3:2</code>，就把 AB 取成 <b>3+2 = 5（份）</b>，
+    于是 <code>AE = 3</code>、<code>EB = 2</code>。<br>
+    再往下两次平行线传递：
+    <div class="code" style="margin:10px 0 0">BE/BA = 2/5   （AB 上的分比）
+BD/BC = 2/5   （DE ∥ AC，公共顶点 B）</div>
+    这时 <b>FC 还不能直接得</b>，要先把 BC 换到 DC：
+    <div class="code" style="margin:10px 0 0">DC/BC = 1 − 2/5 = 3/5   ← 换边要「取补」
+CF/CA = 3/5   （DF ∥ AB，公共顶点 C）
+AF/AC = 1 − 3/5 = 2/5   ← 同样取补
+AF : FC = 2/5 : 3/5 = 2 : 3</div>
+    <b>这个思路本身非常干净</b>——比纯列比例式好上手。他只是<b>没有把这条链子写成式子</b>，而是直接在图上标了数。
+  </div>
 </div><div class="card">
   <h2><span class="n">2</span>断点到底在哪</h2>
   <p class="sub">把两个答案摆一起看。</p>
   <div style="display:grid;grid-template-columns:1fr;gap:12px;margin:18px 0">
     <div class="box" style="background:var(--red-soft);border-color:var(--red-line)">
-      <div style="font-size:12.5px;color:var(--red);font-weight:600;margin-bottom:7px">你写的</div>
-      <div style="font:16px/1.6 ui-monospace,Menlo,monospace;color:var(--red);font-weight:600">A（先写 A，旁注红笔改为 B）</div>
+      <div style="font-size:12.5px;color:var(--red);font-weight:600;margin-bottom:7px">他填的</div>
+      <div style="font:16px/1.6 ui-monospace,Menlo,monospace;color:var(--red);font-weight:600">A（3/2）</div>
+      <div style="font-size:13.5px;color:var(--ink2);margin-top:8px">括号内黑笔「A」，紧邻的红笔「B」是批改</div>
     </div>
     <div class="box box-ans">
       <div style="font-size:12.5px;color:var(--green);font-weight:600;margin-bottom:7px">正确的</div>
       <div style="font:16px/1.6 ui-monospace,Menlo,monospace;color:var(--green);font-weight:600">B（AF:FC = 2/3）</div>
     </div>
-</div>
+  </div>
+
+  <h3>错的那个数，是怎么来的？</h3>
+  <p>不是算错，是<b>把已经算对的数<b>倒过来</b>了</b>。对照原卷就看得清楚：</p>
+
+  <table>
+    <thead><tr><th style="width:44%">他算出的</th><th style="width:20%">他填的</th><th>问题</th></tr></thead>
+    <tbody>
+      <tr><td><code>AF = 2</code>，<code>FC = 3</code></td><td class="tick">2 : 3</td><td>顺序与题目一致，正确</td></tr>
+      <tr><td>同一个 <code>2 : 3</code></td><td class="cross">3 : 2</td><td>写进括号时<b>前后调了个位置</b>，正好是 <code>A</code> 的值</td></tr>
+    </tbody>
+  </table>
+
+  <div class="code">他心里的：   AF 是 2，FC 是 3   →   2 : 3
+笔下的：   3 / 2        ← 分子分母互换了
+
+而选项正好设了这个套：
+  A = 3/2   ← 倒过来的
+  B = 2/3   ← 本来就对的</div>
+
+  <div class="note red">
+    <b>这道题的真正陷阱在选项设计上。</b><br>
+    <b>2/3 和 3/2 都在选项里。</b>也就是说，你<b>算对还是错，跟你会不会做这道题毫无关系</b>——
+    只取决于最后写答案时有没有<b>回读题目问的顺序</b>。<br>
+    <b>所以这道题把全部难度都压在了「填答动作」上。</b>
+  </div>
+
+  <div class="note gold">
+    <b>零成本防错法（30 秒能养成）：</b><br>
+    写答案前<b>把问句念一遍</b>：题目问的是「<b>AF : FC</b>」，那就先念 A 那条线段（AF），再念后一条（FC）。<br>
+    念出来的是 <code>2 : 3</code> 才往下填。<b>顺序和选项一比，答案自己就跳出来了。</b>
+  </div>
+
+  <h3>还有第二个更隐蔽的坑（在草图阶段被绕过去了）</h3>
+  <p>他用<b>具体长度</b>（2cm / 3cm）走完了全程，所以<b>没有踩到</b>下面这个坑：一旦题目改成<b>纯比值</b>形式，就必须做<b>「取补」</b>。</p>
+  <div class="code">传 BC 上的分比：  BD/BC = 2/5
+下一步却要用 DC：DC/BC = 1 − 2/5 = 3/5    ← 忘了「1 减」就错
+
+传 AC 上的分比：  CF/CA = 3/5
+下一步却要用 AF：AF/AC = 1 − 3/5 = 2/5    ← 同样要「1 减」</div>
+  <p>他这次因为在图上标了具体长度，把这两次「1 减」<b>悄悄做掉了</b>（<code>5−2=3</code>，<code>5−3=2</code>）。<b>题目一变脸（改成比值），这个坑就会露出来。</b></p>
 </div><div class="card">
   <h2><span class="n">3</span>零跳跃分步讲解</h2>
-  <p class="sub">一步一个动作，做完上一步再点下一步。不做完不许跳。</p>
-<div class="note" style="border-left:3px solid #f59e0b;background:#fff8ec;color:#854f0b"><b>⚠️ 待补 · 零跳跃分步讲解</b><br><span style="font-size:14px">这是整页的重心，必须一步一个动作、每步说清依据和检验，并标出他的断点在哪一步。需要读原卷手写过程才能拆，脚本做不了。</span></div>
+  <p class="sub">一步一个动作，做完上一步再点下一步。不做完不许跳。<b>★ 标的是他当时停下的位置。</b></p>
+
+  <!-- step 1 -->
+  <div class="step" data-s="1">
+    <div class="step-h"><div class="step-n">1</div><div class="step-t">画图：把三个点放对边</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <p><b>动作</b>：画 △ABC，在 <b>AB</b> 上标 E，在 <b>BC</b> 上标 D，在 <b>AC</b> 上标 F，连 DE 和 DF。</p>
+      <p><b>依据</b>：题干第一句「点 E、D、F <b>分别</b>在边 AB、BC、AC 上」——「分别」是一一对应的硬约束。</p>
+      <div class="note blue">
+        <b>D 在 BC 上，是这道题的枢纽。</b><br>
+        两条平行线都以 D 为端点，所以<b>两次传递都要经过 BC</b>。D 放错边，整条链子就断了。
+      </div>
+      <p><b>检验</b>：对着题干念一遍——「E 在 AB、D 在 BC、F 在 AC」——图上是不是一模一样？</p>
+      <div class="qa">
+        <div class="q">小试：<b>D</b> 点在哪条边上？</div>
+        <div class="qsub">只写边名，三个字母</div>
+        <div class="inrow">
+          <input type="text" id="q1" placeholder="比如 AB">
+          <button class="btn pri" data-chk="q1" data-a="BC">检查</button>
+        </div>
+        <div class="fb" id="f1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- step 2 -->
+  <div class="step locked" data-s="2">
+    <div class="step-h"><div class="step-n">2</div><div class="step-t">把 AE:EB 换成「占整条边的几分之几」</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <p><b>动作</b>：题目给的是 <code>AE:EB = 3:2</code>，但平行线分线段用的是<b>对整条边</b>的比。换成 <code>BE/BA</code>：</p>
+      <div class="code">AE:EB = 3:2        （分比）
+BA = AE + EB = 3 + 2 = 5 份
+BE/BA = 2/5                （占整边的比）</div>
+      <p><b>依据</b>：平行线分线段成比例的公式长这样：</p>
+      <div class="code">DE ∥ AC   ⇒   BE/BA = BD/BC
+DF ∥ AB   ⇒   CD/CB = CF/CA</div>
+      <p>左边两个的分母都是<b>整条边</b>（BA、CB），所以必须先把 <code>AE:EB</code> 换算过去。</p>
+      <p><b>检验</b>：BE 是 AB 的一部分，<code>BE &lt; BA</code>，所以 <code>2/5 &lt; 1</code> ✓ 对得上。分数应该比 1 小，如果算出个大于 1 的，说明方向反了。</p>
+      <div class="note gold">
+        <b>顺手记一条通用习惯：</b>凡是题目给 <code>a:b</code>，而公式要 <code>a/整体</code>，就先算<b>整体 = a + b</b>。<br>
+        沪教版这类题几乎每题都要用这一步。
+      </div>
+    </div>
+  </div>
+
+  <!-- step 3 -->
+  <div class="step locked" data-s="3">
+    <div class="step-h"><div class="step-n">3</div><div class="step-t">第一次传递：AB → BC ★ 他靠具体长度走通了这一步</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <p><b>动作</b>：用 <code>DE ∥ AC</code>，把 <code>BE/BA</code> 传给 BC 上：</p>
+      <div class="code">BE/BA = BD/BC
+2/5  = BD/BC
+BD/BC = 2/5</div>
+      <p><b>依据</b>：<code>DE ∥ AC</code> ⟹ △BDE ∽ △BCA，公共顶点是 <b>B</b>。</p>
+      <p><b>检验</b>：<code>2/5 = 0.4</code>，<code>BD</code> 是 BC 的一部分，<code>BD &lt; BC</code> ✓</p>
+      <div class="note green">
+        <b>他这一步是对的。</b>原卷上他在图里标了具体长度，等价于把 BC 取成 5 份，<code>BD = 2</code>——<b>比例完全一致</b>。
+      </div>
+    </div>
+  </div>
+
+  <!-- step 4 -->
+  <div class="step locked" data-s="4">
+    <div class="step-h"><div class="step-n">4</div><div class="step-t">换边取补：BD/BC → DC/BC<span class="tag hot" style="margin-left:8px">隐藏的坑</span></div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <p><b>动作</b>：下一步要用的是 <code>DC</code>，不是 <code>BD</code>。而 <code>BD + DC = BC</code>，所以：</p>
+      <div class="code">BD/BC = 2/5
+DC/BC = 1 − 2/5 = 3/5      ← 必须「1 减」</div>
+      <p><b>依据</b>：D 在 BC <b>中间</b>，所以 <code>BD</code> 和 <code>DC</code> 合起来才是 <code>BC</code>。既然 <code>BD</code> 占 <code>2/5</code>，剩下的 <code>DC</code> 就占 <code>1 − 2/5</code>。</p>
+      <p><b>检验</b>：<code>2/5 + 3/5 = 5/5 = 1</code> ✓ 两个加起来正好是整条边。这一步<b>验一下就不会错</b>。</p>
+      <div class="note red">
+        <b>这一步是这类题的第一个固定扣分点。</b><br>
+        <b>「换边必取补」</b>——BD 传给 DC 要做 1 减，AF 传给 FC 也要做 1 减。<br>
+        他这次因为在图上标了具体长度（<code>5−2=3</code>），把这一步<b>悄悄做掉了</b>，所以没暴露。<b>题目一改成纯比值就会撞上。</b>
+      </div>
+      <div class="qa">
+        <div class="q">小试：<code>BD/BC = 2/5</code>，那么 <code>DC/BC = ?</code></div>
+        <div class="qsub">先写那个「1 减」</div>
+        <div class="inrow">
+          <input type="text" id="q2" placeholder="填一个分数">
+          <button class="btn pri" data-chk="q2" data-a="3/5">检查</button>
+        </div>
+        <div class="fb" id="f2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- step 5 -->
+  <div class="step locked" data-s="5">
+    <div class="step-h"><div class="step-n">5</div><div class="step-t">第二次传递：BC → AC</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <p><b>动作</b>：用 <code>DF ∥ AB</code>，把 <code>CD/CB</code> 传给 AC 上：</p>
+      <div class="code">CD/CB = CF/CA
+3/5  = CF/CA
+CF/CA = 3/5</div>
+      <p><b>依据</b>：<code>DF ∥ AB</code> ⟹ △CDF ∽ △CAB，公共顶点是 <b>C</b>。</p>
+      <p><b>检验</b>：<code>3/5 = 0.6</code>，<code>CF &lt; CA</code> ✓</p>
+      <div class="note blue">
+        <b>为什么这里能直接传、不用取补？</b><br>
+        因为这一步的起点 <code>CD/CB</code> 和终点 <code>CF/CA</code> <b>本来就是同一段</b>，没换边。<br>
+        <b>规律：只有「BD→DC」「AF→FC」这种同一条边上换段的才要取补。</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- step 6 -->
+  <div class="step locked" data-s="6">
+    <div class="step-h"><div class="step-n">6</div><div class="step-t">再取补，换回题目要的 AF ★ 你的断点在这附近</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <div class="note red" style="margin-top:0">
+        <b>★ 前五步他都做对了。断点就在「最后交答案」这一下。</b>
+      </div>
+      <p><b>动作</b>：题目问的是 <code>AF</code>，手上是 <code>CF</code>，再取一次补：</p>
+      <div class="code">CF/CA = 3/5
+AF/AC = 1 − 3/5 = 2/5      ← 又一次「1 减」
+
+现在把同分母去掉，得到 AF:FC：
+AF/AC = 2/5   →   AF 占 2 份
+FC/AC = 3/5   →   FC 占 3 份
+所以  AF : FC = 2 : 3</div>
+      <p><b>依据</b>：<code>AF + FC = AC</code>，同一条边分成两段；分母相同，<b>比值就是份数之比</b>。</p>
+      <div class="note gold">
+        <b>这一步别用同分母算，直接数份数更快也更不容易错：</b><br>
+        AC 一共 5 份，<code>AF</code> 拿 2 份、<code>FC</code> 拿 3 份 → <b>AF : FC = 2 : 3</b>。<br>
+        <b>顺序跟着题目走</b>：题目问 AF 在前，就先写 2。
+      </div>
+      <p><b>检验</b>：<code>2 + 3 = 5</code>，和 AC 的总份数一致 ✓</p>
+    </div>
+  </div>
+
+  <!-- step 7 -->
+  <div class="step locked" data-s="7">
+    <div class="step-h"><div class="step-n">7</div><div class="step-t">★ 交答案前必做：把问句念一遍</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <div class="note red" style="margin-top:0">
+        <b>★ 这就是你这道题唯一缺的动作。前面六步全对，栽在这里。</b>
+      </div>
+      <p><b>动作</b>：笔停住准备填选项时，<b>把题目的问句念出声</b>：</p>
+      <div class="code">念：「那么 AF : FC 的值是」
+
+听到 AF  →  对应 2   （AF = 2cm，他自己标的）
+听到 FC  →  对应 3   （FC = 3cm）
+
+写成  2 : 3   →  选 B</div>
+      <p><b>依据</b>：<code>AF:FC</code> 和 <code>FC:AF</code> 是<b>两个不同的数</b>，而选项把两个都给了，所以<b>只有回读能分辨</b>。</p>
+      <p><b>检验</b>：把选好的答案<b>代回问句读一遍</b>——「AF 比 FC」读成 <code>2 比 3</code>，和选项 B 一致 ✓</p>
+      <div class="box box-ans">
+        <div class="lbl">最终答案</div>
+        <div style="font:17px/1.6 ui-monospace,Menlo,monospace;font-weight:600;color:var(--green)">B（AF : FC = 2 : 3，即 2/3）</div>
+      </div>
+      <div class="note blue">
+        <b>为什么这道题值得单独讲：</b><br>
+        <b>它的全部难度都压在最后 0.5 秒</b>——前面全对，也照样丢分。<br>
+        这是<b>最值得练的题型</b>：因为练的完全是「检查习惯」，而习惯一旦养成，<b>所有选择题都受益</b>。
+      </div>
+    </div>
+  </div>
 </div><div class="card orig">
   <h2><span class="n" style="background:var(--ink)">练</span>三题变式</h2>
-  <div class="note" style="border-left:3px solid #f59e0b;background:#fff8ec;color:#854f0b"><b>⚠️ 待补 · 三道变式题</b><br><span style="font-size:14px">固定配比：简单变式（改一个数值）+ 同类型（换考点同手法）+ 问答对调（已知与所求互换）。第三题不能省——很多孩子是「记住套路」不是「真懂」。</span></div>
+  <p class="sub"><b>先自己做，答案折叠着。</b>做不出来再展开。<br>
+  配比是固定的：<b>改一个数值 → 换考点同手法 → 已知与所求对调</b>。<b>第三题不能省</b>——很多人是「记住套路」不是「真懂」。</p>
+
+  <h3>第 1 题（简单变式 · 只改一个数值）</h3>
+  <p>图形、条件<b>全都不变</b>，只把最后问的比换个方向问：</p>
+  <p>在 △ABC 中，点 E、D、F 分别在边 AB、BC、AC 上，DE ∥ AC，DF ∥ AB，<code>AE:EB = 3:2</code>，那么 <b>FC:AF</b> 的值是（　）</p>
+  <p>A. 3/2　　B. 2/3　　C. 2/5　　D. 3/5</p>
+
+  <details>
+    <summary>做完了，看思路</summary>
+    <div class="dbody">
+      <div class="code">BE/BA = 2/(3+2) = 2/5
+BD/BC = 2/5      （DE ∥ AC）
+DC/BC = 1 − 2/5 = 3/5   ← 取补
+CF/CA = 3/5      （DF ∥ AB）
+AF/AC = 1 − 3/5 = 2/5   ← 取补
+
+AF = 2 份，FC = 3 份
+
+题目问 FC:AF，FC 在前 →  3 : 2 = 3/2   →  选 A</div>
+      <p><b>关键就是第 3 行：问句换了方向，答案也跟着换方向。</b><br>
+      这题如果答案还写 B，那就是<b>这道题的原错误又犯了一次</b>——<b>做之前先把问句念一遍</b>。</p>
+    </div>
+  </details>
+
+  <h3>第 2 题（同类型 · 换考点，同一手法）</h3>
+  <p>平行关系不变，但<b>把给出的分比换到另一条边上</b>——考的是你<b>换线的方向</b>：</p>
+  <p>在 △ABC 中，点 E、D、F 分别在边 AB、BC、AC 上，DE ∥ AC，DF ∥ AB，<code>AD:DB = 1:2</code>，那么 <b>AF:FC</b> 的值是（　）</p>
+  <p>A. 1/2　　B. 2/1　　C. 1/3　　D. 2/3</p>
+  <p class="hint">注意题目条件换成了 <code>AD:DB</code>（D 在 <b>BC</b> 上），不是 AB 上的比。</p>
+
+  <details>
+    <summary>做完了，看思路</summary>
+    <div class="dbody">
+      <div class="code">条件直接给的是 BC 上的分比，不用先换算：
+BD/DC = 2/1
+BD/BC = 2/(2+1) = 2/3
+
+用 DF ∥ AB 传：
+CF/CA = CD/CB = 1/3
+
+取补：
+AF/AC = 1 − 1/3 = 2/3
+
+AF = 2 份，FC = 1 份
+AF : FC = 2 : 1 = 2      →  选 B</div>
+      <p><b>这题比原题简单一步</b>——因为 <code>AD:DB</code> 本身就落在 BC 上，<b>第一步的「换算成整边比」直接省了</b>。<br>
+      但它同样要<b>取补两次</b>（DC 一次、AF 一次）。<b>「换边必取补」这条规律在这里救了你。</b></p>
+    </div>
+  </details>
+
+  <h3>第 3 题（问答对调 · 已知与所求互换）</h3>
+  <p>这次反过来问。原题是「<b>给 AE:EB，求 AF:FC</b>」，这题是「<b>给 AF:FC，反求 AE:EB</b>」：</p>
+  <p>在 △ABC 中，点 E、D、F 分别在边 AB、BC、AC 上，DE ∥ AC，DF ∥ AB，<code>AF:FC = 1:2</code>，那么 <b>AE:EB</b> 的值是（　）</p>
+  <p>A. 1/2　　B. 2/1　　C. 1/3　　D. 3/1</p>
+
+  <details>
+    <summary>做完了，看思路</summary>
+    <div class="dbody">
+      <p><b>推法一：原路走回去（推荐）</b></p>
+      <div class="code">AF:FC = 1:2  →  AF/AC = 1/3
+取补：  CF/CA = 1 − 1/3 = 2/3
+DF∥AB 逆推：  CD/CB = 2/3
+取补：  BD/BC = 1 − 2/3 = 1/3
+DE∥AC 逆推：  BE/BA = 1/3
+取补：  AE/AB = 1 − 1/3 = 2/3
+
+AE = 2 份，EB = 1 份
+AE : EB = 2 : 1 = 2        →  选 B</div>
+      <p><b>推法二：找对称关系（更快，但要能推出来）</b></p>
+      <div class="code">原题：AE:EB = m:n  →  AF:FC = ?
+      反过来：AF:FC = p:q  →  AE:EB = ?
+
+观察上面第 2 题：AD:DB = 1:2  →  AF:FC = 2:1
+可以验证出的一般关系是：
+   AE:EB = m:n   ⇒   AF:FC = n:m   ← 正好「反比」
+
+所以 AF:FC = 1:2  ⇒  AE:EB = 2:1   →  选 B</div>
+      <div class="note blue">
+        <b>为什么第 3 题才是真正的考试题？</b><br>
+        因为它<b>逼你确认自己理解的是「关系」还是「套路」</b>。<br>
+        <b>只会套原题流程的人，做这题会下意识把 1:2 又用一遍</b>，写出 AE:EB = 1:2 选 A——<b>正好是错的</b>。<br>
+        能做对这题，说明你真的知道<b>为什么</b>是反比，而不是背下了 3:2 → 2:3。
+      </div>
+      <p style="margin-top:12px"><b>顺带一个反比关系的验证：</b>原题 <code>3:2 → 2:3</code>，第 2 题 <code>1:2 → 2:1</code>，第 3 题 <code>1:2 → 2:1</code>，<b>三次都吻合</b>。</p>
+    </div>
+  </details>
+
+  <div class="note gold">
+    <b>三题串起来看，考的是同一个能力：</b><br>
+    ① 第 1 题 → 提醒你<b>答案跟着问句的方向变</b>；<br>
+    ② 第 2 题 → 提醒你<b>分比落在哪条边，就从哪条边开始传</b>；<br>
+    ③ 第 3 题 → 考你<b>知不知道「反比」这个关系</b>。<br>
+    <b>但三题都逃不开同一个动作：交答案前把问句念一遍。</b>
+  </div>
 </div><div class="card">
   <h2><span class="n">4</span>迁移想五题</h2>
-  <div class="note" style="border-left:3px solid #f59e0b;background:#fff8ec;color:#854f0b"><b>⚠️ 待补 · 3-5 个递进问题 + 即时判题</b><br><span style="font-size:14px">最后一个问题必须是「什么情况下这个方法会失效」，练的是方法的适用边界。JSON 里补 thinkQuestions 字段。</span></div>
+  <p class="sub">抽掉脚手架，做<b>递进</b>的。能答出最后一题，说明你练的是方法，不只是这道题。</p>
+
+  <div class="qa">
+    <div class="q">1. 「换边必取补」——这条规律里，哪两种情况必须做「1 减」？</div>
+    <div class="qsub">用自己的话写，写不出来回看第 4、6 步</div>
+    <div class="inrow">
+      <input type="text" id="q3" placeholder="写两种情况…">
+      <button class="btn" data-chk="q3" data-a="BD换DC / AF换FC / 同一条边换段">对照一下</button>
+    </div>
+    <div class="fb" id="f3"></div>
+  </div>
+
+  <div class="qa">
+    <div class="q">2. 如果题目改成问 <code>AE:EB</code> 和 <code>AF:FC</code> 的关系，你能说出它们为什么是「反比」吗？</div>
+    <div class="qsub">用「先取补、再传递」的思路说，不用算具体数</div>
+    <div class="inrow">
+      <input type="text" id="q4" placeholder="用文字说明…">
+      <button class="btn" data-chk="q4" data-a="两次取补 / 取补把比例翻转 / 反比">对照一下</button>
+    </div>
+    <div class="fb" id="f4"></div>
+  </div>
+
+  <div class="qa">
+    <div class="q">3. 你这次在图上标了 <code>AF=2cm、FC=3cm</code>（设具体值）才做的。<b>为什么不直接写比值？</b></div>
+    <div class="qsub">两种做法各有什么好处和风险？</div>
+    <div class="inrow">
+      <input type="text" id="q5" placeholder="说说两种做法的差别…">
+      <button class="btn" data-chk="q5" data-a="具体值 / 不易错 / 直观 / 风险是忘取补 / 比值要取补">对照一下</button>
+    </div>
+    <div class="fb" id="f5"></div>
+  </div>
+
+  <div class="qa">
+    <div class="q">4. 这道题你的方法全对、只栽在<b>填答顺序</b>上。请举出<b>另外两道你遇到过、同样栽在填答动作</b>的题（可以是别的学科）。</div>
+    <div class="qsub">想不出来就翻自己的错题本</div>
+    <div class="inrow">
+      <input type="text" id="q6" placeholder="写下题号或题目…">
+      <button class="btn" data-chk="q6" data-a="顺序 / 单位 / 问法 / 看错问什么">对照一下</button>
+    </div>
+    <div class="fb" id="f6"></div>
+  </div>
+
+  <div class="qa">
+    <div class="q">5. <b>什么情况下这个方法会失效？</b></div>
+    <div class="qsub">最后一题必答。练的是方法的适用边界——<b>知道什么时候不能硬套，比会用更重要。</b></div>
+    <div class="inrow">
+      <input type="text" id="q7" placeholder="说说边界…">
+      <button class="btn" data-chk="q7" data-a="没有平行 / 两条平行不在对应位置 / E、D、F不在边 / 不是三角形 / 中点 / 不在边上">对照一下</button>
+    </div>
+    <div class="fb" id="f7"></div>
+  </div>
+
+  <details>
+    <summary>想不出来？先看第 5 题的边界（这一题建议做完再看）</summary>
+    <div class="dbody">
+      <p><b>这套「平行线分线段成比例」能用的前提是：</b></p>
+      <table>
+        <thead><tr><th style="width:34%">前提</th><th>不满足会怎样</th></tr></thead>
+        <tbody>
+          <tr><td>必须是<b>三角形</b></td><td>没有第三个顶点，就没有公共顶点可传递，公式直接失效</td></tr>
+          <tr><td>必须有<b>平行线</b></td><td>没有平行就<b>没有相似</b>，比例关系无从谈起——这是最常见的前提缺失</td></tr>
+          <tr><td>点必须<b>落在边上</b>且在<b>对应位置</b></td><td>点跑到延长线上，相似仍成立但<b>要改符号</b>，直接套会出现<b>负的长度</b></td></tr>
+          <tr><td>分比和所求必须<b>落在同两条边上</b></td><td>如果给的是 <code>AE:EB</code> 却问 <code>AB</code> 上的其他关系，<b>要自己判断还需不需要传递</b></td></tr>
+        </tbody>
+      </table>
+      <div class="note red">
+        <b>最需要警惕的一种失效：没有平行线。</b><br>
+        <b>题目里如果没有出现「∥」，就不要用这套公式。</b><br>
+        比如若某天题目只说「DE 平分 ∠A」或「AD 是中线」，那是<b>中位线定理</b>的路子，<b>比例形式不同</b>，硬套会得到看着像样但错的答案。
+      </div>
+      <div class="note gold">
+        <b>一句话记住边界：</b><br>
+        <b>「三角形 + 平行线 + 点在对应边上」</b>——三条全满足才用这套比例链。<br>
+        <b>少一条就停下来，换思路。</b>
+      </div>
+    </div>
+  </details>
+
+  <div class="note blue">
+    <b>最后提醒一句：</b>这道题你<b>方法全对</b>，只错了最后一步填答。<br>
+    所以<b>别再去刷相似三角形了</b>——刷再多，填答动作没养成，下次照样丢分。<br>
+    <b>把这 5 题想清楚、把「念问句」变成习惯，比做 20 道同类题有用。</b>
+  </div>
 </div><div class="parent">
   <div class="kicker" style="color:#a1a1aa">写给家长</div>
   <h2 style="color:#fff">这一页怎么用</h2>
