@@ -1066,6 +1066,43 @@ def main():
             slug = re.sub(r'[\\/:*?"<>|\s]+', "-", name).strip("-")
             out_path = os.path.join(ROOT, "docs", "实战表", subject,
                                     f"{date}-{slug}-试卷拆解.html")
+
+            # 防重复：同一份卷子的拆解页可能已被人工命名（如纯日期命名）。
+            # 脚本按 name 造名会另开一份空壳，导致同卷两页、内容分叉，
+            # 而空壳那份永远填不上（脚本每次都会重新生成它）。
+            # 判据不能只看 generator 标记——人工精修页往往仍带标记（是脚本生成骨架后
+            # 被逐字改出来的）。真正的判据是「内容是否已实质填写」：
+            # 已有页面若已含逐题失分记录或诊断结论，就是人工页，认它为准。
+            subj_dir = os.path.join(ROOT, "docs", "实战表", subject)
+            existing = sorted(
+                f for f in os.listdir(subj_dir)
+                if f.startswith(date) and f.endswith("-试卷拆解.html")
+            ) if os.path.isdir(subj_dir) else []
+            human_page = None
+            for f in existing:
+                cand = os.path.join(subj_dir, f)
+                if os.path.abspath(cand) == os.path.abspath(out_path):
+                    continue
+                try:
+                    head = open(cand, encoding="utf-8").read()
+                except OSError:
+                    continue
+                # 已填写实质内容 = 出现逐题失分记录且没有大量空占位
+                filled = ("失分在哪" in head and head.count("待补") <= 4)
+                if filled or "generator" not in head[:600]:
+                    human_page = cand
+                    break
+            if human_page:
+                rel_h = os.path.relpath(human_page, ROOT)
+                skipped += 1
+                print(f"  · 跳过（已有人工拆解页）：{rel_h}")
+                tq.add(f"exam-{ex.get('id', date)}", "exam", rel_h,
+                       subject, "试卷",
+                       "教学判断：逐题判分、模块得分率、失分热区诊断结论"
+                       "（人工页已存在，勿另开新页）",
+                       ["modules", "wrongs", "verdictHtml", "score"])
+                continue
+
             html_out = build_exam_page(ex, out_path, q)
             changed = write_if_changed(out_path, html_out, args.dry_run, q)
             tq.add(f"exam-{ex.get('id', date)}", "exam", os.path.relpath(out_path, ROOT),
