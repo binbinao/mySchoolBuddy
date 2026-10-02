@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  mySchoolBuddy 内容管道 · launchd 任务
+
+  两套触发器，缺一不可：
+
+  1. WatchPaths —— 目录内容变化时立刻跑（增删改都算）。
+     家长把卷子丢进 RAW/、或手工改了 data/wrong/*.json，几秒内就同步到远端。
+     注意：WatchPaths 是**目录级**监听，不是文件级递归监听。
+     macOS 只在目录本身发生变化时触发（coalesced），
+     所以必须把要监听的目录都列出来，子目录新增文件也算目录 mtime 变化，能触发。
+
+  2. StartInterval 1800 —— 每 30 分钟兜底。
+     合盖休眠时 launchd 不会空转；唤醒后补跑。
+     WatchPaths 在某些休眠/网络挂载场景会丢事件，兜底就是防这个。
+
+  两个都必须有的原因：只有 WatchPaths，机器休眠期间丢的事件永远补不回来；
+  只有定时，合盖时基本不跑，响应慢到用户以为没生效。
+
+  注意：不要用 RunAtLoad=true 之外的常驻 KeepAlive。
+  本任务是被动触发的，保持进程常驻毫无意义且白耗电。
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.myschoolbuddy.pipeline</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>__REPO__/tools/pipeline.sh</string>
+  </array>
+
+  <key>WatchPaths</key>
+  <array>
+    <string>__REPO__/RAW/试卷</string>
+    <string>__REPO__/RAW/错题照片</string>
+    <string>__REPO__/RAW/试卷答案</string>
+    <string>__REPO__/RAW/其他材料</string>
+    <string>__REPO__/data/wrong</string>
+    <string>__REPO__/data/exams</string>
+    <string>__REPO__/data/raw-manifest.json</string>
+    <string>__REPO__/docs/实战表</string>
+  </array>
+
+  <key>StartInterval</key>
+  <integer>1800</integer>
+
+  <!-- 休眠时攒着，唤醒后跑：MacBook 合盖场景必须开 -->
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>__REPO__/data/_local/logs/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>__REPO__/data/_local/logs/launchd.err.log</string>
+
+  <key>WorkingDirectory</key>
+  <string>__REPO__</string>
+
+  <key>ProcessType</key>
+  <string>Background</string>
+
+  <key>LowPriorityIO</key>
+  <true/>
+</dict>
+</plist>
