@@ -140,3 +140,44 @@ agent-browser close                     # 必须收尾
 - `data/` 的 JSON **有意入库**（核心资产）
 - 提交信息写清**为什么**，不只写改了什么
 - 每次错题入库 / 每张实战表新增 = 一次独立 commit
+
+## 自动化管道
+
+**`tools/pipeline.sh` 是唯一入口**：ingest 原件 → 生成讲义骨架 → 校验数据 → commit + push。全部幂等，没变化不动 git。
+
+### 脚本与 AI 的分工（硬边界）
+
+脚本**只做确定性填充**，一律不做教学判断：解法步骤、断点分析、变式题、逐题判分、诊断结论全部标 `⚠️ 待补` 并登记到 `data/tasks/pending.json`，由 WorkBuddy 自动化「mySchoolBuddy 教学内容补全」（每 2 小时）补齐。
+
+> 理由：解法步骤写错了比没有更危险。
+
+### 生成器标记（防覆盖机制）
+
+自动生成的页面头部带 `<meta name="generator" content="generated-by: tools/build_skeletons.py">`。
+
+- **带标记** → 可被重新生成
+- **不带标记** → 人工成果，**绝不允许覆盖**（如 q19 精讲页是逐字对照手写过程改出来的）
+
+生成器遇到同题号的人工页会跳过，并在任务队列登记 `wrong-refine`，让 AI 把内容补进已有页而非新开一页。
+
+### 三条硬纪律的机器闸门
+
+`tools/validate_schema.py` 是唯一执行者。**校验出错时照常提交、但拒绝推送**，并在 `data/_local/VALIDATION-FAILED.md` 留提醒——问题必须让人看见，悄悄跳过才最危险。
+
+| 纪律 | 机器检查什么 |
+|---|---|
+| 分值 | `full`/`lost` 为 null 必须 `scorePending: true`，反之亦然 |
+| 溯源 | `sourceRaw`（字符串或数组）必须存在于 RAW/ 且已登记 manifest |
+| 原件 | sha256 必须一致；不一致时比对 Git HEAD 区分「记录错」与「原件被改」，后者拒绝自动修复 |
+
+### 数据字段坑
+
+- **错题 `id` 后缀不是题号**：`w-20261002-02` 是第几条记录。必须用 `qno` 字段或从标题抠「第N题」，否则会生成 `q1-…` 而卷面写的是 q19。
+- **`sourceRaw` 可为数组**：多页试卷必然用数组，校验与生成都要兼容两种形态。
+
+## 定时任务
+
+launchd plist 在 `tools/launchd/com.myschoolbuddy.pipeline.plist.template`，用 `__REPO__` 占位绝对路径。触发器两套缺一不可：**WatchPaths**（目录变化即跑）+ **StartInterval 1800**（休眠兜底）。
+
+> ⚠️ 本 IDE/沙箱内 shell 无法向 launchd 注册服务（error 5），且 `launchctl load` 会**返回成功但实际没注册**——必须用 `launchctl print` 确认。安装走 `tools/install-launchd.sh install`，装完在真终端验证。
+
