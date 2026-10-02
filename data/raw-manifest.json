@@ -23,6 +23,24 @@
           "相似三角形（平行线分线段成比例）"
         ]
       }
+    },
+    {
+      "file": "RAW/错题照片/20261002-数学-第19题.jpg",
+      "kind": "image",
+      "bytes": 332171,
+      "sha256": "356da7708bbca5a4d99625cf584f1d5c17ffd4dae84891a46c1105ed837a8bea",
+      "width": 1828,
+      "height": 1599,
+      "originalBytes": 580006,
+      "status": "已解析",
+      "parsed": {
+        "wrongIds": [
+          "w-20261002-01"
+        ],
+        "modules": [
+          "二次函数"
+        ]
+      }
     }
   ]
 }

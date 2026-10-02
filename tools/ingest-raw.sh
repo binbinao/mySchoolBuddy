@@ -85,12 +85,27 @@ for f in "${FILES[@]}"; do
   echo "处理：$rel  ($(( size / 1024 )) KB)"
 
   if is_img "$f"; then
+    # 先读原图尺寸：已经小于等于长边上限的截图，不再放大——
+    # 放大既不增清晰度，又白白增大体积（实测 1828x1600 截图被拉到 2000px 后反增 18%）。
+    src_dim="$(sips -g pixelWidth -g pixelHeight "$f" 2>/dev/null | awk '/pixelWidth/{w=$2} /pixelHeight/{h=$2} END{print w" "h}')"
+    sw="${src_dim%% *}"; sh="${src_dim##* }"
+    needs_resize=1
+    if [ -n "$sw" ] && [ -n "$sh" ]; then
+      longest=$(( sw > sh ? sw : sh ))
+      [ "$longest" -le "$MAX_EDGE" ] && needs_resize=0
+    fi
+
     tmp="$f.ingest.jpg"
     # -Z 限制长边；formatOptions 控制 JPEG 质量。
     # 试卷是白底黑字的高对比内容，q=50 即可清晰可读且体积最小。
     # 实测 3024x4032 手机原图 10.5MB → 约 305KB（降幅 97%），文字完全可读。
-    if ! sips -s format jpeg -s formatOptions "$JPEG_Q" -Z "$MAX_EDGE" "$f" --out "$tmp" >/dev/null 2>&1; then
-      echo "  ✗ 压缩失败，跳过：$rel"; rm -f "$tmp"; continue
+    if [ "$needs_resize" = "1" ]; then
+      sips -s format jpeg -s formatOptions "$JPEG_Q" -Z "$MAX_EDGE" "$f" --out "$tmp" >/dev/null 2>&1
+    else
+      sips -s format jpeg -s formatOptions "$JPEG_Q" "$f" --out "$tmp" >/dev/null 2>&1
+    fi
+    if [ ! -f "$tmp" ]; then
+      echo "  ✗ 压缩失败，跳过：$rel"; continue
     fi
     dim="$(sips -g pixelWidth -g pixelHeight "$tmp" 2>/dev/null | awk '/pixelWidth/{w=$2} /pixelHeight/{h=$2} END{print w" "h}')"
     w="${dim%% *}"; h="${dim##* }"
@@ -107,8 +122,12 @@ for f in "${FILES[@]}"; do
     else
       rm -f "$tmp"
     fi
-    ratio="$(awk -v n="$newsize" -v o="$origsize" 'BEGIN{ if(o>0) printf "%.0f", (1 - n/o)*100; else print 0 }')"
-    echo "  ✓ 压缩完成 → ${w}x${h}  $(( newsize / 1024 )) KB（原 $(( origsize / 1024 )) KB，降幅 ${ratio}%）"
+    ratio="$(awk -v n="$newsize" -v o="$origsize" 'BEGIN{ if(o>0) printf "%+.0f", (n/o-1)*100; else print 0 }')"
+    if [ "$needs_resize" = "0" ]; then
+      echo "  ✓ 仅转格式（长边 ${sw}x${sh} 已达标，不放大）→ ${w}x${h}  $(( newsize / 1024 )) KB（原 $(( origsize / 1024 )) KB，${ratio#+}%）"
+    else
+      echo "  ✓ 压缩完成 → ${w}x${h}  $(( newsize / 1024 )) KB（原 $(( origsize / 1024 )) KB，降幅 ${ratio#-}%）"
+    fi
     printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$rel" "image" "$newsize" "$sha" "$w" "$h" "$origsize" >> "$TSV_NEW"
     CHANGED=$((CHANGED+1))
 

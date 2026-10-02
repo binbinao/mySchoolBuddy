@@ -4,7 +4,8 @@
     "created": "2026-10-02",
     "count": 2,
     "source": "错题照片人工转录（w-01 来自 q19；w-02 来自 20261002-数学-第5题.jpg，已走 RAW 原件层入库）",
-    "note": "错题入库。题号旁未见分值标注，full/lost 留空待补，不做估算。入库纪律：每条须经「独立重算 + 比对卷面批改」双重确认答案后才写入，答案栏记的是正确结果，解题过程不入库（那是孩子要想出来的东西）。"
+    "note": "首次错题入库。两条记录的 full/lost 均为 null —— 照片中未见分值标注，需对照卷面分值表回填后才能计入失分点热区统计。不做估算。",
+    "schemaNote": "引用原件统一用 sourceRaw 字段，指向 RAW/ 下已入库文件（见 data/raw-manifest.json）"
   },
   "items": [
     {
@@ -25,8 +26,9 @@
       "childAnswer": "y = −(x − 6)² − 3",
       "status": "pending",
       "reviewRounds": [],
-      "scanRef": "data/_scans/2026-10-02/q19-math.jpg",
-      "ts": 1790914724000
+      "ts": 1790914724000,
+      "sourceRaw": "RAW/错题照片/20261002-数学-第19题.jpg",
+      "sourceNote": "原 scanRef 指向 data/_scans/（已被 .gitignore 排除，远端断链），已迁入 RAW 原件层"
     },
     {
       "id": "w-20261002-02",
@@ -36,7 +38,12 @@
       "subject": "数学",
       "module": "相似三角形（平行线分线段成比例）",
       "point": "九下 · 相似三角形判定与性质 / 平行线分线段成比例（章节号待按孩子课本目录核实）",
-      "options": { "A": "3/2", "B": "2/3", "C": "2/5", "D": "3/5" },
+      "options": {
+        "A": "3/2",
+        "B": "2/3",
+        "C": "2/5",
+        "D": "3/5"
+      },
       "correctAnswer": "B（AF:FC = 2/3）",
       "myAnswer": "A",
       "full": null,
@@ -55,12 +62,42 @@
       "rawSha256": "676b09ba4bd9eda3c6606dcdac42e8c98c4104195e70d696fddb2144c20aca85",
       "reviewRounds": [],
       "reviewPlan": [
-        { "round": "R1", "dueDate": "2026-10-02", "action": "遮住答案，独立重做一遍", "pass": "能独立写出关键步骤" },
-        { "round": "R2", "dueDate": "2026-10-04", "action": "重做 + 口述思路", "pass": "思路完整，无需提示" },
-        { "round": "R3", "dueDate": "2026-10-06", "action": "只做变式（换比值 AE:EB=2:3，或改问 FC:AF）", "pass": "变式也能独立完成" },
-        { "round": "R4", "dueDate": "2026-10-09", "action": "限时做（5 分钟内）", "pass": "限时内完成且正确" },
-        { "round": "R5", "dueDate": "2026-10-17", "action": "混入套卷，不单独练", "pass": "不再触发提醒" },
-        { "round": "R6", "dueDate": "2026-11-01", "action": "完整章节复测", "pass": "掌握，退出复测名单" }
+        {
+          "round": "R1",
+          "dueDate": "2026-10-02",
+          "action": "遮住答案，独立重做一遍",
+          "pass": "能独立写出关键步骤"
+        },
+        {
+          "round": "R2",
+          "dueDate": "2026-10-04",
+          "action": "重做 + 口述思路",
+          "pass": "思路完整，无需提示"
+        },
+        {
+          "round": "R3",
+          "dueDate": "2026-10-06",
+          "action": "只做变式（换比值 AE:EB=2:3，或改问 FC:AF）",
+          "pass": "变式也能独立完成"
+        },
+        {
+          "round": "R4",
+          "dueDate": "2026-10-09",
+          "action": "限时做（5 分钟内）",
+          "pass": "限时内完成且正确"
+        },
+        {
+          "round": "R5",
+          "dueDate": "2026-10-17",
+          "action": "混入套卷，不单独练",
+          "pass": "不再触发提醒"
+        },
+        {
+          "round": "R6",
+          "dueDate": "2026-11-01",
+          "action": "完整章节复测",
+          "pass": "掌握，退出复测名单"
+        }
       ],
       "variantTask": {
         "desc": "R3 变式题，做的时候不要翻原题答案",
