@@ -44,6 +44,18 @@ h3{font-size:15.5px;font-weight:600;margin:26px 0 10px}
 p{margin:0 0 14px}
 .hint{font-size:13.5px;color:var(--ink3)}
 
+/* ---------- 原题区 ---------- */
+.card.orig{border-color:var(--line2);background:#fdfdfd}
+.stmt{
+  font-size:15.5px;line-height:1.95;padding:18px 20px;margin:0 0 14px;
+  background:#fff;border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:4px 10px 10px 4px;
+}
+.stmt .hl{background:#fff8ec;padding:1px 4px;border-radius:3px;font-weight:600;color:#854f0b}
+.stmt b:first-child{color:var(--ink);font-weight:700;margin-right:2px}
+.stmt i{font-style:italic;font-family:"Times New Roman",Georgia,serif}
+.scan{width:100%;border-radius:10px;border:1px solid var(--line);display:block;margin-bottom:8px}
+.cap{font-size:12.5px;color:var(--ink3);margin:0 0 7px}
+
 /* ---------- callout ---------- */
 .note{border-radius:11px;padding:15px 17px;font-size:15px;margin:16px 0;border:1px solid}
 .note b{font-weight:600}
@@ -167,6 +179,45 @@ summary:hover{color:var(--ink)}
     <span class="tag hot">复核后：方法没想到</span>
   </div>
 </header>
+
+<!-- ===== 原题 ===== -->
+<div class="card orig">
+  <h2><span class="n" style="background:var(--ink)">原</span>原题</h2>
+  <p class="sub">先自己读一遍，再往下看。题干里的每一句话后面都有用。</p>
+
+  <div class="stmt">
+    <b>19.</b> 已知顶点 <i>A</i> 在抛物线 <i>y</i><sub>1</sub> 上，则称抛物线 <i>y</i><sub>1</sub> 与抛物线 <i>y</i><sub>2</sub> 互为"关联抛物线"（<span class="hl">顶点 <i>A</i> 在抛物线 <i>y</i><sub>2</sub> 上，且两抛物线互为"关联抛物线"</span>）。
+    已知顶点为 <i>M</i> 的抛物线 <i>y</i> = (<i>x</i>−2)<sup>2</sup> + 3 与顶点为 <i>N</i> 的抛物线互为"关联抛物线"，直线 <i>MN</i> 与 <i>x</i> 轴正半轴交于点 <i>D</i>，
+    如果 tan∠<i>MDO</i> = 3/4，那么顶点为 <i>N</i> 的抛物线的解析式是 ________。
+  </div>
+
+  <details>
+    <summary>看原卷照片（题干 + 他的草稿 + 红笔批改）</summary>
+    <div class="dbody">
+      <p class="cap">原卷上的第 19 题</p>
+      <img class="scan" src="../../../data/_scans/2026-10-02/q19-stem.png" alt="q19 题干原图">
+      <p class="cap">整题照片（含红笔订正与手写草稿）</p>
+      <img class="scan" src="../../../data/_scans/2026-10-02/q19-math.jpg" alt="q19 原卷照片">
+      <p class="hint">照片存在 <code>data/_scans/</code>（含个人信息，未入 Git，本地保留）。</p>
+    </div>
+  </details>
+
+  <h3>题干拆成 4 个已知</h3>
+  <table>
+    <thead><tr><th style="width:30%">题干说的</th><th>翻译过来</th></tr></thead>
+    <tbody>
+      <tr><td>互为"关联抛物线"</td><td><b>两个方向都要成立</b>，不只是 A 在 y₂ 上</td></tr>
+      <tr><td>顶点为 M 的抛物线 y=(x−2)²+3</td><td>这条抛物线是<b>已知的</b>，M 的坐标能直接读出来</td></tr>
+      <tr><td>顶点为 N 的抛物线</td><td>这条是<b>要求的</b>，用 y₂ 表示</td></tr>
+      <tr><td>直线 MN 与 x 轴正半轴交于 D<br>tan∠MDO = 3/4</td><td>用来<b>定 D 的位置</b>，进而定直线 MN 的斜率</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note blue">
+    <b>最容易漏掉的是第一条。</b>很多人只做到"A 在 y₂ 上"就以为完了——但题目说的是"<b>互为</b>关联抛物线"，说明<b>反过来也成立</b>。<br>
+    这就是这道题全部的难点。
+  </div>
+</div>
 
 <!-- ===== 开场 ===== -->
 <div class="card">
