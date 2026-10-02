@@ -345,21 +345,53 @@ def find_manual_page(out_dir, item, qno):
 
 
 # 限定词高亮清单——这些是丢分重灾区，孩子最爱漏。
-# 与 wrong-question-coaching 技能里的清单保持一致。
+# 与 wrong-question-coaching 技能里的清单保持一致，并按实测补充。
+#
+# 补充说明：光标「互为/至少」这类词不够。像「AF:FC 的值是」这种
+# 「求什么」的表述才是真正的陷阱——孩子算对了比值却把顺序写反，
+# 而这类表述一个限定词都没有。所以必须加上问答焦点词。
 KEY_WORDS = [
-    "互为", "相反", "不正确的是", "不是", "至少", "至多", "恰好",
-    "不超过", "不小于", "最大", "最小", "全部", "任取", "已知", "求",
-    "的中点", "平分", "外角", "内心", "内心", "切线", "相交",
+    # 逻辑/性质类
+    "互为", "相反", "相似", "全等", "相切", "垂直", "平分",
+    # 判断类
+    "不正确的是", "不是", "不正确", "错误的是",
+    # 程度类
+    "至少", "至多", "恰好", "不超过", "不小于", "不高于", "不少于",
+    "最大", "最小", "最长", "最短",
+    # 范围类
+    "全部", "任取", "任意",
+    # 几何位置类
+    "的中点", "外角", "内心", "切线", "延长线",
+    # 问答焦点类：问的是什么，决定答案怎么写（顺序错就全错）
+    "的值是", "是多少", "的值", "为多少",
 ]
 
 
 def hl_keywords(text):
-    """把限定词包进 <span class="hl">。先转义再替换，避免破坏 HTML。"""
-    out = esc(text)
-    for w in sorted(KEY_WORDS, key=len, reverse=True):
-        if w in out:
-            out = out.replace(w, f'<span class="hl">{w}</span>')
-    return out
+    """把限定词与问答焦点包进 <span class="hl">。
+
+    实现要点：不能「转义 → 反复 replace」——前一次替换生成的
+    <span class="hl"> 里含有「值」「的」这类字符片段，会被后一轮二次包裹，
+    产出 <span class="hl">的<span class="hl">值</span>是</span> 这种烂标签。
+
+    正确做法是**单趟扫描**：先用正则把所有命中词一次找出来，
+    按位置切分成「普通文本 / 命中词」交替的序列，
+    普通文本原样（已转义），命中词包一层 span。只走一遍，天然不会自我嵌套。
+    """
+    plain = esc(text)
+    if not plain:
+        return plain
+    # 最长匹配优先：先试长的词，避免「的值」把「的值是」切碎
+    pattern = "|".join(re.escape(w) for w in
+                       sorted(KEY_WORDS, key=len, reverse=True))
+    out = []
+    pos = 0
+    for m in re.finditer(pattern, plain):
+        out.append(plain[pos:m.start()])
+        out.append(f'<span class="hl">{m.group(0)}</span>')
+        pos = m.end()
+    out.append(plain[pos:])
+    return "".join(out)
 
 
 def build_stem_html(item, qno):
