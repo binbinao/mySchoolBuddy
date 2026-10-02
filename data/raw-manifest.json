@@ -97,6 +97,127 @@
         "wrongIds": [],
         "modules": []
       }
+    },
+    {
+      "file": "RAW/试卷库/2025-中考-全市-数学-2025年上海市中考数学真题试卷(含答案).txt",
+      "kind": "text",
+      "bytes": 10279,
+      "sha256": "0e2a3886d2c87f0ac8cf2027e1c1d7ba49d5e1ce2fb373c2c3c60e73d934d0ae",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/2025-中考-全市-物理-2025年上海市中考物理真题(原卷+解析).txt",
+      "kind": "text",
+      "bytes": 26383,
+      "sha256": "5a65db63b653f4df642d46b40a5ac9ee1037a6cfeabc99dad2064f2a61a6e757",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/2025-中考-全市-语文-2025年上海市中考语文真题(原卷+解析).txt",
+      "kind": "text",
+      "bytes": 70058,
+      "sha256": "8384eceba8910360204513e8c8fd9d1d5e88c225df5d8e8aa91295309fe528c2",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/2025-中考-全市-化学-【精品解析】上海市2025年中考化学真题.txt",
+      "kind": "text",
+      "bytes": 14033,
+      "sha256": "74533b37cdd9461a822e39e5d1cc65a91c9e4ae37799fec3a08e34e91003b80a",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/2025-中考-全市-生物-2025年上海市中考生物试卷(含答案).txt",
+      "kind": "text",
+      "bytes": 7600,
+      "sha256": "ea571cb4495d7f03a81a08d59c89ad6005f4f0806b9bb561f580aa2c280632f3",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/2025-中考-全市-地理-2025年上海市初中学业水平考试地理试卷(含答案).txt",
+      "kind": "text",
+      "bytes": 13739,
+      "sha256": "ce436a2363525b19c0afaa8ac7f71ef5a33ee1ff3f720d8f0fa37dda2d03a132",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/2024-中考-全市-数学-2024年上海市中考数学试题(含部分答案).txt",
+      "kind": "text",
+      "bytes": 3011,
+      "sha256": "057dec2314b65238a364a13df8ffe8113dc317fd5acca759e096e0c0d05af05a",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/2023-中考-全市-数学-2023年上海市初中学业水平考试数学试卷.txt",
+      "kind": "text",
+      "bytes": 4620,
+      "sha256": "b3dc4b95cb6d0d92a81184539c88436a6396683890a231e8a6719be163a7a1f1",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/2025-一模-徐汇区-数学-2025届上海市徐汇区初三一模数学试卷(含答案).txt",
+      "kind": "text",
+      "bytes": 3348,
+      "sha256": "afb240aa40f84c71f69633517d8f15e4ec57675167dec61bdb34f78b223749d1",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/2025-一模-闵行区-数学-上海市闵行区2025-2026学年上学期九年级学业质量(一模)调研数学试题.txt",
+      "kind": "text",
+      "bytes": 4193,
+      "sha256": "107e8eb5d50b475a2049dfe4d89aa4b6fe661b7e0a489cf04cca7e5a70c9df9a",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷库/2026-中考-全市-物理-2026年上海中考物理真题(含答案)-—-renrendoc-版本.txt",
+      "kind": "text",
+      "bytes": 16103,
+      "sha256": "7a489a91c435caa75ef6c71bdd13e8ee6309905f8ac120a331a5acfbc7826431",
+      "status": "已入库·公开教辅",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
     }
   ]
 }

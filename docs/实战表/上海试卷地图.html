@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>上海中考试卷地图 · mySchoolBuddy</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+  background:#FAFAFA;color:#1C1C1E;line-height:1.75;font-size:16px;padding:24px 20px 60px}
+.wrap{max-width:1080px;margin:0 auto}
+header{margin-bottom:28px;padding-bottom:20px;border-bottom:2px solid #1C1C1E}
+h1{font-size:28px;font-weight:700;letter-spacing:-.3px}
+.sub{color:#71717A;font-size:14px;margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:20px 0 26px}
+.stat{background:#fff;border:1px solid #E4E4E7;border-radius:10px;padding:14px 16px}
+.stat b{display:block;font-size:24px;font-weight:700;color:#1C1C1E}
+.stat span{font-size:12px;color:#71717A}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;align-items:center}
+.fbtn{padding:6px 14px;border:1px solid #D4D4D8;background:#fff;border-radius:20px;
+  font-size:13.5px;cursor:pointer;transition:.15s;color:#3F3F46}
+.fbtn:hover{border-color:#F59E0B}
+.fbtn.on{background:#1C1C1E;color:#fff;border-color:#1C1C1E}
+.flabel{font-size:12.5px;color:#A1A1AA;margin-right:2px}
+.card{background:#fff;border:1px solid #E4E4E7;border-radius:12px;padding:18px 20px;margin-bottom:12px;
+  transition:.15s}
+.card:hover{border-color:#D4D4D8;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.ch{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.t{font-size:16.5px;font-weight:600;flex:1;min-width:240px;line-height:1.5}
+.tag{font-size:11.5px;padding:2px 9px;border-radius:20px;font-weight:500;white-space:nowrap}
+.t-archived{background:#DCFCE7;color:#15803D}
+.t-paywall,.t-netdisk{background:#FEF3C7;color:#B45309}
+.t-preview,.t-login{background:#E0E7FF;color:#4338CA}
+.t-suspect{background:#FEE2E2;color:#B91C1C}
+.meta{font-size:13px;color:#71717A;display:flex;flex-wrap:wrap;gap:5px 14px;margin-bottom:8px}
+.meta span b{color:#3F3F46;font-weight:600}
+.note{font-size:13px;line-height:1.65;padding:9px 12px;border-radius:8px;margin-top:8px}
+.note-warn{background:#FFF7ED;border-left:3px solid #F59E0B;color:#7C2D12}
+.note-ok{background:#F0FDF4;border-left:3px solid #22C55E;color:#14532D}
+.note-sus{background:#FEF2F2;border-left:3px solid #EF4444;color:#7F1D1D}
+a{color:#B45309;text-decoration:none;border-bottom:1px solid #FDE68A}
+a:hover{border-bottom-color:#F59E0B}
+code{background:#F4F4F5;padding:1px 6px;border-radius:4px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+h2{font-size:19px;margin:34px 0 14px;padding-left:11px;border-left:3px solid #F59E0B}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0;background:#fff;
+  border:1px solid #E4E4E7;border-radius:10px;overflow:hidden}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid #F4F4F5}
+th{background:#F4F4F5;font-weight:600;font-size:12.5px;color:#3F3F46}
+tr:last-child td{border-bottom:none}
+.discipline{background:#1C1C1E;color:#E4E4E7;border-radius:12px;padding:20px 22px;margin-top:30px}
+.discipline h3{color:#F59E0B;font-size:16px;margin-bottom:10px}
+.discipline ol{margin-left:18px;font-size:14px}
+.discipline li{margin:7px 0}
+.empty{text-align:center;color:#A1A1AA;padding:40px;font-size:14px}
+@media(max-width:600px){body{padding:16px 14px 40px;font-size:15.5px}h1{font-size:23px}.t{font-size:15.5px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>上海中考试卷地图</h1>
+  <div class="sub">中考真题 · 一模 · 二模 ｜ 沪教版五四制 ｜ 数据源：21cnjy / renrendoc / 学科网 / 二一组卷网</div>
+</header>
+
+<div class="stats" id="stats"></div>
+
+<div class="filters">
+  <span class="flabel">科目</span><span id="fSubject"></span>
+  <span class="flabel" style="margin-left:10px">场次</span><span id="fSession"></span>
+  <span class="flabel" style="margin-left:10px">状态</span><span id="fAccess"></span>
+</div>
+
+<div id="list"></div>
+
+<h2>📋 2026 上海中招政策要点</h2>
+<div id="policy"></div>
+
+<div class="discipline">
+  <h3>使用纪律</h3>
+  <ol>
+    <li><b>这是公共教辅资源，不是孩子的考试记录</b>——所以单独放 <code>data/resources/</code>，不进 <code>data/exams/</code>。</li>
+    <li><b>标 ⚠️ 不可信的条目不要用来给孩子讲题</b>。renrendoc 上部分「2026 中考物理」是 AI 拼凑题，与上海真卷风格不符，仅作题面参考。</li>
+    <li><b>付费/网盘资源需人工下载</b>：把文件放进 <code>RAW/试卷库/</code>，我再跑一次入库并登记指纹。</li>
+    <li><b>⚠️ 数学/化学/物理卷的公式符号在抓取中会丢失</b>（上标下标、分数线、根号）。题干与分值结构可信，但具体公式必须回原文页核对——给孩子讲题前务必确认。</li>
+    <li><b>历年真题分值结构高度稳定</b>（数学 24/48/78），可作为制定复习规划的可靠基准。</li>
+    <li>政策与分数线以<b>上海市教育考试院 / 市教委最新文件</b>为准，页面内容仅供参考。</li>
+  </ol>
+</div>
+</div>
+
+<script>
+const DATA = {
+ "meta": {
+  "schema": "resource-index.v1",
+  "note": "上海市中考/一模/二模试卷资源索引。**这不是孩子参加过的考试记录**——公共教辅资源，不进 data/exams/。rawFile 指向已归档的公开可见全文；access=paywall/login 表示需人工到平台下载后放 RAW/试卷库/。",
+  "created": "2026-10-02",
+  "count": 17,
+  "stats": {
+   "fetched": 0,
+   "metaOnly": 6,
+   "failed": 1,
+   "unchanged": 10
+  },
+  "discipline": "索引只记可核实元数据；题目内容一律来自实际抓取，不编造。",
+  "extractionLimits": "抓取自网页预览版，数学/化学的**公式符号存在丢失**：上标下标、分数线、根号、希腊字母在 HTML→纯文本转换中会退化（如 ³√3+³√3 变成 '3 + 3 = 2 3'）。**题干与分值结构可信，具体公式必须回原页核对**。给孩子讲题前务必打开 sourceUrl 确认。",
+  "limitAffected": 8
+ },
+ "shanghaiPolicy": {
+  "总分": 750,
+  "科目分值": {
+   "语文": "150（闭卷100分钟）",
+   "数学": "150（闭卷100分钟）",
+   "外语": "150（笔试140含听力25 + 听说测试10）",
+   "道德与法治": "60（统一考试30开卷40分钟 + 日常考核30）",
+   "历史": "60（统一考试30开卷40分钟 + 日常考核30）",
+   "综合测试": "150（物理70 + 化学50 + 跨学科案例分析15 + 实验操作15）",
+   "体育与健身": "30（日常考核15 + 统一测试15）"
+  },
+  "录取批次": [
+   "自主招生录取",
+   "名额分配综合评价录取（到区/到校）",
+   "统一招生录取（1至15志愿）"
+  ],
+  "名额分配同分排序": [
+   "综合素质评价",
+   "语数外三科合计",
+   "数学",
+   "语文",
+   "综合测试"
+  ],
+  "来源": "上海市教育考试院 沪教考院中招〔2026〕3号 + 沪教委基〔2026〕2号",
+  "note": "2026 年政策与 2025 年一致。分数线/政策须以市教委与市教育考试院最新文件为准。"
+ },
+ "regions": [
+  "16区合集",
+  "全市",
+  "徐汇区",
+  "闵行区"
+ ],
+ "subjects": [
+  "全科",
+  "化学",
+  "地理",
+  "数学",
+  "物理",
+  "生物",
+  "语文",
+  "跨学科"
+ ],
+ "papers": [
+  {
+   "id": "sh-2025-zk-math",
+   "year": 2025,
+   "session": "中考",
+   "region": "全市",
+   "subject": "数学",
+   "title": "2025年上海市中考数学真题试卷(含答案)",
+   "sourceSite": "21cnjy",
+   "sourceUrl": "https://zy.21cnjy.com/23226588",
+   "access": "open",
+   "accessNote": "预览页含完整题目文本与分值结构（选择24分/填空48分/解答78分）",
+   "curriculumNote": "沪教版五四制",
+   "trusthLevel": "high",
+   "trustNote": "含原卷题目、官方分值结构、明确卷首说明，与上海中考实卷一致",
+   "hasAnswer": "含答案",
+   "rawFile": "RAW/试卷库/2025-中考-全市-数学-2025年上海市中考数学真题试卷(含答案).txt",
+   "chars": 5215,
+   "fetchedAt": "2026-10-02",
+   "extractionLimit": "抓取自网页预览版，数学/化学的**公式符号存在丢失**：上标下标、分数线、根号、希腊字母在 HTML→纯文本转换中会退化（如 ³√3+³√3 变成 '3 + 3 = 2 3'）。**题干与分值结构可信，具体公式必须回原页核对**。给孩子讲题前务必打开 sourceUrl 确认。"
+  },
+  {
+   "id": "sh-2025-zk-physics",
+   "year": 2025,
+   "session": "中考",
+   "region": "全市",
+   "subject": "物理",
+   "title": "2025年上海市中考物理真题(原卷+解析)",
+   "sourceSite": "21cnjy",
+   "sourceUrl": "https://zy.21cnjy.com/23213616",
+   "access": "open",
+   "accessNote": "预览页含完整题目+逐题答案解析；卷首标明物理部分满分135分(不含实验操作15分)",
+   "curriculumNote": "沪科版",
+   "trusthLevel": "high",
+   "trustNote": "原卷+解析齐全，含考生注意事项与分值说明",
+   "hasAnswer": "含解析",
+   "rawFile": "RAW/试卷库/2025-中考-全市-物理-2025年上海市中考物理真题(原卷+解析).txt",
+   "chars": 10448,
+   "fetchedAt": "2026-10-02",
+   "extractionLimit": "抓取自网页预览版，数学/化学的**公式符号存在丢失**：上标下标、分数线、根号、希腊字母在 HTML→纯文本转换中会退化（如 ³√3+³√3 变成 '3 + 3 = 2 3'）。**题干与分值结构可信，具体公式必须回原页核对**。给孩子讲题前务必打开 sourceUrl 确认。"
+  },
+  {
+   "id": "sh-2025-zk-chinese",
+   "year": 2025,
+   "session": "中考",
+   "region": "全市",
+   "subject": "语文",
+   "title": "2025年上海市中考语文真题(原卷+解析)",
+   "sourceSite": "21cnjy",
+   "sourceUrl": "https://zy.21cnjy.com/23235680",
+   "access": "open",
+   "accessNote": "预览页含完整题目+答案解析；文言文阅读36分",
+   "curriculumNote": "统编版",
+   "trusthLevel": "high",
+   "trustNote": "原卷+解析，含《陋室铭》真实篇目，符合上海中考命题风格",
+   "hasAnswer": "含解析",
+   "rawFile": "RAW/试卷库/2025-中考-全市-语文-2025年上海市中考语文真题(原卷+解析).txt",
+   "chars": 24924,
+   "fetchedAt": "2026-10-02"
+  },
+  {
+   "id": "sh-2025-zk-chemistry",
+   "year": 2025,
+   "session": "中考",
+   "region": "全市",
+   "subject": "化学",
+   "title": "【精品解析】上海市2025年中考化学真题",
+   "sourceSite": "21cnjy",
+   "sourceUrl": "https://zy.21cnjy.com/23475457",
+   "access": "open",
+   "accessNote": "预览页含完整题目",
+   "curriculumNote": "沪教版",
+   "trusthLevel": "medium",
+   "trustNote": "题目真实但第1与第3题内容重复（'属于溶液'题出现两次），疑为整理错误，使用时需核对",
+   "hasAnswer": "含解析",
+   "rawFile": "RAW/试卷库/2025-中考-全市-化学-【精品解析】上海市2025年中考化学真题.txt",
+   "chars": 5241,
+   "fetchedAt": "2026-10-02",
+   "extractionLimit": "抓取自网页预览版，数学/化学的**公式符号存在丢失**：上标下标、分数线、根号、希腊字母在 HTML→纯文本转换中会退化（如 ³√3+³√3 变成 '3 + 3 = 2 3'）。**题干与分值结构可信，具体公式必须回原页核对**。给孩子讲题前务必打开 sourceUrl 确认。"
+  },
+  {
+   "id": "sh-2025-zk-biology",
+   "year": 2025,
+   "session": "中考",
+   "region": "全市",
+   "subject": "生物",
+   "title": "2025年上海市中考生物试卷(含答案)",
+   "sourceSite": "21cnjy",
+   "sourceUrl": "https://zy.21cnjy.com/23196175",
+   "access": "open",
+   "accessNote": "预览页含完整题目+逐题解析；选择题20题60分+简答题6题40分",
+   "curriculumNote": "沪教版",
+   "trusthLevel": "high",
+   "trustNote": "含崇明东滩/大自流盆地等上海本地情境题，符合上海命题特色",
+   "hasAnswer": "含解析",
+   "rawFile": "RAW/试卷库/2025-中考-全市-生物-2025年上海市中考生物试卷(含答案).txt",
+   "chars": 2838,
+   "fetchedAt": "2026-10-02"
+  },
+  {
+   "id": "sh-2025-zk-geography",
+   "year": 2025,
+   "session": "中考",
+   "region": "全市",
+   "subject": "地理",
+   "title": "2025年上海市初中学业水平考试地理试卷(含答案)",
+   "sourceSite": "renrendoc",
+   "sourceUrl": "https://renrendoc.com/paper/451494162.html",
+   "access": "open",
+   "accessNote": "页面含完整试卷与参考答案",
+   "curriculumNote": "沪教版",
+   "trusthLevel": "high",
+   "trustNote": "含大自流 Basin 自流井模拟实验、故宫排水系统等真实考题，与上海地理中考一致",
+   "hasAnswer": "含答案",
+   "rawFile": "RAW/试卷库/2025-中考-全市-地理-2025年上海市初中学业水平考试地理试卷(含答案).txt",
+   "chars": 5306,
+   "fetchedAt": "2026-10-02"
+  },
+  {
+   "id": "sh-2024-zk-math",
+   "year": 2024,
+   "session": "中考",
+   "region": "全市",
+   "subject": "数学",
+   "title": "2024年上海市中考数学试题(含部分答案)",
+   "sourceSite": "21cnjy",
+   "sourceUrl": "https://mip.21cnjy.com/P/20611845.html",
+   "access": "preview",
+   "accessNote": "mip 页仅渲染前段（1257字），完整 25 题需登录查看",
+   "curriculumNote": "沪教版五四制",
+   "trusthLevel": "high",
+   "trustNote": "分值结构与2025年完全一致（24/48/78），符合沪教版五四制命题稳定性",
+   "hasAnswer": "含部分答案",
+   "rawFile": "RAW/试卷库/2024-中考-全市-数学-2024年上海市中考数学试题(含部分答案).txt",
+   "chars": 1257,
+   "fetchedAt": "2026-10-02",
+   "fetchError": "The read operation timed out",
+   "extractionLimit": "抓取自网页预览版，数学/化学的**公式符号存在丢失**：上标下标、分数线、根号、希腊字母在 HTML→纯文本转换中会退化（如 ³√3+³√3 变成 '3 + 3 = 2 3'）。**题干与分值结构可信，具体公式必须回原页核对**。给孩子讲题前务必打开 sourceUrl 确认。"
+  },
+  {
+   "id": "sh-2023-zk-math",
+   "year": 2023,
+   "session": "中考",
+   "region": "全市",
+   "subject": "数学",
+   "title": "2023年上海市初中学业水平考试数学试卷",
+   "sourceSite": "21cnjy",
+   "sourceUrl": "https://zy.21cnjy.com/16276743",
+   "access": "open",
+   "accessNote": "预览页含完整题目与卷首考生注意",
+   "curriculumNote": "沪教版五四制",
+   "trusthLevel": "high",
+   "trustNote": "含完整卷首说明（100分钟/满分150/共4页），真实真题",
+   "hasAnswer": "无答案",
+   "rawFile": "RAW/试卷库/2023-中考-全市-数学-2023年上海市初中学业水平考试数学试卷.txt",
+   "chars": 1928,
+   "fetchedAt": "2026-10-02",
+   "extractionLimit": "抓取自网页预览版，数学/化学的**公式符号存在丢失**：上标下标、分数线、根号、希腊字母在 HTML→纯文本转换中会退化（如 ³√3+³√3 变成 '3 + 3 = 2 3'）。**题干与分值结构可信，具体公式必须回原页核对**。给孩子讲题前务必打开 sourceUrl 确认。"
+  },
+  {
+   "id": "sh-2025-yimo-xuhui-math",
+   "year": 2025,
+   "session": "一模",
+   "region": "徐汇区",
+   "subject": "数学",
+   "title": "2025届上海市徐汇区初三一模数学试卷(含答案)",
+   "sourceSite": "21cnjy",
+   "sourceUrl": "https://zy.21cnjy.com/22290205",
+   "access": "open",
+   "accessNote": "预览页含题目（2024学年第一学期徐汇区学习能力诊断卷，2025.1）",
+   "curriculumNote": "沪教版五四制",
+   "trusthLevel": "high",
+   "trustNote": "徐汇区官方一模卷，含卷首说明与分值（100分钟/150分/25题）",
+   "hasAnswer": "含答案",
+   "rawFile": "RAW/试卷库/2025-一模-徐汇区-数学-2025届上海市徐汇区初三一模数学试卷(含答案).txt",
+   "chars": 1355,
+   "fetchedAt": "2026-10-02",
+   "extractionLimit": "抓取自网页预览版，数学/化学的**公式符号存在丢失**：上标下标、分数线、根号、希腊字母在 HTML→纯文本转换中会退化（如 ³√3+³√3 变成 '3 + 3 = 2 3'）。**题干与分值结构可信，具体公式必须回原页核对**。给孩子讲题前务必打开 sourceUrl 确认。"
+  },
+  {
+   "id": "sh-2025-yimo-minhang-math",
+   "year": 2025,
+   "session": "一模",
+   "region": "闵行区",
+   "subject": "数学",
+   "title": "上海市闵行区2025-2026学年上学期九年级学业质量(一模)调研数学试题",
+   "sourceSite": "21cnjy",
+   "sourceUrl": "https://zy.21cnjy.com/25006669",
+   "access": "open",
+   "accessNote": "预览页含题目（2025学年第一学期初三年级学业质量调研）",
+   "curriculumNote": "沪教版五四制",
+   "trusthLevel": "high",
+   "trustNote": "含向量、相似三角形、二次函数等上海特色考点，闵行区官方一模卷",
+   "hasAnswer": "含答案",
+   "rawFile": "RAW/试卷库/2025-一模-闵行区-数学-上海市闵行区2025-2026学年上学期九年级学业质量(一模)调研数学试题.txt",
+   "chars": 1723,
+   "fetchedAt": "2026-10-02",
+   "extractionLimit": "抓取自网页预览版，数学/化学的**公式符号存在丢失**：上标下标、分数线、根号、希腊字母在 HTML→纯文本转换中会退化（如 ³√3+³√3 变成 '3 + 3 = 2 3'）。**题干与分值结构可信，具体公式必须回原页核对**。给孩子讲题前务必打开 sourceUrl 确认。"
+  },
+  {
+   "id": "sh-2025-yimo-math-collection",
+   "year": 2025,
+   "session": "一模",
+   "region": "16区合集",
+   "subject": "数学",
+   "title": "2025上海16区初三一模数学合集",
+   "sourceSite": "cc518",
+   "sourceUrl": "https://www.cc518.com/article.php?id=6358",
+   "access": "netdisk",
+   "accessNote": "夸克网盘 https://pan.quark.cn/s/0e1409fa63c3 ，含16区一模+二模全科合集，需人工转存",
+   "curriculumNote": "",
+   "trusthLevel": "unverified",
+   "trustNote": "文件清单已确认（可见完整文件名），内容未核验",
+   "hasAnswer": "部分含答案",
+   "rawFile": null,
+   "chars": 0,
+   "fetchedAt": null
+  },
+  {
+   "id": "sh-2025-ermo-all-districts",
+   "year": 2025,
+   "session": "二模",
+   "region": "16区合集",
+   "subject": "全科",
+   "title": "2025上海初三二模16区全科试卷合集（嘉定/奉贤/宝山/崇明/徐汇/普陀/杨浦/松江/浦东/虹口/金山/长宁/闵行/青浦/静安/黄浦）",
+   "sourceSite": "cc518",
+   "sourceUrl": "https://www.cc518.com/article.php?id=6358",
+   "access": "netdisk",
+   "accessNote": "夸克网盘，含16区二模语文/数学/英语/物理/化学/跨学科/道法及答案，需人工转存",
+   "curriculumNote": "",
+   "trusthLevel": "unverified",
+   "trustNote": "已确认覆盖16区、含综合二模（化学/物理/跨学科分册）与答案，文件清单完整可见",
+   "hasAnswer": "多数含答案",
+   "rawFile": null,
+   "chars": 0,
+   "fetchedAt": null
+  },
+  {
+   "id": "sh-2026-zk-physics-renrendoc",
+   "year": 2026,
+   "session": "中考",
+   "region": "全市",
+   "subject": "物理",
+   "title": "2026年上海中考物理真题(含答案) — renrendoc 版本",
+   "sourceSite": "renrendoc",
+   "sourceUrl": "https://renrendoc.com/paper/529867107.html",
+   "access": "open",
+   "accessNote": "页面可见题目与答案",
+   "curriculumNote": "沪科版",
+   "trusthLevel": "suspect",
+   "trustNote": "⚠️ 内容为AI拼凑题，非上海真题原卷：如'下列现象与光的折射无关''灭火器是哪种器材'等泛化题目，与上海卷风格明显不符。仅作题面参考，不可作为真题依据",
+   "hasAnswer": "含答案",
+   "rawFile": "RAW/试卷库/2026-中考-全市-物理-2026年上海中考物理真题(含答案)-—-renrendoc-版本.txt",
+   "chars": 6427,
+   "fetchedAt": "2026-10-02",
+   "extractionLimit": "抓取自网页预览版，数学/化学的**公式符号存在丢失**：上标下标、分数线、根号、希腊字母在 HTML→纯文本转换中会退化（如 ³√3+³√3 变成 '3 + 3 = 2 3'）。**题干与分值结构可信，具体公式必须回原页核对**。给孩子讲题前务必打开 sourceUrl 确认。"
+  },
+  {
+   "id": "sh-zxxk-3year-collection",
+   "year": "2023-2025",
+   "session": "中考",
+   "region": "全市",
+   "subject": "全科",
+   "title": "上海市2023-2025年中考真题汇总（学科网专辑）",
+   "sourceSite": "zxxk",
+   "sourceUrl": "https://www.zxxk.com/docpack/3646143.html",
+   "access": "paywall",
+   "accessNote": "学科网专辑，13份，多数标'储值'（付费）；2024语文免费。需账号+付费",
+   "curriculumNote": "",
+   "trusthLevel": "unverified",
+   "trustNote": "仅从搜索结果确认专辑存在与文件清单",
+   "hasAnswer": "含解析",
+   "rawFile": null,
+   "chars": 0,
+   "fetchedAt": null
+  },
+  {
+   "id": "sh-2026-sprint-collection",
+   "year": 2026,
+   "session": "一模",
+   "region": "全市",
+   "subject": "全科",
+   "title": "2026年上海中考三模冲刺&25年真题汇聚（35份）",
+   "sourceSite": "zxxk",
+   "sourceUrl": "https://www.zxxk.com/docpack/3683053.html",
+   "access": "paywall",
+   "accessNote": "学科网专辑35份，含各区5月阶段练习与考前预测，需付费",
+   "curriculumNote": "",
+   "trusthLevel": "unverified",
+   "trustNote": "仅从搜索结果确认存在",
+   "hasAnswer": "含解析",
+   "rawFile": null,
+   "chars": 0,
+   "fetchedAt": null
+  },
+  {
+   "id": "sh-2024-ermo-physics-collection",
+   "year": 2025,
+   "session": "二模",
+   "region": "16区合集",
+   "subject": "物理",
+   "title": "2025上海各区初三二模物理试卷+答案合集",
+   "sourceSite": "zujuan",
+   "sourceUrl": "https://zujuan.21cnjy.com/paper/paper-exam-list?xd=2&chid=6&papertype=7&province_id=9",
+   "access": "login",
+   "accessNote": "二一组卷网试卷库，覆盖静安/黄浦/嘉定/宝山/青浦/闵行/杨浦等区，可按区筛选；下载需登录",
+   "curriculumNote": "",
+   "trusthLevel": "unverified",
+   "trustNote": "已确认覆盖区与题量（每卷20题左右）",
+   "hasAnswer": "含答案",
+   "rawFile": null,
+   "chars": 0,
+   "fetchedAt": null
+  },
+  {
+   "id": "sh-crossdisc-2024",
+   "year": 2024,
+   "session": "中考",
+   "region": "全市",
+   "subject": "跨学科",
+   "title": "2024年上海中考跨学科案例分析卷(含评分标准)",
+   "sourceSite": "ima.qq",
+   "sourceUrl": "https://ima.qq.com/wiki/?shareId=cdab6adf9287f399174c76675b3a7f37d1631272fad7575a25352e0313a6fd17",
+   "access": "preview",
+   "accessNote": "腾讯ima文档，可见第1-3页内容；跨学科15分，崇明东滩生态系统案例",
+   "curriculumNote": "跨学科",
+   "trusthLevel": "medium",
+   "trustNote": "已看到完整评分标准（合理/不合理两种作答路径各2分，含5个示例答案），内容真实但仅部分页可见",
+   "hasAnswer": "含评分标准",
+   "rawFile": null,
+   "chars": 0,
+   "fetchedAt": null
+  }
+ ]
+};
+const SUBJ = ["全部",...new Set(DATA.papers.map(p=>p.subject))];
+const SESS = ["全部",...new Set(DATA.papers.map(p=>p.session))];
+const ACC  = ["全部","已归档","需下载","存疑"];
+let f={s:"全部",x:"全部",a:"全部"};
+
+const accLabel={open:"已归档·可直接看",paywall:"付费墙",netdisk:"网盘",login:"需登录",preview:"仅部分可见"};
+function accGroup(a){return (a==="open")?"已归档":(a==="suspect"?"存疑":"需下载")}
+
+function render(){
+  document.getElementById("stats").innerHTML=`
+    <div class="stat"><b>${DATA.papers.length}</b><span>收录试卷</span></div>
+    <div class="stat"><b>${DATA.papers.filter(p=>p.rawFile).length}</b><span>全文已归档</span></div>
+    <div class="stat"><b>${new Set(DATA.papers.filter(p=>p.region!=="16区合集"&&p.region!=="全市").map(p=>p.region)).size}</b><span>覆盖区</span></div>
+    <div class="stat"><b>${DATA.subjects.filter(s=>s!=="全科").length}</b><span>科目</span></div>
+    <div class="stat"><b>${DATA.papers.filter(p=>p.trusthLevel==="suspect").length}</b><span>标注存疑</span></div>`;
+
+  const mk=(arr,key,el)=>document.getElementById(el).innerHTML=arr.map(v=>
+    `<button class="fbtn ${f[key]===v?"on":""}" onclick="setF('${key}',${JSON.stringify(v)})">${v}</button>`).join("");
+  mk(SUBJ,"s","fSubject");mk(SESS,"x","fSession");mk(ACC,"a","fAccess");
+
+  const list=DATA.papers.filter(p=>{
+    if(f.s!=="全部"&&p.subject!==f.s)return false;
+    if(f.x!=="全部"&&p.session!==f.x)return false;
+    if(f.a==="已归档"&&!p.rawFile)return false;
+    if(f.a==="需下载"&&p.rawFile)return false;
+    if(f.a==="存疑"&&p.trusthLevel!=="suspect")return false;
+    return true;
+  });
+
+  document.getElementById("list").innerHTML = list.length? list.map(p=>{
+    const badge = p.trusthLevel==="suspect"?'<span class="tag t-suspect">⚠️ 内容存疑</span>':
+      p.rawFile?`<span class="tag t-archived">已归档 ${p.chars} 字</span>`:
+      `<span class="tag t-${p.access}">${accLabel[p.access]||p.access}</span>`;
+    const note = p.trusthLevel==="suspect"?`<div class="note note-sus"><b>⚠️ 不可作为真题依据：</b>${p.trustNote}</div>`:
+      p.extractionLimit?`<div class="note note-warn"><b>⚠️ 公式提取限制：</b>${p.extractionLimit.replace(/\*\*/g,"")}</div>`:
+      p.trusthLevel==="unverified"&&!p.rawFile?`<div class="note note-warn">${p.trustNote}</div>`:
+      p.trusthLevel==="medium"&&p.rawFile?`<div class="note note-warn"><b>使用提示：</b>${p.trustNote}</div>`:"";
+    return `<div class="card">
+      <div class="ch"><div class="t">${p.title}</div>${badge}</div>
+      <div class="meta">
+        <span>📅 <b>${p.year}</b></span><span>📍 <b>${p.region}</b></span>
+        <span>📝 <b>${p.subject}</b></span><span>🎯 <b>${p.session}</b></span>
+        ${p.curriculumNote?`<span>📘 ${p.curriculumNote}</span>`:""}
+        <span>✅ ${p.hasAnswer}</span>
+      </div>
+      <div class="meta"><span>🔗 <a href="${p.sourceUrl}" target="_blank" rel="noopener">${p.sourceSite} 原文页</a></span>
+        <span>${p.accessNote}</span></div>
+      ${p.rawFile?`<div class="meta"><span>📂 <code>${p.rawFile}</code></span></div>`:""}
+      ${note}</div>`;
+  }).join("") : '<div class="empty">没有符合条件的试卷</div>';
+}
+
+function setF(k,v){f[k]=v;render()}
+
+const P=DATA.shanghaiPolicy;
+document.getElementById("policy").innerHTML=`
+<p style="font-size:14px;color:#52525B;margin-bottom:10px">总分 <b>${P.总分}</b> ｜ 录取顺序：${P.录取批次.map(x=>`<code>${x}</code>`).join(" → ")}</p>
+<table><tr><th style="width:110px">科目</th><th>分值构成</th></tr>
+${Object.entries(P.科目分值).map(([k,v])=>`<tr><td><b>${k}</b></td><td>${v}</td></tr>`).join("")}
+<tr><td><b>名额分配同分排序</b></td><td>${P.名额分配同分排序.map((x,i)=>`${i+1}. ${x}`).join(" → ")}</td></tr>
+</table>
+<div class="note note-ok" style="margin-top:10px">来源：${P.来源}<br>${P.note}</div>`;
+
+render();
+</script>
+</body>
+</html>
