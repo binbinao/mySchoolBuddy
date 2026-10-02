@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "schema": "tasks.v1",
+    "note": "待 AI 补全的教学内容队列。脚本只搭骨架，教学判断留给 AI。\n  AI 补全规则：填回对应 HTML 的 ⚠️ 待补 区块 + 更新 data/ 里的 JSON 字段，\n  然后把本文件里对应条目 status 改为 done。\n  禁止：编造分值、编造孩子作答、编造官方答案。",
+    "updated": "2026-10-02 13:09",
+    "pending": 2
+  },
+  "items": [
+    {
+      "id": "wrong-w-20261002-01",
+      "kind": "wrong-refine",
+      "target": "docs/实战表/数学/q19-关联抛物线-精讲.html",
+      "subject": "数学",
+      "module": "二次函数",
+      "reason": "教学判断：把该错题的讲解补进已有人工精讲页（保留人工内容，只补空缺段）",
+      "fields": [
+        "steps",
+        "variants",
+        "thinkQuestions"
+      ],
+      "created": "2026-10-02 13:09"
+    },
+    {
+      "id": "wrong-w-20261002-02",
+      "kind": "wrong",
+      "target": "docs/实战表/数学/q5-相似三角形（平行线分线段成比例）-精讲.html",
+      "subject": "数学",
+      "module": "相似三角形（平行线分线段成比例）",
+      "reason": "教学判断：零跳跃讲解步骤、断点分析、三题变式、想五题",
+      "fields": [
+        "stem",
+        "breakdown",
+        "doneRight",
+        "steps",
+        "variants",
+        "thinkQuestions"
+      ],
+      "created": "2026-10-02 13:09"
+    }
+  ]
+}
