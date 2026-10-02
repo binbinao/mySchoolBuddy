@@ -307,18 +307,59 @@ def check_exams(rep, rawmap):
 
 
 # ── 4. 任务队列：待补条目是否长期未处理 ────────────────────────
-def check_tasks(rep):
+def check_tasks(rep, rawmap):
     tp = os.path.join(ROOT, "data", "tasks", "pending.json")
     d = load(tp, rep, "data/tasks/pending.json")
     if not d:
         return
-    pend = [i for i in d.get("items", []) if i.get("status") != "done"]
+    items = d.get("items", [])
+    pend = [i for i in items if i.get("status") != "done"]
     if pend:
         names = "、".join(f"{i.get('target')}" for i in pend[:3])
         rep.warn("data/tasks/pending.json",
                  f"{len(pend)} 条教学内容待 AI 补全",
                  f"最近：{names}{'…' if len(pend) > 3 else ''}。"
                  "打开对应 HTML 补 ⚠️ 待补 段，或让 AI 跑一次补全")
+
+    # meta.pending 与实际条目对不上——队列自己会说谎，比空队列更危险。
+    actual = len(pend)
+    declared = d.get("meta", {}).get("pending")
+    if declared is not None and declared != actual:
+        rep.err("data/tasks/pending.json",
+                f"meta.pending={declared} 与实际待办数 {actual} 不符",
+                "队列状态与内容不一致时，任何基于 pending 的判断都不可信")
+
+    # 标了 done 但声称要补的字段其实没落地——「done ≠ 做完了」的机器闸门。
+    # （2026-10-03 修：q19 的 steps/variants/thinkQuestions 只存在于人工精讲页 HTML，
+    #   从未回写 JSON，生成器与一切数据分析都读不到，任务却已标 done。）
+    wrong_items = {}
+    wd = os.path.join(ROOT, "data", "wrong")
+    if os.path.isdir(wd):
+        for fn in sorted(os.listdir(wd)):
+            if not fn.endswith(".json"):
+                continue
+            wdd = load(os.path.join(wd, fn), rep, f"data/wrong/{fn}")
+            for it in (wdd or {}).get("items", []):
+                wrong_items[it.get("id")] = it
+
+    for t in items:
+        if t.get("status") != "done":
+            continue
+        want = t.get("fields") or []
+        if not want:
+            continue
+        # 任务 id 形如 wrong-w-20261002-01，对应错题 id 去掉前缀后的 w-20261002-01
+        tid = str(t.get("id", ""))
+        wid = tid.replace("wrong-", "", 1) if tid.startswith("wrong-") else tid
+        it = wrong_items.get(wid)
+        if it is None:
+            continue
+        missing = [f for f in want if not it.get(f)]
+        if missing:
+            rep.err("data/tasks/pending.json",
+                    f"任务 {t.get('id')} 标为 done，但 JSON 里字段仍为空：{'、'.join(missing)}",
+                    f"内容可能只写进了 {t.get('target')} 的 HTML，数据层读不到。"
+                    "按纪律要同时回写 data/ 里的 JSON，否则生成器与统计都拿不到")
 
 
 def main():
@@ -333,7 +374,7 @@ def main():
     rawmap = check_raw(rep, deep=not args.no_sha)
     check_wrong(rep, rawmap)
     check_exams(rep, rawmap)
-    check_tasks(rep)
+    check_tasks(rep, rawmap)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 
