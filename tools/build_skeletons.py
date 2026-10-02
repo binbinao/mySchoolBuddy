@@ -344,6 +344,57 @@ def find_manual_page(out_dir, item, qno):
     return None
 
 
+# 限定词高亮清单——这些是丢分重灾区，孩子最爱漏。
+# 与 wrong-question-coaching 技能里的清单保持一致。
+KEY_WORDS = [
+    "互为", "相反", "不正确的是", "不是", "至少", "至多", "恰好",
+    "不超过", "不小于", "最大", "最小", "全部", "任取", "已知", "求",
+    "的中点", "平分", "外角", "内心", "内心", "切线", "相交",
+]
+
+
+def hl_keywords(text):
+    """把限定词包进 <span class="hl">。先转义再替换，避免破坏 HTML。"""
+    out = esc(text)
+    for w in sorted(KEY_WORDS, key=len, reverse=True):
+        if w in out:
+            out = out.replace(w, f'<span class="hl">{w}</span>')
+    return out
+
+
+def build_stem_html(item, qno):
+    """组装题干区。
+
+    优先用 stemHtml（人工逐字转录版，最权威）；
+    其次用 stem（纯文本，自动加限定词高亮）；
+    再次退回 title（自动剥掉「第N题」前缀，避免和页头题号重复）；
+    都没有才报待补。
+    """
+    if item.get("stemHtml"):
+        stem = item["stemHtml"]
+    else:
+        raw = item.get("stem") or item.get("title") or ""
+        if raw:
+            # 剥掉「第5题」「q19.」这类前缀——页头已经写了题号，重复了看着乱
+            raw = re.sub(r"^\s*(第\s*\d+\s*题|q\d+\s*[.、．]?)\s*", "", str(raw))
+            stem = hl_keywords(raw)
+        else:
+            return ('<span style="color:var(--ink3)">'
+                    '（题干待补：请从原卷照片逐字转录到 data/wrong JSON 的 <code>stem</code> 字段）'
+                    '</span>')
+
+    # 选择题自动列出选项——选项在错题里是独立字段，不拼进来题干就残缺
+    opts = item.get("options")
+    if isinstance(opts, dict) and opts:
+        keys = sorted(opts.keys())
+        cells = "　　".join(
+            f"<b>{esc(k)}.</b> {esc(opts[k])}" for k in keys)
+        stem = f"{stem}\n<div style=\"margin-top:12px;padding-top:12px;"
+        stem += "border-top:1px dashed var(--line);font-size:15px\">"
+        stem += f"{cells}</div>"
+    return stem
+
+
 def build_wrong_page(item, out_path, manifest, qno=None):
     """生成一道错题的精讲页骨架。out_path 必传——用于计算图片相对路径。"""
     wid = item.get("id", "")
@@ -353,7 +404,8 @@ def build_wrong_page(item, out_path, manifest, qno=None):
     cause = item.get("cause", "")
     # 题号：由调用方传入（或从 id/标题推断），保证与卷面一致
     qno = qno or qno_of(item)[0]
-    short = re.sub(r"^q\d+\s*", "", title_text)[:24] or "错题"
+    short = (re.sub(r"^\s*(第\s*\d+\s*题|q\d+\s*[.、．]?)\s*", "", title_text)
+             or "错题")[:22].strip(" ，,。.")
 
     # 原图引用：sourceRaw 指向 RAW/，从输出目录算相对路径
     src = item.get("sourceRaw")
@@ -371,9 +423,7 @@ def build_wrong_page(item, out_path, manifest, qno=None):
         q.skip = f"已有精讲页 {ref}，跳过骨架生成（补全版优先）"
         return None
 
-    stem = item.get("stemHtml") or item.get("stem") or ""
-    if not stem:
-        stem = "（题干待补：请从原卷照片逐字转录到 data/wrong JSON 的 stem 字段）"
+    stem = build_stem_html(item, qno)
 
     cause_tone = CAUSE_TONE.get(cause, "")
     full = item.get("full")
@@ -604,7 +654,7 @@ def build_wrong_page(item, out_path, manifest, qno=None):
             + explain_html + variants_block + think_block + parent_html)
 
     return page(
-        title=f"q{qno} {short} · 精讲",
+        title=f"第{qno}题 · {module or short} · 精讲",
         kicker=f"{subject} · {module or '模块待补'} · 错题精讲",
         tags=tags,
         body=body,
