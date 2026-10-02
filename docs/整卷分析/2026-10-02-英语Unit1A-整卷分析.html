@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>整卷分析 · Test for Unit 1 (A) · 2026-10-02</title>
+<style>
+:root{
+  --ink:#1C1C1E; --ink2:#3A3A3C; --grey:#6B6B70; --mute:#A1A1AA;
+  --line:#E8E8ED; --line2:#D4D4D8; --bg:#FFFFFF; --soft:#FAFAFB;
+  --gold:#F59E0B; --gold-soft:#FEF6E7; --gold-line:#FCD9A0;
+  --red:#D92D20; --red-soft:#FEF3F2; --red-line:#FECDCA;
+  --green:#067647; --green-soft:#ECFDF3; --green-line:#ABEFC6;
+  --blue:#175CD3; --blue-soft:#EFF8FF; --blue-line:#B2DDFF;
+  --maxw:980px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro SC","PingFang SC","Helvetica Neue",sans-serif;
+  background:var(--bg); color:var(--ink); font-size:16px; line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px 100px}
+@media(max-width:600px){ .wrap{padding:0 18px 70px} body{font-size:15.5px} }
+
+/* ── Header ── */
+header{padding:56px 0 32px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:14px}
+h1{font-size:34px;line-height:1.25;font-weight:700;letter-spacing:-.02em;margin-bottom:10px}
+@media(max-width:600px){ h1{font-size:26px} }
+.sub{color:var(--grey);font-size:15px}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:22px;font-size:13px;color:var(--grey)}
+.meta-row b{color:var(--ink);font-weight:600}
+
+/* ── Sections ── */
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+.sec-num{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:.1em;
+  border:1px solid var(--gold-line);background:var(--gold-soft);
+  padding:3px 9px;border-radius:5px;white-space:nowrap}
+h2{font-size:23px;font-weight:700;letter-spacing:-.015em}
+@media(max-width:600px){ h2{font-size:20px} }
+.sec-lead{color:var(--grey);margin:12px 0 26px;font-size:15px;max-width:66ch}
+h3{font-size:17px;font-weight:650;margin:34px 0 14px;letter-spacing:-.01em}
+h4{font-size:15px;font-weight:650;margin:22px 0 10px;color:var(--ink2)}
+p{margin:12px 0}
+ul,ol{margin:12px 0 12px 22px}
+li{margin:6px 0}
+strong{font-weight:650}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;
+  background:var(--soft);border:1px solid var(--line);padding:1px 5px;border-radius:4px}
+
+/* ── Cards ── */
+.card{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin:20px 0}
+.card.gold{background:var(--gold-soft);border-color:var(--gold-line)}
+.card.red{background:var(--red-soft);border-color:var(--red-line)}
+.card.green{background:var(--green-soft);border-color:var(--green-line)}
+.card.blue{background:var(--blue-soft);border-color:var(--blue-line)}
+.card-t{font-size:14px;font-weight:700;letter-spacing:.02em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card.red .card-t{color:var(--red)} .card.gold .card-t{color:#B45309}
+.card.green .card-t{color:var(--green)} .card.blue .card-t{color:var(--blue)}
+
+/* ── Verdict hero ── */
+.verdict{background:linear-gradient(135deg,#1C1C1E 0%,#2E2E32 100%);
+  color:#fff;border-radius:16px;padding:34px 34px 30px;margin:8px 0 6px}
+.verdict .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:14px}
+.verdict h2{color:#fff;font-size:26px;line-height:1.4;margin-bottom:16px;font-weight:700}
+@media(max-width:600px){ .verdict{padding:26px 22px} .verdict h2{font-size:21px} }
+.verdict p{color:#D4D4D8;font-size:15.5px;max-width:60ch}
+.verdict .gold-em{color:var(--gold);font-weight:600}
+.verdict-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:28px;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);border-radius:10px;overflow:hidden}
+@media(max-width:600px){ .verdict-stats{grid-template-columns:repeat(2,1fr)} }
+.vs{background:#232326;padding:16px 18px}
+.vs .n{font-size:24px;font-weight:700;color:#fff;line-height:1.2}
+.vs .n.gold{color:var(--gold)}
+.vs .l{font-size:12px;color:#A1A1AA;margin-top:4px;line-height:1.4}
+@media(max-width:600px){ .vs .n{font-size:20px} }
+
+/* ── Tables ── */
+.tbl-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:12px;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:620px}
+th{background:var(--soft);font-weight:650;text-align:left;padding:12px 14px;
+  border-bottom:1px solid var(--line2);color:var(--ink2);font-size:13px;letter-spacing:.02em;white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl-note{font-size:13px;color:var(--grey);margin:10px 0 0;padding-left:2px}
+
+/* ── Pills ── */
+.pill{display:inline-block;font-size:12px;font-weight:650;padding:2.5px 9px;border-radius:20px;
+  white-space:nowrap;line-height:1.5}
+.pill.ok{background:var(--green-soft);color:var(--green);border:1px solid var(--green-line)}
+.pill.mid{background:var(--gold-soft);color:#B45309;border:1px solid var(--gold-line)}
+.pill.bad{background:var(--red-soft);color:var(--red);border:1px solid var(--red-line)}
+.pill.na{background:var(--soft);color:var(--grey);border:1px solid var(--line2)}
+.pill.blue{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)}
+
+/* ── Bar ── */
+.bar-row{display:grid;grid-template-columns:180px 1fr 92px;gap:14px;align-items:center;margin:11px 0}
+@media(max-width:600px){ .bar-row{grid-template-columns:110px 1fr 66px;gap:9px} }
+.bar-label{font-size:14px;color:var(--ink2);font-weight:550;line-height:1.35}
+.bar-track{height:9px;background:var(--line);border-radius:6px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:6px}
+.bar-val{font-size:13.5px;font-variant-numeric:tabular-nums;text-align:right;color:var(--grey);font-weight:600}
+.bar-val b{color:var(--ink)}
+
+/* ── Loss callout ── */
+.loss-strip{display:grid;grid-template-columns:1fr;gap:0;border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;margin:22px 0}
+.loss-row{display:grid;grid-template-columns:130px 1fr 1fr 66px;gap:0;border-bottom:1px solid var(--line);font-size:14px}
+.loss-row:last-child{border-bottom:none}
+.loss-row.head{background:var(--soft);font-size:12.5px;font-weight:650;color:var(--grey)}
+.loss-row.head div{padding:10px 14px}
+.loss-row>div{padding:12px 14px;border-right:1px solid var(--line)}
+.loss-row>div:last-child{border-right:none;text-align:center}
+@media(max-width:600px){
+  .loss-row{grid-template-columns:1fr;gap:0}
+  .loss-row>div{border-right:none;border-bottom:1px solid var(--line);padding:8px 14px}
+  .loss-row.head{display:none}
+  .loss-row>div:first-child{font-weight:700;background:var(--soft)}
+  .loss-row>div:nth-child(2)::before{content:"正确答案 · ";color:var(--mute);font-size:12px}
+  .loss-row>div:nth-child(3)::before{content:"孩子答案 · ";color:var(--mute);font-size:12px}
+}
+
+/* ── Steps ── */
+.steps{counter-reset:s;list-style:none;margin:16px 0;padding:0}
+.steps li{counter-increment:s;position:relative;padding:0 0 18px 42px;margin:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:26px;height:26px;
+  background:var(--gold-soft);border:1px solid var(--gold-line);color:#B45309;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700}
+.steps li::after{content:"";position:absolute;left:13px;top:30px;bottom:2px;width:1px;background:var(--line2)}
+.steps li:last-child{padding-bottom:0}
+.steps li:last-child::after{display:none}
+.steps li b{display:block;margin-bottom:2px}
+.steps li span{color:var(--grey);font-size:14.5px}
+
+/* ── Details ── */
+details{margin:10px 0;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+summary{padding:12px 16px;cursor:pointer;font-size:14.5px;font-weight:600;color:var(--ink);
+  list-style:none;display:flex;align-items:center;gap:9px;user-select:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸";color:var(--mute);font-size:12px;transition:transform .16s;flex-shrink:0}
+details[open] summary::before{transform:rotate(90deg)}
+summary:hover{background:var(--soft)}
+.det-body{padding:2px 16px 16px;border-top:1px solid var(--line);font-size:14.5px}
+.det-body p:first-child{margin-top:12px}
+
+/* ── Shot ── */
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+@media(max-width:600px){ .shots{grid-template-columns:1fr} }
+.shot{border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:#fff}
+.shot img{width:100%;display:block;cursor:zoom-in;background:var(--soft)}
+.shot .cap{font-size:12.5px;color:var(--grey);padding:8px 12px;border-top:1px solid var(--line);background:var(--soft)}
+
+/* ── Parent ── */
+.parent{background:#1C1C1E;color:#fff;border-radius:16px;padding:32px 34px;margin:20px 0}
+.parent .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
+.parent h3{color:#fff;margin:0 0 6px;font-size:20px}
+.parent .note{color:#A1A1AA;font-size:13.5px;margin-bottom:22px}
+.pitem{display:grid;grid-template-columns:78px 1fr;gap:16px;padding:16px 0;border-top:1px solid rgba(255,255,255,.12)}
+.pitem:first-of-type{border-top:none;padding-top:0}
+.ptime{font-size:13px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;padding-top:2px}
+.ptime span{display:block;font-size:11.5px;color:#7C7C85;font-weight:500;margin-top:2px}
+.pbody{font-size:14.5px;color:#D4D4D8;line-height:1.7}
+.pbody b{color:#fff;font-weight:650;display:block;margin-bottom:3px}
+@media(max-width:600px){
+  .parent{padding:24px 20px}
+  .pitem{grid-template-columns:1fr;gap:6px}
+  .ptime span{display:inline;margin-left:8px}
+}
+
+/* ── Footer ── */
+footer{padding:36px 0 0;color:var(--mute);font-size:13px;line-height:1.8}
+footer b{color:var(--grey)}
+
+/* ── Lightbox ── */
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;z-index:99;
+  align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">整卷分析 · Verdict</div>
+  <h1>Test for Unit 1 (A) 完整卷面诊断</h1>
+  <p class="sub">英语 · 九年级 · 2026-10-02 单元测 · 满分 100 · 逐题批改判读</p>
+  <div class="meta-row">
+    <span>试卷 <b>Test for Unit 1 (A)</b></span>
+    <span>原件 <b>8 页照片</b>（4 张对开）</span>
+    <span>错题 <b>6 处</b>已定位</span>
+    <span>缺失 <b>写作正文 15 分</b></span>
+  </div>
+</header>
+
+<!-- ══════ 0. 总判 ══════ -->
+<section style="border-bottom:none;padding-bottom:0">
+  <div class="verdict">
+    <div class="kicker">一句话结论</div>
+    <h2>这不是一张"考砸"的卷子。这是一张<span class="gold-em">基础扎实、但输出环节失守</span>的卷子。</h2>
+    <p>已能读懂的 85 分卷面里，客观题的失分几乎全部集中在两处：<b>句子输出漏成分</b>（第 35、36 题）和<b>审题不辨问法</b>（第 57 题）。语法选择、完形填空、阅读理解全篇零失误——这些是他真正能拿分、能依靠的地盘。<b>写作 15 分完全没拍到</b>，这是当前最大的盲区，不能假设它好。</p>
+
+    <div class="verdict-stats">
+      <div class="vs"><div class="n gold">~90</div><div class="l">已评分部分得分<br>（估计，待确认）</div></div>
+      <div class="vs"><div class="n">6</div><div class="l">定位到的错题<br>（另有 2 题待核）</div></div>
+      <div class="vs"><div class="n">0</div><div class="l">语法/完形/阅读<br>客观题失误数</div></div>
+      <div class="vs"><div class="n gold">15</div><div class="l">写作分值<br>完全未评分</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 1. 分模块得分 ══════ -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>分模块得分：钱花在哪儿，哪儿在漏水</h2></div>
+  <p class="sec-lead">卷面各大题分值合计 100 分。下表按批改痕迹逐题判读，未拍到或批改不明确的部分标注为待确认，不估算。</p>
+
+  <div class="bar-row">
+    <div class="bar-label">听力 <span style="color:var(--mute);font-weight:400">(1-15)</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:96%;background:#F59E0B"></div></div>
+    <div class="bar-val"><b>24</b> / 25</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">语法选择 <span style="color:var(--mute);font-weight:400">(16-25)</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:100%;background:#067647"></div></div>
+    <div class="bar-val"><b>10</b> / 10</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">完形填空 <span style="color:var(--mute);font-weight:400">(26-33)</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:87.5%;background:#067647"></div></div>
+    <div class="bar-val"><b>7</b> / 8</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">句子完成 <span style="color:var(--mute);font-weight:400">(34-38)</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:90%;background:#F59E0B"></div></div>
+    <div class="bar-val"><b>9</b> / 10</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">阅读理解 <span style="color:var(--mute);font-weight:400">(39-61)</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:94%;background:#067647"></div></div>
+    <div class="bar-val"><b>30</b> / 32</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">写作 <span style="color:var(--mute);font-weight:400">(VI)</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:0%;background:var(--line2)"></div></div>
+    <div class="bar-val"><b style="color:var(--red)">?</b> / 15</div>
+  </div>
+  <p class="tbl-note">柱长按估计得分绘制。分值为模块内等分折算，仅用于横向比较强弱，不写回数据库的 full/lost 字段（卷面未标注单题分值）。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>模块</th><th>题号</th><th class="num">满分</th><th class="num">估计得分</th><th>卷面判读依据</th></tr></thead>
+      <tbody>
+        <tr><td>听力理解</td><td>1-15</td><td class="num">25</td><td class="num">24</td><td>1-5 图选、6-10 选择、12-15 填空全对；<b>11 题</b>「stay ~~but~~ balanced」红笔划掉 but</td></tr>
+        <tr><td>语法与词汇</td><td>16-25</td><td class="num">10</td><td class="num">10</td><td>两组单项选择，红笔 √ 全部到位，零失误</td></tr>
+        <tr><td>完形填空</td><td>26-33</td><td class="num">8</td><td class="num">7</td><td>A 段 26-29 全对且四选项各用一次；B 段 30-32 对；<b>33 题</b>写 D(trusted)，红笔划掉改 C(related)</td></tr>
+        <tr><td>句子完成</td><td>34-38</td><td class="num">10</td><td class="num">9</td><td>34/37/38 红笔 √；<b>35 题</b>漏宾语 it；<b>36 题</b>该行无 √</td></tr>
+        <tr><td>阅读理解</td><td>39-61</td><td class="num">32</td><td class="num">30</td><td>39-43 匹配、44-48 选择、49-56 完形全对；<b>57 题</b>答 In 2026 被红笔打叉；58 被批注「What was?」</td></tr>
+        <tr><td><b>写作</b></td><td>VI</td><td class="num">15</td><td class="num" style="color:var(--red)"><b>未评</b></td><td><span class="pill na">缺失</span> 第 8 页只有题目要求，作文正文与批改未拍摄</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════ 2. 优势 vs 短板 ══════ -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>哪些是"有用的得分"，哪些是"要补的窟窿"</h2></div>
+  <p class="sec-lead">把卷面拆成两堆：一堆是可以往外借力的稳定资产，一堆是会重复漏水的结构性问题。第二堆决定了下一张卷的分数上限。</p>
+
+  <div class="card green">
+    <div class="card-t">✅ 稳定资产 · 可以往上加码</div>
+    <ul style="margin-bottom:0">
+      <li><b>语法与词汇选择（16-25，10/10）</b>：介词搭配、连词、动名词、不定式、后接形容词的动词、比较级构词——<b>六大语法点一次性全中</b>。这不是运气，是语法体系已经搭起来了。</li>
+      <li><b>完形填空 A/B 段（26-32，7/8）</b>：两段共 7 题对 6 题，且 A 段四个选项各用一次、无重复无遗漏。这说明<b>读句子的能力是有的</b>，不是靠蒙。</li>
+      <li><b>阅读理解客观题（39-56，23/23 满分）</b>：匹配题、细节题、词义题、反向推理题、主旨态度题全对。<b>信息定位和推断能力明显高于同龄水平</b>——这是阅读提分最值钱的底子。</li>
+      <li><b>听力大段正确（24/25）</b>：15 题只错 1 题，且错的那道是辨词细节，不是听不懂。</li>
+    </ul>
+  </div>
+
+  <div class="card red">
+    <div class="card-t">🔴 结构性短板 · 反复出现在不同模块</div>
+    <p style="margin-top:0"><b>核心病灶只有一个：写下来的句子不合规，和读的时候理解的不一致。</b></p>
+    <ul style="margin-bottom:0">
+      <li><b>句子成分漏写（第 35 题）</b>：问「学习吉他多久了」，写出 <code>How long have you been learning…?</code> 漏了宾语 <code>it</code>。<b>能听出原句含这个成分，落到笔下就丢了</b>——这是"理解 → 产出"之间的断层。</li>
+      <li><b>固定搭配不落地（第 36 题）</b>：写出句子但该行无 √，<code>work for you</code> 这类搭配的熟练度还没到能自动输出的程度（需对照原卷答案最终确认）。</li>
+      <li><b>审题不辨问法（第 57 题）</b>：问 "Where did BBC Bitesize do the survey?"，答「In 2026」。<b>2026 是文中出现的年份，地点才是答案</b>。孩子读到了 2026，说明定位没错，是没意识到"问的是 where 不是 when"。</li>
+      <li><b>表述不落靶心（第 58 题）</b>：内容读懂了（怕 AI 抢工作 + 同时想用 AI），但老师批「What was?」——<b>没把答案组织成 paradox 的对比结构</b>。这是"读懂"到"答对"之间的表达落差。</li>
+      <li><b>词汇颗粒度不够（第 11 题）</b>：balanced 没听全，多写了个 but。<b>听辨精度在词尾级</b>，需要靠高频词的整词记忆补。</li>
+    </ul>
+  </div>
+
+  <div class="card gold">
+    <div class="card-t">⚠️ 未知区 · 不能假设</div>
+    <p style="margin-top:0;margin-bottom:0"><b>写作 15 分（占全卷 15%）完全没有材料。</b>第 8 页只拍到了「Love Yourself, Love Your Life」的题目要求和三个写作要点，作文正文和老师的批改都在<b>没拍到的第 9 页</b>。<br>按他语法 10/10、阅读 23/23 的水平推测，写作不会差——<b>但推测不能代替证据</b>。这张卷真正的水位，取决于那 60 词写得怎么样。</p>
+  </div>
+</section>
+
+<!-- ══════ 3. 错题清单 ══════ -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>六处失分逐条拆解</h2></div>
+  <p class="sec-lead">每条给出「正确答案 / 孩子答案」对照，卷面笔迹在下方原图可查。错因按批改痕迹判读，不凭猜测。</p>
+
+  <div class="loss-strip">
+    <div class="loss-row head"><div>题号 · 模块</div><div>正确答案</div><div>孩子答案</div><div>红笔</div></div>
+    <div class="loss-row">
+      <div><b>11</b><br><span style="font-size:12px;color:var(--grey)">听力</span></div>
+      <div>stay <b>balanced</b></div>
+      <div>stay ~~but~~ balanced</div>
+      <div><span class="pill bad">划掉 but</span></div>
+    </div>
+    <div class="loss-row">
+      <div><b>33</b><br><span style="font-size:12px;color:var(--grey)">完形 III</span></div>
+      <div><b>C</b> related</div>
+      <div>D trusted</div>
+      <div><span class="pill bad">改 C</span></div>
+    </div>
+    <div class="loss-row">
+      <div><b>35</b><br><span style="font-size:12px;color:var(--grey)">句子完成</span></div>
+      <div>How long have you been learning <b>it</b>?</div>
+      <div>How long have you been learning…?</div>
+      <div><span class="pill bad">补 it</span></div>
+    </div>
+    <div class="loss-row">
+      <div><b>36</b><br><span style="font-size:12px;color:var(--grey)">句子完成</span></div>
+      <div><span style="color:var(--grey)">待对照原卷答案</span></div>
+      <div>Does this Saturday morning work for you?</div>
+      <div><span class="pill mid">无 √</span></div>
+    </div>
+    <div class="loss-row">
+      <div><b>57</b><br><span style="font-size:12px;color:var(--grey)">阅读 D</span></div>
+      <div>In the <b>UK</b></div>
+      <div>In 2026</div>
+      <div><span class="pill bad">✗ 打叉</span></div>
+    </div>
+    <div class="loss-row">
+      <div><b>58</b><br><span style="font-size:12px;color:var(--grey)">阅读 D</span></div>
+      <div>怕 AI 抢工作，但同时愿用 AI 提升自己（paradox 对比）</div>
+      <div>写了两句，含 some people are worried… others believe AI will cut down…</div>
+      <div><span class="pill mid">批注 What was?</span></div>
+    </div>
+  </div>
+
+  <h3>为什么这六处值得单独拎出来讲</h3>
+  <div class="card">
+    <p style="margin-top:0"><b>它们不是六个独立的错，是同一个问题的六个切面。</b></p>
+    <p>第 35 题漏 <code>it</code>、第 36 题搭配不熟、第 58 题答案没组织成对比结构、第 57 题没抓住问的是 where——<b>共同点是：卷面给的信息他基本都读到了，但"读到的"和"写下的"之间隔着一道「组装工序」</b>。这道工序在语法选择题上不需要（只需选字母），一到需要自己造句/组织语言的题就掉链子。</p>
+    <p style="margin-bottom:0">这解释了为什么他的卷面长这样：<b>客观题接近满分，主观输出题集中失分。</b>补的方向不是"多刷题"，而是<b>针对那道组装工序做训练</b>。</p>
+  </div>
+
+  <details>
+    <summary>展开看第 35 题的完整细节（最值得讲清的一题）</summary>
+    <div class="det-body">
+      <p><b>卷面原文：</b>Amy: Really? That is so cool. (35) ______？（询问学习吉他时长）</p>
+      <p><b>孩子写：</b><code>How ~~long~~ have you been learning…?</code>　<b>老师红笔补：</b><code>it</code> → <code>How long have you been learning it?</code></p>
+      <p><b>为什么这题重要：</b>孩子把疑问词和现在完成进行时（have been + doing）都写对了——<b>时态和语序都没问题</b>，唯独漏了宾语。<code>learning</code> 后面缺宾语，句子在语法上不完整。</p>
+      <p style="margin-bottom:0"><b>诊断：</b>这不是时态问题（他时态是对的），是<b>造句时没做成分自检</b>。中考写作和口语表达里，动词的及物/不及物决定了后面跟不跟宾语——<code>learn sth.</code> 跟宾语，<code>learn</code> 单独用要有状语。这个判断目前是无意识的。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>展开看第 57 题（审题失误，不是读不懂）</summary>
+    <div class="det-body">
+      <p><b>卷面原文：</b>57. Where did BBC Bitesize do the survey?　（文中第 2 段：surveyed over 4,500 students aged 13 to 16 <b>across the United Kingdom</b>）</p>
+      <p><b>孩子写：</b><code>In 2026</code>　<b>老师红笔：</b>✗</p>
+      <p><b>关键区分：</b>「2026」这个数字确实出现在文中第一句（Careers Survey 2026）。孩子<b>定位到了正确的段落</b>，只是抓取的信息点不是问题要的那个。</p>
+      <p style="margin-bottom:0"><b>诊断：</b>典型的<b>「读到关键词就写」</b>模式。教训动作很具体：<b>答题前先圈出疑问词（Who/What/When/Where/Why/How），答案必须与它对应。</b>这是可以训练成肌肉记忆的习惯。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>展开看第 33 题（完形选词，A 段全对 B 段栽在这）</summary>
+    <div class="det-body">
+      <p><b>卷面原文：</b>...asking a <b>___</b> adult or a doctor for help.　（选项：A support / B harm / C reflect / D trusted / E related）</p>
+      <p><b>孩子写：</b><code>D trusted</code>　<b>老师红笔划掉改：</b><code>C related</code></p>
+      <p><b>为什么 D 不对：</b><code>a trusted adult</code>（一个值得信赖的成年人）语法和语义都成立——这是个强干扰项，<b>不能算粗心</b>。但后文 <code>or a doctor for help</code> 提示这是「求助对象」，且前半句 <code>meaningful face-to-face connections with others at their age</code> 指向「关系」维度。<b>related to</b> 才能把「社交孤立」这条线索接上。</p>
+      <p style="margin-bottom:0"><b>诊断：</b>他能在前 7 题里靠语感判断，但<b>到最后一个空、选项开始"都挺通"时就停了</b>。缺的是<b>回读全文线索的收尾动作</b>——最后一个空最容易放弃回看，因为"刚做过的题感觉还在"。</p>
+    </div>
+  </details>
+</section>
+
+<!-- ══════ 4. 洞察 ══════ -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>三条洞察：这份卷子真正在说什么</h2></div>
+  <p class="sec-lead">比"哪几题错了"更有用的，是这些错误之间的结构。</p>
+
+  <div class="card blue">
+    <div class="card-t">洞察 1 · 他的瓶颈在"输出"，不在"输入"</div>
+    <p style="margin-top:0;margin-bottom:0">语法 10/10、完形 7/8、阅读客观题 23/23——所有需要"识别、判断、选择"的任务他都做得很好。失分全部落在<b>需要他自己组装语言</b>的地方：造句（35）、成句表达（36）、组织答案（58）。<b>输入通道基本畅通，输出通道有摩擦。</b>这个判断决定了补法：不是扩大阅读量或背更多单词，而是做<b>「强制成句 + 成分自检」</b>的专项训练。</p>
+  </div>
+
+  <div class="card blue">
+    <div class="card-t">洞察 2 · 客观题的满分正在掩盖一个更大的风险</div>
+    <p style="margin-top:0;margin-bottom:0">本卷客观题（选择/匹配/填空）共 60 分，他拿 58。这很亮眼，但<b>中考英语的分值结构里，主观输出（写作 + 任务型阅读 + 口语）占比更高</b>。现在输出的窟窿被客观题的分数盖住了，一旦进入以写作为主的题型，<b>同样的病灶会以更大的分值暴露出来</b>。写作 15 分还没看到——<b>那才是本卷真正的压力测试</b>，也应该是下一步补拍的第一张图。</p>
+  </div>
+
+  <div class="card blue">
+    <div class="card-t">洞察 3 · 有两个"几乎没人注意"的习惯性动作，值得现在就抓</div>
+    <p style="margin-top:0;margin-bottom:0">这两处不体现在错题数量上，但会在更难的卷子里持续失分：<br>
+    ① <b>圈疑问词</b>（第 57 题的教训）——一个动作，几乎零成本，能直接消灭一类审题失分。<br>
+    ② <b>写完回读一遍成分</b>（第 35 题的教训）——检查动词后面有没有缺宾语，主语谓语是否齐全。<br>
+    <b>这两个动作加起来不到 30 秒，却直接对应本卷 3 分的确定性失分（35、36、57）。</b>比多做十套卷子性价比高。</p>
+  </div>
+</section>
+
+<!-- ══════ 5. 行动计划 ══════ -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>下一步：按优先级补齐</h2></div>
+  <p class="sec-lead">分三档。第一档是本周必须做的，第二档是常规维护，第三档是拿到写作卷面后再评估。</p>
+
+  <h3>第一档 · 本周内</h3>
+  <ol class="steps">
+    <li><b>补拍第 9 页（写作正文 + 老师批改）</b><span>这是当前最大盲区，占全卷 15 分。拍清楚后本报告的写作诊断才能出结论。</span></li>
+    <li><b>重做第 35 / 57 两题，不看答案先写，再对照</b><span>35 题：把「造句时先找动词的及物性」讲一遍，让他自己说出 learning 后面为什么必须有 it。57 题：让他先圈疑问词再回原文找。这两题的价值在于<b>把方法说出来</b>，不是做对。</span></li>
+    <li><b>练 5 组「动词 + 宾语」造句，每组写完做成分自检</b><span>专治第 35 题那类漏成分。清单用：learn / find / buy / decide / enjoy 等及物动词，每个都必须跟宾语。每天 1 组，写完逐句问"动词后面有没有东西"。</span></li>
+  </ol>
+
+  <h3>第二档 · 常规维护（保持现状即可）</h3>
+  <ul>
+    <li><b>语法与词汇（16-25）</b>：已满分区。<b>不需要加练</b>，保持每周一份语法小测的频率即可，重点是"不遗忘"而非"拔高"。</li>
+    <li><b>阅读客观题（39-56）</b>：已是强项。<b>不建议加量</b>，只需在练习中<b>刻意练一次「问什么答什么」的动作</b>（对应洞察 3 ①），让强项不被习惯拖累。</li>
+    <li><b>听力（1-15）</b>：只错 1 题且是词尾级问题。<b>补高频词的整词听写</b>（balanced / trusted / related 这类），不需要整套听力训练。</li>
+  </ul>
+
+  <h3>第三档 · 拿到写作卷面后</h3>
+  <div class="card gold">
+    <div class="card-t">待评估 · 写作 15 分</div>
+    <p style="margin-top:0;margin-bottom:0">补拍后需要看三件事：<b>①</b> 有没有满足 60 词要求；<b>②</b> 三个写作要点（做什么 / 为什么重要 / 怎么更好地爱自己）是否都有覆盖；<b>③</b> 老师的批改集中在语法、拼写还是内容。<br>如果是<b>内容分被扣</b>，问题在审题和展开，和第 57、58 题同源；如果是<b>语言分被扣</b>，就是第 35 题那个断层在写作里的放大版。<b>两种情况的补法完全不同，所以必须先看到卷面再动手。</b></p>
+  </div>
+</section>
+
+<!-- ══════ 6. 家长区 ══════ -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>家长执行区</h2></div>
+  <p class="sec-lead">具体到分钟的动作。不用讲道理，只做动作。</p>
+
+  <div class="parent">
+    <div class="kicker">Parent Zone</div>
+    <h3>这周怎么配合</h3>
+    <div class="note">总时长约 40 分钟，分 3 次，每次 10-15 分钟。不要一次做完。</div>
+
+    <div class="pitem">
+      <div class="ptime">10 分钟<span>补拍</span></div>
+      <div class="pbody"><b>让孩子自己翻出第 9 页重新拍</b>写作那一页，要求：正对、光线足、不要有阴影，作文正文和老师的批改都要入镜。这件事让他自己完成——顺便是一个"对自己的卷子负责"的动作训练。</div>
+    </div>
+
+    <div class="pitem">
+      <div class="ptime">15 分钟<span>共做</span></div>
+      <div class="pbody"><b>只做两道题：35 和 57</b>。流程固定：① 他先独立重做；② 对照原卷；③ <b>让他讲出"我原来为什么这么写"</b>。你只做一件事：他讲完，你问一句"那下次遇到这种题，第一步做什么？"直到他说出具体动作（如"先圈疑问词"）。<b>不要替他总结道理。</b></div>
+    </div>
+
+    <div class="pitem">
+      <div class="ptime">10 分钟<span>每天</span></div>
+      <div class="pbody"><b>造句成分自检，每天 1 组，5 句。</b>给出 5 个及物动词（learn / find / buy / decide / enjoy），每个写一个完整句子。写完逐句问："这个动词后面有没有宾语？"漏了就当场改。<b>坚持 5 天，比刷一套卷子有用。</b></div>
+    </div>
+
+    <div class="pitem">
+      <div class="ptime">5 分钟<span>反馈</span></div>
+      <div class="pbody"><b>把强项明确说出来。</b>这份卷子语法 10 分、阅读客观题全对、完形只错 1 题——让孩子知道<b>他的底子是好的，问题不在"学不会"，而在"写得不够细"</b>。这个认知差别，会影响他遇到错题时的态度。<b>不要说"你只错了 6 道"，要说"你在需要自己造句的地方掉链子，这个能练"。</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ 7. 原图证据 ══════ -->
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2>原卷证据</h2></div>
+  <p class="sec-lead">所有判读基于原件照片。以下为关键题目的卷面截取，红笔批改清晰可查。点击可放大。</p>
+
+  <div class="shots">
+    <div class="shot">
+      <img src="../../RAW/试卷/20261002-单元测-英语-p2.jpg" alt="p2 原卷" style="max-height:300px;object-fit:cover;object-position:top">
+      <div class="cap">p2 · 语法 II、完形 III（含第 33 题红笔改 C）、句子完成 IV（含第 35/36 题批改）</div>
+    </div>
+    <div class="shot">
+      <img src="../../RAW/试卷/20261002-单元测-英语-p4.jpg" alt="p4 原卷" style="max-height:300px;object-fit:cover;object-position:top">
+      <div class="cap">p4 · 完形 49-56 全对，阅读 D（含第 57 题红笔打叉、第 58 题批注 What was?）</div>
+    </div>
+    <div class="shot">
+      <img src="../../RAW/试卷/20261002-单元测-英语-p1.jpg" alt="p1 原卷" style="max-height:300px;object-fit:cover;object-position:top">
+      <div class="cap">p1 · 听力 1-15（含第 11 题「stay but balanced」批改）</div>
+    </div>
+    <div class="shot">
+      <img src="../../RAW/试卷/20261002-单元测-英语-p3.jpg" alt="p3 原卷" style="max-height:300px;object-fit:cover;object-position:top">
+      <div class="cap">p3 · 阅读 A 匹配题、B 段落 44-48、句子完成 38 题</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><b>数据来源</b>　RAW/试卷/20261002-单元测-英语-p1~p4.jpg（8 页原件，含教师批改笔迹）· 结构化记录 data/exams/2026-10-02-单元测-英语.json</p>
+  <p><b>判读纪律</b>　所有失分点均以红笔批改痕迹为依据；卷面未标注单题分值处一律留空并标「待确认」，不估算。写作模块因第 9 页缺失未评分。</p>
+  <p><b>待补事项</b>　① 补拍第 9 页　② 对照原卷答案核实第 36 / 58 / 61 题得分　③ 回填第 11 / 33 / 35 / 57 题的单题分值</p>
+</footer>
+
+</div>
+
+<div id="lb"><img src="" alt=""></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'), lbi=lb.querySelector('img');
+  document.querySelectorAll('.shot img').forEach(function(im){
+    im.addEventListener('click',function(){ lbi.src=im.src; lb.classList.add('on'); });
+  });
+  lb.addEventListener('click',function(){ lb.classList.remove('on'); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') lb.classList.remove('on'); });
+})();
+</script>
+</body>
+</html>

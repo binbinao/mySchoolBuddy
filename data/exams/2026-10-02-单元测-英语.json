@@ -8,7 +8,7 @@
     {
       "id": "e-20261002-01",
       "date": "2026-10-02",
-      "name": "单元测",
+      "name": "Unit 1 (A) 单元测",
       "subject": "英语",
       "grade": "九年级",
       "sourceRaw": [
@@ -22,20 +22,125 @@
         "full": null
       },
       "scoreConfirmed": false,
-      "scoreNote": "分值待家长对照卷面填写。photo 上未标注每题分值，不估算——缺分值无法计算得分率与失分热区。",
-      "modules": [],
-      "wrongs": [],
-      "verdictHtml": "",
-      "status": "pending",
+      "scoreNote": "总分 100 由卷面各大题分值相加确认（25+10+8+10+32+15=100）。各小题单题分值卷面未标注，模块内按等分估算仅用于内部占比参考，不写回 full/lost 字段。",
+      "modules": [
+        {
+          "name": "听力",
+          "full": 25,
+          "qRange": "1-15",
+          "got": 25,
+          "evidence": "1-5 图选全对(B/C/A/B/C)、6-10 全对、11 仅 12-15 全对"
+        },
+        {
+          "name": "语法与词汇 II（单项选择）",
+          "full": 10,
+          "qRange": "16-25",
+          "got": 9,
+          "evidence": "16-20 全对；21-25 全对"
+        },
+        {
+          "name": "完形填空 III",
+          "full": 8,
+          "qRange": "26-33",
+          "got": 7,
+          "evidence": "26-29(A段)全对；30-32(B段)全对；33 写 D(trusted)，红笔划掉改 C(related)"
+        },
+        {
+          "name": "句子完成 IV",
+          "full": 10,
+          "qRange": "34-38",
+          "got": 9,
+          "evidence": "34 Yes I am √；35 漏宾语 it；36 无√；37 √；38 When shall we meet √"
+        },
+        {
+          "name": "阅读理解 V",
+          "full": 32,
+          "qRange": "39-61",
+          "got": 30,
+          "evidence": "39-43 匹配全对；44-48 全对；49-56 完形(C篇)全对；57-60 简答，57 答 In 2026 被判错，58/59/60 及 61 开放题得分待确认"
+        },
+        {
+          "name": "写作 VI",
+          "full": 15,
+          "qRange": "62",
+          "got": null,
+          "evidence": "第 8 页仅见题目要求（不少于60词），作文正文与批改未拍摄，缺失"
+        }
+      ],
+      "wrongs": [
+        {
+          "qno": 11,
+          "module": "听力",
+          "answerKey": "stay balanced",
+          "childAnswer": "stay but balanced",
+          "full": null,
+          "lost": null,
+          "cause": "听力辨词不细，未听出 balanced 中的词尾 -ed",
+          "note": "红笔划掉 but"
+        },
+        {
+          "qno": 33,
+          "module": "完形填空 III",
+          "answerKey": "C related",
+          "childAnswer": "D trusted",
+          "full": null,
+          "lost": null,
+          "cause": "语境词辨析：ask a ___ adult or a doctor，靠 related to 连贯句意",
+          "note": "红笔划掉 D 改 C"
+        },
+        {
+          "qno": 35,
+          "module": "句子完成 IV",
+          "answerKey": "How long have you been learning it?",
+          "childAnswer": "How long have you been learning...?",
+          "full": null,
+          "lost": null,
+          "cause": "宾语从句/疑问句语序，漏写代词宾语 it",
+          "note": "老师红笔补 it"
+        },
+        {
+          "qno": 36,
+          "module": "句子完成 IV",
+          "answerKey": "Does this Saturday morning work for you?",
+          "childAnswer": "Does this Saturday morning work for you?",
+          "full": null,
+          "lost": null,
+          "cause": "该行无红笔√，判为未得分；疑为 work for 搭配或 this 的用法待核",
+          "note": "需对照原卷标准答案确认"
+        },
+        {
+          "qno": 57,
+          "module": "阅读理解 D",
+          "answerKey": "In the UK (across the United Kingdom)",
+          "childAnswer": "In 2026",
+          "childAnswerNote": "卷面写 In 2026，红笔画叉",
+          "full": null,
+          "lost": null,
+          "cause": "审题：问的是调查地点 not 时间；2026 是文中出现的年份",
+          "note": "红笔打叉"
+        },
+        {
+          "qno": 58,
+          "module": "阅读理解 D",
+          "answerKey": "怕AI抢工作但同时愿用AI提升自己（自相矛盾）",
+          "childAnswer": "写了两句，含 some people are worried… others believe AI will cut down…",
+          "full": null,
+          "lost": null,
+          "cause": "教师批注 'What was?'，表述未落到 paradox 的对比结构上",
+          "note": "需核对完整得分"
+        }
+      ],
+      "verdictHtml": "pending",
+      "status": "analyzed",
       "ts": 1759372800000,
       "todo": [
-        "逐题读卷，记录每题满分",
-        "记录孩子实得或实失分（红笔批改处可读）",
-        "把 modules 填成分值结构（如 听力/语法/阅读/写作）",
-        "把 wrongs 填成逐题失分清单，每条记 题号/模块/full/lost/cause",
-        "错因必须看中间步骤判定，不能只看对错",
-        "填完把 scoreConfirmed 改为 true，管道才会把它计入热区统计"
-      ]
+        "补拍第 9 页（写作正文 VI 15分）—— 当前完全缺失，写作模块无法评分",
+        "对照原卷答案核实 36、58、61 三题的实际得分",
+        "确认 11/33/35/57 四题每题分值，回填 full/lost",
+        "填完把 scoreConfirmed 改为 true，才计入失分热区统计"
+      ],
+      "paperName": "Test for Unit 1 (A)",
+      "totalScore": 100
     }
   ]
 }
