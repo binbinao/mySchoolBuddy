@@ -760,14 +760,18 @@ def build_exam_page(exam, out_path, q):
         for m in modules:
             mf = m.get("full")
             mg = m.get("got")
+            # row_cls 必须先初始化：模块分值未确认时既不标红也不标待确认色，
+            # 但变量本身一定要有值，否则拼 HTML 时 UnboundLocalError。
+            row_cls = ""
             if m.get("scoreConfirmed") is False or mf in (None, 0) or mg is None:
                 rate = '<span style="color:var(--ink3)">待确认</span>'
-                row_cls = ""
             else:
                 pct = round(mg / mf * 100)
                 rate = f"<b>{pct}%</b>（{mg}/{mf}）"
                 if pct < 60:
                     row_cls = ' style="background:#fdf0ee"'
+                elif pct < 75:
+                    row_cls = ' style="background:#fff8ec"'
             rows.append(
                 f'<tr{row_cls}><td><b>{esc(m.get("name", ""))}</b></td>'
                 f'<td>{score_cell(mf)}</td><td>{score_cell(mg)}</td><td>{rate}</td></tr>')

@@ -2,7 +2,7 @@
   "meta": {
     "schema": "tasks.v1",
     "note": "待 AI 补全的教学内容队列。脚本只搭骨架，教学判断留给 AI。\n  AI 补全规则：填回对应 HTML 的 ⚠️ 待补 区块 + 更新 data/ 里的 JSON 字段，\n  然后把本文件里对应条目 status 改为 done。\n  禁止：编造分值、编造孩子作答、编造官方答案。",
-    "updated": "2026-10-02 13:13",
+    "updated": "2026-10-02 13:15",
     "pending": 3
   },
   "items": [
@@ -18,7 +18,7 @@
         "variants",
         "thinkQuestions"
       ],
-      "created": "2026-10-02 13:13"
+      "created": "2026-10-02 13:15"
     },
     {
       "id": "wrong-w-20261002-02",
@@ -35,7 +35,7 @@
         "variants",
         "thinkQuestions"
       ],
-      "created": "2026-10-02 13:13"
+      "created": "2026-10-02 13:15"
     },
     {
       "id": "exam-e-20261002-01",
@@ -50,7 +50,7 @@
         "verdictHtml",
         "score"
       ],
-      "created": "2026-10-02 13:13"
+      "created": "2026-10-02 13:15"
     }
   ]
 }
