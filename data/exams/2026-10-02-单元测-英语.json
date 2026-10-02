@@ -22,121 +22,188 @@
         "full": null
       },
       "scoreConfirmed": false,
-      "scoreNote": "总分 100 由卷面各大题分值相加确认（25+10+8+10+32+15=100）。各小题单题分值卷面未标注，模块内按等分估算仅用于内部占比参考，不写回 full/lost 字段。",
+      "scoreNote": "总分 100 由卷面各大题标题处标注的分值相加确认：I 听力 25 + II 语法 10 + III 完形 8 + IV 句子完成 10 + V 阅读 32 + VI 写作 15 = 100。阅读 V 的 32 分由子题相加确认：A 5 + B 5 + C 8 + D 14 = 32。⚠️ 仅 V-D 大题标题明确标注了单题分值（『第 57 至 60 题，每题 2 分，第 61 题 6 分，共 14 分』），故第 57 题的 full/lost 已按卷面回填为 2/2；其余各大题单题分值卷面未标注，对应 wrongs[].full/lost 留 null，不做等分估算。卷面未见总分，且 V-D 14 分中 58/60 的失分空数与写作 15 分正文均无法从照片判定，故 score.got 留 null，scoreConfirmed 保持 false。",
+      "answerKeyNote": "RAW/试卷答案/ 目录为空，本卷无官方答案卷。所有 answerKey 字段均为依据题目与红笔批改反推得出，不能替代原始答案。",
       "modules": [
         {
-          "name": "听力",
+          "name": "I 听力",
           "full": 25,
           "qRange": "1-15",
           "got": 25,
-          "evidence": "1-5 图选全对(B/C/A/B/C)、6-10 全对、11 仅 12-15 全对"
+          "evidence": "1-10 图选与对话全对；11 仅错 1 空（stay but balanced → 红笔划掉 but 改 stay balanced）；12-15 全对"
         },
         {
-          "name": "语法与词汇 II（单项选择）",
+          "name": "II 语法与词汇",
           "full": 10,
           "qRange": "16-25",
-          "got": 9,
-          "evidence": "16-20 全对；21-25 全对"
+          "got": 10,
+          "evidence": "16-25 逐题核对，红笔全部为 √，无一订正"
         },
         {
-          "name": "完形填空 III",
+          "name": "III 完形填空",
           "full": 8,
           "qRange": "26-33",
           "got": 7,
-          "evidence": "26-29(A段)全对；30-32(B段)全对；33 写 D(trusted)，红笔划掉改 C(related)"
+          "evidence": "26-32 全对；33 写 D(trusted)，红笔划掉改 C(related)"
         },
         {
-          "name": "句子完成 IV",
+          "name": "IV 句子完成",
           "full": 10,
           "qRange": "34-38",
-          "got": 9,
-          "evidence": "34 Yes I am √；35 漏宾语 it；36 无√；37 √；38 When shall we meet √"
+          "got": 8,
+          "gotNote": "35 确定失分 1 处；36 存疑（未见红笔 √，可能是漏勾）。got=8 系按 35 失分 1 处的保守估计，待家长确认后回填。",
+          "evidence": "34 Yes I am √；35 漏宾语 it（老师红笔补 it 并画斜线）；36 该行未见红笔 √，存疑；37 √；38 When shall we meet √"
         },
         {
-          "name": "阅读理解 V",
-          "full": 32,
-          "qRange": "39-61",
-          "got": 30,
-          "evidence": "39-43 匹配全对；44-48 全对；49-56 完形(C篇)全对；57-60 简答，57 答 In 2026 被判错，58/59/60 及 61 开放题得分待确认"
+          "name": "V-A 匹配",
+          "full": 5,
+          "qRange": "39-43",
+          "got": 5,
+          "evidence": "答案 D B E A C，红笔全 √"
         },
         {
-          "name": "写作 VI",
+          "name": "V-B 选择",
+          "full": 5,
+          "qRange": "44-48",
+          "got": 5,
+          "evidence": "五题红笔全 ✓"
+        },
+        {
+          "name": "V-C 完形",
+          "full": 8,
+          "qRange": "49-56",
+          "got": 8,
+          "evidence": "逐题核对，红笔全 ✓"
+        },
+        {
+          "name": "V-D 简答",
+          "full": 8,
+          "qRange": "57-60",
+          "fullNote": "卷面 V-D 标题明确标注「第 57 至 60 题，每题 2 分」，故每题 2 分、合计 8 分。",
+          "perQ": 2,
+          "got": null,
+          "gotNote": "不估算。57 确定失分（红笔划掉）；58 老师批注 What was?、59 √、60 疑有词数问题，但 58/60 卷面未明示失分，无法确定共失几空，故 got 留 null（JSON 数据层不接受无依据的保守估计值，避免被误读为「实际得分」）。",
+          "evidence": "57 答 In 2026 被红笔划掉；58 老师批注 'What was?'；59 √；60 疑有词数问题"
+        },
+        {
+          "name": "V-D 开放题",
+          "full": 6,
+          "qRange": "61",
+          "fullNote": "卷面 V-D 标题明确标注「第 61 题 6 分」。",
+          "perQ": 6,
+          "got": null,
+          "evidence": "已作答（给出两条建议），红笔批改未见，得分待老师确认"
+        },
+        {
+          "name": "VI 写作",
           "full": 15,
           "qRange": "62",
           "got": null,
-          "evidence": "第 8 页仅见题目要求（不少于60词），作文正文与批改未拍摄，缺失"
+          "evidence": "第 8 页仅见题目要求（不少于60词），作文正文与批改未拍摄，完全缺失"
         }
       ],
       "wrongs": [
         {
           "qno": 11,
-          "module": "听力",
+          "module": "I 听力 C",
           "answerKey": "stay balanced",
+          "answerKeySource": "依据红笔批改反推，无官方答案卷",
           "childAnswer": "stay but balanced",
           "full": null,
           "lost": null,
-          "cause": "听力辨词不细，未听出 balanced 中的词尾 -ed",
+          "scorePending": true,
+          "cause": "审题错误",
+          "causeNote": "不是听不懂，是听漏了连读中的 but。其余 14 空全对，说明整体听力水平没问题。",
           "note": "红笔划掉 but"
         },
         {
           "qno": 33,
-          "module": "完形填空 III",
+          "module": "III 完形填空",
           "answerKey": "C related",
+          "answerKeySource": "依据红笔批改反推，无官方答案卷",
           "childAnswer": "D trusted",
           "full": null,
           "lost": null,
-          "cause": "语境词辨析：ask a ___ adult or a doctor，靠 related to 连贯句意",
-          "note": "红笔划掉 D 改 C"
+          "scorePending": true,
+          "cause": "概念不清",
+          "causeNote": "认识单词但读不出句意——查生词表能懂，没放回句子里读。救法是朗读+口译，不是背单词。",
+          "note": "红笔划掉 D 改 C，旁边批注 related to"
         },
         {
           "qno": 35,
-          "module": "句子完成 IV",
+          "module": "IV 句子完成",
           "answerKey": "How long have you been learning it?",
-          "childAnswer": "How long have you been learning...?",
+          "answerKeySource": "依据老师红笔补写的 it 反推，无官方答案卷",
+          "childAnswer": "How long have you been learning ...?",
           "full": null,
           "lost": null,
-          "cause": "宾语从句/疑问句语序，漏写代词宾语 it",
-          "note": "老师红笔补 it"
-        },
-        {
-          "qno": 36,
-          "module": "句子完成 IV",
-          "answerKey": "Does this Saturday morning work for you?",
-          "childAnswer": "Does this Saturday morning work for you?",
-          "full": null,
-          "lost": null,
-          "cause": "该行无红笔√，判为未得分；疑为 work for 搭配或 this 的用法待核",
-          "note": "需对照原卷标准答案确认"
+          "scorePending": true,
+          "cause": "表达不规范",
+          "causeNote": "句子结构意识够，只是落笔时漏了。属收尾没查，不是语法概念不清。",
+          "note": "老师红笔在 learning 后补 it 并画斜线"
         },
         {
           "qno": 57,
-          "module": "阅读理解 D",
+          "module": "V-D 简答",
           "answerKey": "In the UK (across the United Kingdom)",
+          "answerKeySource": "依据原文第 2 段与红笔划叉判定，无官方答案卷",
           "childAnswer": "In 2026",
-          "childAnswerNote": "卷面写 In 2026，红笔画叉",
-          "full": null,
-          "lost": null,
-          "cause": "审题：问的是调查地点 not 时间；2026 是文中出现的年份",
+          "childAnswerNote": "卷面写 In 2026，红笔划掉",
+          "full": 2,
+          "lost": 2,
+          "scorePending": false,
+          "scoreNote": "卷面 V-D 标题明确标注「第 57 至 60 题，每题 2 分」，此处分值直接读自卷面，非估算。57 红笔打叉，确定全错，故 lost=2。",
+          "cause": "审题错误",
+          "causeNote": "抓住显眼名词就作答，没读问句疑问词。救法是强制先圈疑问词。",
           "note": "红笔打叉"
         },
         {
-          "qno": 58,
-          "module": "阅读理解 D",
-          "answerKey": "怕AI抢工作但同时愿用AI提升自己（自相矛盾）",
-          "childAnswer": "写了两句，含 some people are worried… others believe AI will cut down…",
+          "qno": 36,
+          "module": "IV 句子完成",
+          "answerKey": null,
+          "childAnswer": "Does this Saturday morning work for you?",
           "full": null,
           "lost": null,
-          "cause": "教师批注 'What was?'，表述未落到 paradox 的对比结构上",
-          "note": "需核对完整得分"
+          "uncertain": true,
+          "cause": "审题错误", "causePending": true,
+          "causeNote": "该行未见红笔 √。句子本身通顺，可能是真错，也可能只是批改时漏勾。不替老师判断。",
+          "note": "需对照原卷标准答案与老师确认"
+        },
+        {
+          "qno": 58,
+          "module": "V-D 简答",
+          "answerKey": null,
+          "childAnswer": "写了两句，含 some people are worried … others believe AI will cut down …",
+          "full": null,
+          "lost": null,
+          "uncertain": true,
+          "cause": "表达不规范",
+          "causePending": true,
+          "causeNote": "无官方答案卷可对照，暂不下定论。",
+          "note": "需老师确认实际得分"
+        },
+        {
+          "qno": 61,
+          "module": "V-D 开放题",
+          "answerKey": null,
+          "childAnswer": "已作答，给出两条建议（以 AI 为工具提升自己、learn how AI works）",
+          "full": null,
+          "lost": null,
+          "uncertain": true,
+          "cause": "表达不规范", "causePending": true,
+          "causeNote": "得分需老师确认。",
+          "note": "需老师确认实际得分"
         }
       ],
-      "verdictHtml": "pending",
+      "verdictHtml": "已补全（2026-10-02 复核，2026-10-03 修正 V-D 分值）。一句话结论：这不是考砸的卷子，是细节漏分的卷子。听力 25/25、语法 10/10、阅读 A/B/C 全对，确定失分只有 11/33/35/57 四处，其中仅 57 题的分值能从卷面直接读出（每题 2 分，失 2 分），其余三题单题分值卷面未标注，full/lost 一律留 null。失分按性质分两类：①收尾没查（35 漏 it、57 看错疑问词，占 2/4 已确定项）②语感辨词（11 听漏 but、33 trusted/related，占 2/4 已确定项）。第 0 优先是补拍写作 15 分正文——这是最大盲区（占全卷 15%），在补齐前无法判断真正的优先级。其次是把 III 完形与 IV 句子完成的 11 句朗读+口译，15 分钟可同时压住 33 和 35 两类失分。第 3 优先的听力精听可延后，因只错 1 空且其余全对。三条纪律：分数未确认（scoreConfirmed=false）；第 36/58/61 三题因无明确红笔订正而列为存疑，不替老师判断；RAW/试卷答案/ 为空，无官方答案卷，所有 answerKey 均为反推。另修正一处错误：先前 HTML 报告把 V-D 简答记为 6 分、开放题记为 2 分，与卷面标注（第 57-60 题每题 2 分、第 61 题 6 分）恰好颠倒，已改回 8 分与 6 分。",
+      "verdictNote": "verdictHtml 字段存纯文本摘要（供 JSON 检索与 diff）；完整富文本诊断见 docs/实战表/英语/2026-10-02-单元测-试卷拆解.html 第 3 节。",
       "status": "analyzed",
       "ts": 1759372800000,
       "todo": [
-        "补拍第 9 页（写作正文 VI 15分）—— 当前完全缺失，写作模块无法评分",
-        "对照原卷答案核实 36、58、61 三题的实际得分",
-        "确认 11/33/35/57 四题每题分值，回填 full/lost",
+        "补拍第 9 页（写作正文 VI 15分）—— 当前完全缺失，写作模块无法评分，是最大信息缺口",
+        "对照原卷答案核实 36、58、61 三题的实际得分（这三题无明确红笔订正，已列为存疑）",
+        "确认 11/33/35/57 四题每题分值，回填 full/lost（卷面各大题仅标总分，单题分值未标注，现全部留 null）",
+        "确认第 IV 大题与 V-D 的实际失分空数，回填 got 保守估计值",
         "填完把 scoreConfirmed 改为 true，才计入失分热区统计"
       ],
       "paperName": "Test for Unit 1 (A)",

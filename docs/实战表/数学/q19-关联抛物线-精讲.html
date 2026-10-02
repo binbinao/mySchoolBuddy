@@ -194,11 +194,11 @@ summary:hover{color:var(--ink)}
   <details>
     <summary>看原卷照片（题干 + 他的草稿 + 红笔批改）</summary>
     <div class="dbody">
-      <p class="cap">原卷上的第 19 题</p>
-      <img class="scan" src="../../../data/_scans/2026-10-02/q19-stem.png" alt="q19 题干原图">
+      <p class="cap">原卷上的第 19 题（题干裁切）</p>
+      <img class="scan" src="../../../RAW/错题照片/20261002-数学-第19题-题干裁切.jpg" alt="q19 题干原图">
       <p class="cap">整题照片（含红笔订正与手写草稿）</p>
-      <img class="scan" src="../../../data/_scans/2026-10-02/q19-math.jpg" alt="q19 原卷照片">
-      <p class="hint">照片存在 <code>data/_scans/</code>（含个人信息，未入 Git，本地保留）。</p>
+      <img class="scan" src="../../../RAW/错题照片/20261002-数学-第19题.jpg" alt="q19 原卷照片">
+      <p class="hint">原件在 <code>RAW/错题照片/</code>，已入库 Git。判读依据是卷面上他自己的手写过程与红笔批改。</p>
     </div>
   </details>
 
@@ -497,8 +497,8 @@ y₂ = −x² + (5/2)x + 2</div>
 
 <!-- ===== 6 检验题 ===== -->
 <div class="card">
-  <h2><span class="n">6</span>两道检验题</h2>
-  <p class="sub"><b>先自己做，答案折叠着。</b>做不出来再展开。</p>
+  <h2><span class="n">6</span>三道检验题</h2>
+  <p class="sub"><b>先自己做，答案折叠着。</b>做不出来再展开。<br>三题配比是固定的：<b>改一个数值 → 换考点 → 已知与所求对调</b>。第三题不能省。</p>
 
   <h3>第 1 题（原题变式）</h3>
   <p>y₁ 和 y₂ 的关联关系不变，y₁ 还是 <code>(x−2)²+3</code>，M、N、D 仍共线，D 仍在 x 轴正半轴，但把条件改成：</p>
@@ -541,6 +541,43 @@ y₂ = −x² + (5/2)x + 2</div>
       <p>这题 c 很好算，但<b>第 ③ 步的验证不能省</b>——只有 c=2 才能同时满足两个方向。顺手验一遍更稳。</p>
     </div>
   </details>
+
+  <h3>第 3 题（问答对调 · 这题才是真正的考试题）</h3>
+  <p>这次反过来问。已知 y₁ 的解析式是 <code>y = (x−2)² + 3</code>，并且它<b>就是</b>某条抛物线 <code>y = −x² + bx + c</code> 的关联抛物线，求 <b>b 的值</b>。</p>
+
+  <details>
+    <summary>做完了，看思路</summary>
+    <div class="dbody">
+      <div class="code">① 关联是双向的，两条都验：
+   y₁ 的顶点 M(2,3)
+   条件①  M 在 y = −x²+bx+c 上：
+          −4 + 2b + c = 3   →   2b + c = 7
+   条件②  y = −x²+bx+c 的顶点 N 在 y₁ 上：
+          顶点横坐标 = b/2
+          顶点纵坐标 = b²/4 + c
+          所以 (b/2 − 2)² + 3 = b²/4 + c
+          b²/4 − 2b + 4 + 3 = b²/4 + c
+          c = 7 − 2b
+② 代回条件①：  2b + (7 − 2b) = 7   →  恒成立！
+③ 所以 b 无法唯一确定</div>
+      <div class="note red">
+        <b>这道题的陷阱：b 不唯一。</b><br>
+        看起来像"算不出来"，其实是<b>条件不够</b>——只给一条抛物线，无法定出另一条。<br>
+        <b>但别急着走。</b>原题之所以能定下来，靠的是第三个条件：<b>D 在 x 轴正半轴，且 tan∠MDO = 3/4</b>。<br>
+        少了这个"斜率条件"，y₂ 就成了一个自由参数。
+      </div>
+      <p style="margin-top:12px"><b>所以这题真正在问什么？</b>——问的是<b>能不能看出"还缺一个条件"</b>。</p>
+      <p>中考里这类"条件不足"的坑很常见：选项里一定有一个"无法确定 / 条件不足"。<b>看出缺条件，本身就是得分点。</b></p>
+    </div>
+  </details>
+
+  <div class="note gold">
+    <b>三题串起来看，这套题就一个动作：</b><br>
+    ① 简单变式换了 tan 值 → 你要重新走一遍全流程；<br>
+    ② 换考点（给定 y₂ 求 c）→ 你要<b>主动做双向验证</b>；<br>
+    ③ 问对调 → 你要<b>看出条件不足</b>。<br>
+    <b>三道题考的是同一个能力：把"互为关联"翻译成两个方程，并检查解够不够定未知数。</b>
+  </div>
 </div>
 
 <!-- ===== 7 复述 ===== -->
@@ -569,6 +606,71 @@ y₂ = −x² + (5/2)x + 2</div>
   </div>
 </div>
 
+<!-- ===== 8 想五题 ===== -->
+<div class="card orig">
+  <h2><span class="n" style="background:var(--ink)">想</span>迁移想五题</h2>
+  <p class="sub">前面四步都是给你<b>搭脚手架</b>。现在把脚手架撤了——这几题没有提示，检验的是<b>方法本身</b>。<br>先自己想，再填。答错不扣分，答不出来才是真问题。</p>
+
+  <div class="qa">
+    <div class="q">第 1 题　为什么 y₂ 的顶点纵坐标<b>一定 ≥ 0</b>？</div>
+    <div class="qsub">提示：y₂ 的顶点在 y₁ 上，而 y₁ = (x−2)²+3</div>
+    <div class="inrow">
+      <input type="text" id="q4" placeholder="因为…">
+      <button class="btn" data-chk="q4" data-a="最低点/3/最小值">对照一下</button>
+    </div>
+    <div class="fb" id="f4"></div>
+  </div>
+
+  <div class="qa">
+    <div class="q">第 2 题　解出 x₁ = 2 这组"假解"的时候，<b>你在写答案之前</b>用什么动作能一秒发现它是假的？</div>
+    <div class="qsub">想想第 4 节第 3 步那段红字</div>
+    <div class="inrow">
+      <input type="text" id="q5" placeholder="代回去看一眼…">
+      <button class="btn" data-chk="q5" data-a="代回/代回去/验算/重合">对照一下</button>
+    </div>
+    <div class="fb" id="f5"></div>
+  </div>
+
+  <div class="qa">
+    <div class="q">第 3 题　如果题目改成"直线 MN 与 x 轴<b>负</b>半轴交于 D"，<b>整个解法哪一步会最先出问题</b>？</div>
+    <div class="qsub">先别算。想清楚 D 跑到负半轴后，tan∠MDO 会变成什么</div>
+    <div class="inrow">
+      <input type="text" id="q6" placeholder="tan 应该是…">
+      <button class="btn" data-chk="q6" data-a="负/-3/-4|负数|为负|正负">对照一下</button>
+    </div>
+    <div class="fb" id="f6"></div>
+  </div>
+
+  <div class="qa">
+    <div class="q">第 4 题　如果 y₂ 的开口<b>朝上</b>（a₂ = +1），这套解法还成立吗？</div>
+    <div class="qsub">重点想：第 2 节那个"顶点在 M 上 → 2b+c₂=7"的式子，顶点式还写不写得出来</div>
+    <div class="inrow">
+      <input type="text" id="q7" placeholder="成立/不成立，因为…">
+      <button class="btn" data-chk="q7" data-a="顶点横坐标|-b|对称轴|中点">对照一下</button>
+    </div>
+    <div class="fb" id="f7"></div>
+  </div>
+
+  <div class="qa" style="border-color:var(--gold-line);background:#fffdf7">
+    <div class="q">第 5 题 ★ <b>什么情况下这个方法会失效？</b></div>
+    <div class="qsub">这题练的是<b>方法的适用边界</b>。想清楚"互为关联"这个定义在什么时候<b>不给数值</b>。</div>
+    <div class="inrow">
+      <input type="text" id="q8" placeholder="当…的时候…">
+      <button class="btn pri" data-chk="q8" data-a="条件/不足/无法/不唯一/少">对照一下</button>
+    </div>
+    <div class="fb" id="f8"></div>
+  </div>
+
+  <div class="note blue" style="margin-top:20px">
+    <b>第 5 题的完整答案（做完再看）：</b><br>
+    这套方法建立在<b>"两个条件 + 一个斜率条件"刚好定一个未知数</b> 上。以下三种情况会失效：<br>
+    <b>① 条件不足</b>——只给一条抛物线，另一条完全自由（第 6 节第 3 题就是这种，b 无法确定）。<br>
+    <b>② 两抛物线顶点重合</b>——退化情形，x=2 那组解必须舍。<br>
+    <b>③ 定义退化成对称情形</b>——如果 y₁ 和 y₂ 恰好是同一条抛物线，"互为"就变成了"自己关联自己"，题目失去意义（所以要验两条方向）。<br>
+    <b>一句话：先数未知数个数，再数有效条件个数。个数不够 → 主动写"条件不足"，不要硬凑答案。</b>
+  </div>
+</div>
+
 <!-- ===== 给家长 ===== -->
 <div class="card parent">
   <h2><span class="n" style="background:#fbbf24;color:#1c1c1e">家长</span>今晚 20 分钟怎么用</h2>
@@ -578,8 +680,9 @@ y₂ = −x² + (5/2)x + 2</div>
     <thead><tr><th>时间</th><th>做什么</th><th>注意什么</th></tr></thead>
     <tbody>
       <tr><td>8 分钟</td><td>让他<b>关掉这一页</b>，重做原题</td><td>重点盯：解出 4x²−13x+10=0 之后，他写什么</td></tr>
-      <tr><td>7 分钟</td><td>做检验题第 1 题</td><td>卡住就回来看第 4 步，别直接给答案</td></tr>
-      <tr><td>5 分钟</td><td>让他讲第 7 节那两个问题</td><td>说不出来 = 只是"看懂"，不是"会用"</td></tr>
+      <tr><td>7 分钟</td><td>做检验题第 1 题（改 tan 值那题）</td><td>卡住就回来看第 4 步，别直接给答案</td></tr>
+      <tr><td>6 分钟</td><td>做检验题<b>第 3 题</b>（问答对调）</td><td>这题他很可能硬算。看他能不能说出"条件不足"</td></tr>
+      <tr><td>5 分钟</td><td>让他讲第 8 节第 5 题（方法何时失效）</td><td>说不出来 = 只是"看懂"，不是"会用"</td></tr>
     </tbody>
   </table>
 
@@ -657,7 +760,7 @@ y₂ = −x² + (5/2)x + 2</div>
     var hit=keys.some(function(k){return val.indexOf(k)>-1;});
     if(hit){
       fb.className='fb show ok';
-      fb.textContent='✓ 对了。'+({q1:'记住"两个方向"这四个字。',q2:'再强调一次：x 是横坐标，纵坐标要回方程里算。',q3:'所以要舍掉，不能两个答案都写。'}[id]||'');
+      fb.textContent='✓ 对了。'+({q1:'记住"两个方向"这四个字。',q2:'再强调一次：x 是横坐标，纵坐标要回方程里算。',q3:'所以要舍掉，不能两个答案都写。',q4:'对。y₁ 的最低点是 3，所以凡是在 y₁ 上的点，纵坐标都 ≥ 3。',q5:'对。"解完先代回去看一眼"是这类题的保命动作。',q6:'对。D 跑到负半轴，tan 会变号——这时候要重新判断锐角/钝角，斜率也变。',q7:'思路对。y₂ 开口朝上时，顶点式仍可写，但顶点的横纵坐标关系会变，别硬套 b/2。',q8:'正是这一点。先数未知数，再数条件——不够就写"条件不足"。'}[id]||'');
     }else{
       fb.className='fb show no';
       fb.textContent='再想想。对照一下参考答案：'+ans;

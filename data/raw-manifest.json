@@ -3,7 +3,7 @@
     "schema": "raw.v1",
     "note": "RAW 原件索引。每条记录指向 RAW/ 下一个已压缩入库的原件；解析产物（错题、卷面结构分析）通过 sourceRaw 字段反向溯源到这里。详见 RAW/README.md",
     "created": "2026-10-02",
-    "updated": "2026-10-02"
+    "updated": "2026-10-03"
   },
   "items": [
     {
@@ -1020,6 +1020,20 @@
       "width": 860,
       "height": 1216,
       "status": "原卷扫描·公开预览",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/错题照片/20261002-数学-第19题-题干裁切.jpg",
+      "kind": "image",
+      "bytes": 78789,
+      "sha256": "83e93ff4603e53a20f18953fd0fb59163657d71827cc44ab38e248b717315c0f",
+      "width": 1668,
+      "height": 262,
+      "originalBytes": 139963,
+      "status": "已入库·待解析",
       "parsed": {
         "wrongIds": [],
         "modules": []

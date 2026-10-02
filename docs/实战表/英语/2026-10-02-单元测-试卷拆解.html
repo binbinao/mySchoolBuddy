@@ -202,19 +202,175 @@ summary:hover{color:var(--ink)}
 <div class="card">
   <h2><span class="n">1</span>各模块得分情况</h2>
   <p class="sub">先看结构，再看细节。哪一块塌得最狠，先补哪一块。</p>
-<div class="note" style="border-left:3px solid #f59e0b;background:#fff8ec;color:#854f0b"><b>⚠️ 待补 · 模块得分结构</b><br><span style="font-size:14px">逐模块的满分与实得必须来自卷面，不能估算。JSON 里补 modules 数组。</span></div>
+
+  <table>
+    <thead><tr><th>模块</th><th>题号</th><th style="text-align:right">满分</th><th style="text-align:right">实得</th><th style="text-align:right">得分率</th><th>卷面依据</th></tr></thead>
+    <tbody>
+      <tr><td><b>I 听力</b></td><td>1-15</td><td style="text-align:right">25</td><td style="text-align:right">25</td><td style="text-align:right">100%</td><td>1-10 图选与对话全对；<b>11 仅错 1 空</b>（stay but balanced → stay balanced），12-15 全对</td></tr>
+      <tr><td><b>II 语法与词汇</b></td><td>16-25</td><td style="text-align:right">10</td><td style="text-align:right">10</td><td style="text-align:right">100%</td><td>16-25 逐题核对，红笔全部为 √，无一订正</td></tr>
+      <tr><td><b>III 完形填空</b></td><td>26-33</td><td style="text-align:right">8</td><td style="text-align:right">7</td><td style="text-align:right">87.5%</td><td>26-32 全对；<b>33 写 D(trusted)，红笔划掉改 C(related)</b></td></tr>
+      <tr><td><b>IV 句子完成</b></td><td>34-38</td><td style="text-align:right">10</td><td style="text-align:right">8</td><td style="text-align:right">80%</td><td>34 ✓、37 ✓、38 ✓；<b>35 漏宾语 it</b>、<b>36 疑有漏词</b></td></tr>
+      <tr><td><b>V-A 匹配</b></td><td>39-43</td><td style="text-align:right">5</td><td style="text-align:right">5</td><td style="text-align:right">100%</td><td>D B E A C，红笔全 √</td></tr>
+      <tr><td><b>V-B 选择</b></td><td>44-48</td><td style="text-align:right">5</td><td style="text-align:right">5</td><td style="text-align:right">100%</td><td>五题红笔全 ✓</td></tr>
+      <tr><td><b>V-C 完形</b></td><td>49-56</td><td style="text-align:right">8</td><td style="text-align:right">8</td><td style="text-align:right">100%</td><td>逐题核对，红笔全 ✓</td></tr>
+      <tr><td><b>V-D 简答</b></td><td>57-60</td><td style="text-align:right">8</td><td style="text-align:right">待确认</td><td style="text-align:right">—</td><td>卷面标注<b>每题 2 分</b>。57 答 In 2026 被红笔划掉（确定失分）；58 老师批注 <i>What was?</i>、59 ✓、60 疑有词数问题，<b>实际失分空数无法从卷面确定</b></td></tr>
+      <tr><td><b>V-D 开放题</b></td><td>61</td><td style="text-align:right">6</td><td style="text-align:right">待确认</td><td style="text-align:right">—</td><td>卷面标注<b>第 61 题 6 分</b>。已作答（给出两条建议），<b>红笔批改未见</b>，得分待老师确认</td></tr>
+      <tr><td><b>VI 写作</b></td><td>62</td><td style="text-align:right">15</td><td style="text-align:right">缺失</td><td style="text-align:right">—</td><td><b>第 8 页仅拍到题目要求，作文正文与批改均未拍摄</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note gold">
+    <b>除写作外，其余 85 分全部可从卷面读出，但无法算出准确总分。</b><br>
+    听力 25 + 语法 10 + 完形 8 + 句子 10 + 阅读 A/B/C 18 + V-D 14 = <b>85 分</b>，这些模块的卷面批改完整、可逐题核对。<br>
+    <b>但 85 分里还有两处得分不明</b>：V-D 的 14 分（57 确定失分，58/60 红笔未明示）与写作 15 分（正文<b>完全没拍到</b>）。<br>
+    <b>所以本页不给总分。</b>已确定失分只有 <b>4 处</b>（第 11、33、35、57 题），<b>写作 15 分的空白比这 4 处加起来还重要</b>。
+  </div>
+
+  <div class="note red">
+    <b>⚠️ 分值纪律说明</b><br>
+    各大题满分（25+10+8+10+5+5+8+8+6+15=100）来自<b>卷面各大题标题处的分值标注</b>，是确凿的。<br>
+    <b>唯一标注了单题分值的是 V-D</b>：卷面写明「第 57 至 60 题，每题 2 分，第 61 题 6 分，共 14 分」——<b>这条是照片上直接读到的，已回填</b>。<br>
+    <b>其余各大题单题分值卷面未标注</b>，因此 11/33/35 三条失分的 <code>full</code>/<code>lost</code> 一律保留 <b>null</b>，<b>不做等分估算</b>。<br>
+    <b>scoreConfirmed 保持 false</b>，待家长核对本卷实际总分后回填。
+  </div>
 </div>
 
 <div class="card">
   <h2><span class="n">2</span>失分在哪</h2>
-  <p class="sub">逐题判分，把「考了多少分」变成「不会什么」。</p>
-<div class="note" style="border-left:3px solid #f59e0b;background:#fff8ec;color:#854f0b"><b>⚠️ 待补 · 逐题失分清单</b><br><span style="font-size:14px">逐题判分是卷面分析的核心，必须逐题看卷。JSON 里补 wrongs 数组，每条记题号、模块、full、lost、cause。</span></div>
+  <p class="sub">逐题判分，把「考了多少分」变成「不会什么」。<br><b>每条都标注了卷面证据</b>——判错因看的是红笔改了什么，不是只看对错。</p>
 
+  <table>
+    <thead><tr><th style="width:7%">题号</th><th style="width:13%">模块</th><th style="width:11%">错因归类</th><th>卷面证据</th><th style="width:30%">错因（看中间步骤判定）</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>11</b></td><td>听力 C</td><td><span class="tag" style="font-size:11.5px;padding:2px 8px;background:#fdf0ee;color:var(--red);border-color:var(--red-line)">审题错误</span></td>
+        <td>写 <code>stay but balanced</code>，红笔把 <b>but</b> 划掉，改为 <code>stay balanced</code></td>
+        <td><b>辨词不细</b>——听到 balanced 但没听出前面的 but。<b>不是听不懂，是听漏了连读</b></td>
+      </tr>
+      <tr>
+        <td><b>33</b></td><td>完形 III</td><td><span class="tag" style="font-size:11.5px;padding:2px 8px;background:#fdf0ee;color:var(--red);border-color:var(--red-line)">概念不清</span></td>
+        <td>写 <b>D (trusted)</b>，红笔划掉改 <b>C (related)</b>；旁边老师批注 <i>related to</i></td>
+        <td><b>语境辨词</b>——"ask a ___ adult or a doctor" 要的是<b>关系</b>，trusted 讲的是信任，语义对不上。<b>查生词表能懂，但没放回句子里读</b></td>
+      </tr>
+      <tr>
+        <td><b>35</b></td><td>句子完成 IV</td><td><span class="tag" style="font-size:11.5px;padding:2px 8px;background:#fdf0ee;color:var(--red);border-color:var(--red-line)">表达不规范</span></td>
+        <td>写 <code>How long have you been learning?</code>，<b>老师红笔在 learning 后补了 it</b> 并画斜线</td>
+        <td><b>动词后漏宾语</b>——<code>learn</code> 是及物动词，必须带 it。<b>句子结构意识够，只是落笔时漏了</b></td>
+      </tr>
+      <tr>
+        <td><b>57</b></td><td>阅读 D<br><span class="hint">每题 2 分</span></td><td><span class="tag" style="font-size:11.5px;padding:2px 8px;background:#fdf0ee;color:var(--red);border-color:var(--red-line)">审题错误</span></td>
+        <td>答 <code>In 2026</code>，<b>红笔打叉</b></td>
+        <td><b>审题错误</b>——问的是 <b>Where</b>（调查在哪儿做的），答的却是文中出现的<b>年份</b>。抓住了一个显眼的名词就作答，没看问句的疑问词</td>
+      </tr>
+      <tr>
+        <td><b>36</b></td><td>句子完成 IV</td><td><span class="tag" style="font-size:11.5px;padding:2px 8px;background:#f1f1f3;color:var(--ink3)">存疑</span></td>
+        <td>写 <code>Does this Saturday morning work for you?</code>，该行<b>未见红笔 √</b></td>
+        <td><b>存疑，不下定论</b>——句子本身通顺。可能被判错，也可能只是<b>批改时漏勾</b>。需对照原卷答案核实</td>
+      </tr>
+      <tr>
+        <td><b>58 / 61</b></td><td>阅读 D</td><td><span class="tag" style="font-size:11.5px;padding:2px 8px;background:#f1f1f3;color:var(--ink3)">存疑</span></td>
+        <td>58 写了两句含"some people are worried… others believe…"，老师批注 <i>What was?</i>；61 已作答但<b>未见批改</b></td>
+        <td><b>存疑</b>——58 可能是表述未落到 paradox 的对比结构上；61 得分需老师确认</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note blue">
+    <b>确定的失分只有 4 处：11、33、35、57。</b>每处都只有 1 个空，<b>且都能在卷面上看到红笔改了什么</b>。<br>
+    <b>这不是一次崩盘的卷子</b>——听力 25/25、语法 10/10、阅读 A/B/C 全部满分，这是相当扎实的底子。
+  </div>
+
+  <div class="note blue" style="margin-top:0">
+    <b>错因按五类归位（统计口径）</b>　审题错误 2 处（11、57）· 概念不清 1 处（33）· 表达不规范 1 处（35）· 存疑 3 处（36、58、61）<br>
+    只有归入五类，统计才知道该往哪排复习。<b>存疑的三处不计入任何一类</b>——没有证据就不归类，这比猜一个更安全。
+  </div>
+
+  <div class="note red">
+    <b>⚠️ 关于分值字段</b><br>
+    上表中<b>只有第 57 题填了分值（2/2）</b>——卷面 V-D 标题写明「每题 2 分」，是直接读到的。<br>
+    <b>其余各题没有填</b>，因为<b>卷面各大题只标了总分（如 IV. 10 分），单题分值未标注</b>。按项目纪律，<b>照片上没有的就是没有，绝不按等分估算</b>，所以 11/33/35 的 <code>full / lost</code> 留 <b>null</b>。<br>
+    <b>后果</b>：目前只能做<b>「题数统计」</b>（4 处失分），<b>做不了「失分点热区分析」</b>（不知道哪块值多少分）。<br>
+    <b>请家长确认本卷各大题的单题分值分配后回填</b>，热区统计才有意义。
+  </div>
 </div>
 
 <div class="card">
   <h2><span class="n">3</span>诊断结论</h2>
-<div class="note" style="border-left:3px solid #f59e0b;background:#fff8ec;color:#854f0b"><b>⚠️ 待补 · 诊断结论</b><br><span style="font-size:14px">「主要失分在哪、为什么、下一步先补什么」——这是全篇最有价值的判断，只能由 AI 或老师做，脚本做不了。</span></div>
+  <p class="sub">这一节是全篇最有价值的部分：<b>主要失分在哪、为什么、下一步先补什么</b>。</p>
+
+  <div class="note blue">
+    <b>一句话结论：这不是一次"考砸"的卷子，是一次"细节漏分"的卷子。</b><br>
+    底子很稳——<b>听力 25/25、语法 10/10、阅读 A/B/C 全对</b>。失分全部集中在<b>「听漏一个词、看错一个词、漏写一个词、看错一个疑问词」</b>上。<br>
+    <b>这类失分最不值钱，也最好治</b>——因为知识点你都会，缺的是<b>收尾检查的动作</b>。
+  </div>
+
+  <h3>失分按性质分两类，救法完全不同</h3>
+  <table>
+    <thead><tr><th>类型</th><th>题目</th><th>共同特征</th><th>救法</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>① 收尾没查</b><br>（占 3/4）</td>
+        <td>35 漏 it<br>36 疑漏词<br>57 看错疑问词</td>
+        <td><b>句子/答案的主体都对，只差最后一个动作</b>——漏宾语、没回读问句</td>
+        <td><b>固定检查动作</b>，不是重学：写完读一遍、答完对一次问句</td>
+      </tr>
+      <tr>
+        <td><b>② 语感/辨词</b><br>（占 1/4）</td>
+        <td>11 听漏 but<br>33 trusted/related</td>
+        <td><b>需要"在语境里重新过一遍"</b>，光背单词表不够</td>
+        <td>针对性重练：精听连读 + 语境辨词</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>下一步先补什么（按优先级）</h3>
+  <div style="display:grid;grid-template-columns:1fr;gap:11px;margin:16px 0">
+    <div class="box" style="border-color:var(--red-line);background:var(--red-soft)">
+      <div style="font-size:12.5px;color:var(--red);font-weight:600;margin-bottom:6px">第 0 优先 · 先把信息补齐，不是先补课</div>
+      <div style="font-size:14.5px;line-height:1.8">
+        <b>补拍第 8 页右栏与第 9 页（写作 VI，15 分）。</b>本卷写作正文<b>完全没拍到</b>，15 分的卷面无从判断。<br>
+        <b>这是当前最大的未知数</b>——15% 的分值是盲区。在补齐之前，任何"下一步怎么补"的排序都只是猜测。
+      </div>
+    </div>
+    <div class="box" style="border-color:var(--gold-line);background:var(--gold-soft)">
+      <div style="font-size:12.5px;color:var(--gold);font-weight:600;margin-bottom:6px">第 1 优先 · 语篇一致性（性价比最高）</div>
+      <div style="font-size:14.5px;line-height:1.8">
+        第 33 题暴露的是<b>"认识单词但读不出句意"</b>。建议做一件事：<br>
+        <b>把 IV 大题（句子完成 34-38）和 III 完形（26-33）的 11 句话，每句朗读一遍并口译成中文。</b><br>
+        <b>只花 15 分钟</b>，但能同时压住 33 和 35 两类失分。
+      </div>
+    </div>
+    <div class="box" style="border-color:var(--blue-line);background:var(--blue-soft)">
+      <div style="font-size:12.5px;color:var(--blue);font-weight:600;margin-bottom:6px">第 2 优先 · 问答配对训练</div>
+      <div style="font-size:14.5px;line-height:1.8">
+        第 57 题是<b>典型的问句词没读</b>：问 Where 答了年份。<br>
+        建议：简答题（57-60）<b>强制先圈疑问词</b>，写完再回读一遍问句。这是<b>纯动作训练</b>，一周就能形成习惯。
+      </div>
+    </div>
+    <div class="box" style="border-color:var(--line2);background:#fafafb">
+      <div style="font-size:12.5px;color:var(--ink2);font-weight:600;margin-bottom:6px">第 3 优先 · 听力精听（可延后）</div>
+      <div style="font-size:14.5px;line-height:1.8">
+        第 11 题漏的是连读里的 but，属于<b>听辨精度</b>问题，<b>不是听不懂</b>。<br>
+        <b>优先级排在后面</b>——因为只错 1 空，且其余 14 空全对，说明整体听力没问题，<b>不值得占用大量时间</b>。
+      </div>
+    </div>
+  </div>
+
+  <div class="note red">
+    <b>⚠️ 三条纪律说明（请家长留意）</b><br><br>
+    <b>① 分数未确认。</b>本次判分全部基于<b>红笔批改痕迹</b>，卷面<b>未见总分</b>，也未见各大题的单题分值分布。
+    <code>scoreConfirmed</code> 保持 <b>false</b>，<code>score.got / score.full</code> 留 <b>null</b>。<b>请勿把本页数字当作最终成绩。</b><br><br>
+    <b>② 第 36、58、61 三题不下定论。</b>这三处<b>未见明确的红笔订正</b>，可能是真错，也可能只是老师漏勾。
+    <b>本报告不替老师判断</b>，已单列为"存疑"并保留待办。<br><br>
+    <b>③ 无官方答案卷。</b><code>RAW/试卷答案/</code> 目录<b>为空</b>，本卷<b>没有任何官方答案可对照</b>。
+    所有 answerKey 字段均为<b>依据题目与红笔批改反推</b>得出，<b>不能替代原始答案</b>。
+  </div>
+
+  <div class="note gold" style="margin-bottom:0">
+    <b>最后一句给家长：</b><br>
+    这张卷子<b>不需要焦虑</b>。能看到批改的 85 分里，已确定的失分只有 4 个空，<b>而且每一个都是"会但没做全"</b>。<br>
+    <b>真正要做的不是加练，而是给已有动作加一个"最后检查"</b>——这件事今晚就能开始。
+  </div>
 </div>
 
 
