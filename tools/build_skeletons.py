@@ -439,15 +439,17 @@ def build_wrong_page(item, out_path, manifest, qno=None):
     short = (re.sub(r"^\s*(第\s*\d+\s*题|q\d+\s*[.、．]?)\s*", "", title_text)
              or "错题")[:22].strip(" ，,。.")
 
-    # 原图引用：sourceRaw 指向 RAW/，从输出目录算相对路径
+    # 原图引用：sourceRaw 指向 RAW/，从输出目录算相对路径。
+    # 允许字符串或数组——一道题可能跨多张原卷裁切，或题干与解答分处两页。
     src = item.get("sourceRaw")
+    srcs = [src] if isinstance(src, str) else list(src or [])
     imgs = []
-    if src:
-        abs_src = os.path.join(ROOT, src)
+    for s in srcs:
+        abs_src = os.path.join(ROOT, s)
         if os.path.exists(abs_src):
-            imgs.append((rel(out_path, abs_src), "原卷照片（原件层，含批改与手写）"))
+            imgs.append((rel(out_path, abs_src), f"原卷照片：{os.path.basename(s)}"))
         else:
-            imgs.append((rel(out_path, abs_src), "⚠️ 原件缺失：" + src))
+            imgs.append((rel(out_path, abs_src), "⚠️ 原件缺失：" + s))
 
     # 是否已有 AI 补全过的完整页面
     ref = item.get("refinedPage")
@@ -831,10 +833,48 @@ def build_exam_page(exam, out_path, q):
         verdict = todo_block("诊断结论", "「主要失分在哪、为什么、下一步先补什么」——"
                                      "这是全篇最有价值的判断，只能由 AI 或老师做，脚本做不了。")
 
+    # 原卷照片：多页试卷全部列出，孩子要能自己翻原卷核对
+    src = exam.get("sourceRaw")
+    srcs = [src] if isinstance(src, str) else list(src or [])
+    if srcs:
+        rows = []
+        for s in srcs:
+            ap = os.path.join(ROOT, s)
+            p = rel(out_path, ap)
+            cap = os.path.basename(s) if os.path.exists(ap) else "⚠️ 原件缺失：" + s
+            rows.append(f'<p class="cap">{esc(cap)}</p>\n      '
+                        f'<img class="scan" src="{esc(p)}" alt="{esc(cap)}">')
+        scan_block = f"""<details>
+    <summary>看本次考试的整卷照片（{len(srcs)} 页）</summary>
+    <div class="dbody">
+      {''.join(rows)}
+      <p class="hint">原件在 <code>RAW/试卷/</code>，已入库 Git。判分如有争议，翻这里核对。</p>
+    </div>
+  </details>"""
+    else:
+        scan_block = todo_block(
+            "整卷照片", "试卷记录缺 sourceRaw。把 RAW/试卷/ 下的卷面照片路径填进 sourceRaw，"
+                       "报告才能附上证据，孩子也能自己复核判分。")
+
+    # 待补清单：把 JSON 里的 todo 直接搬上来，避免家长/AI 漏掉步骤
+    todo_list = exam.get("todo") or []
+    if todo_list:
+        lis = "".join(f"<li>{esc(t)}</li>" for t in todo_list)
+        todo_html = f"""  <details>
+    <summary>录入待办（点开展开）</summary>
+    <div class="dbody">
+      <ol style="margin:0;padding-left:20px;font-size:14px;line-height:1.9">{lis}</ol>
+    </div>
+  </details>"""
+    else:
+        todo_html = ""
+
     body = f"""<div class="card orig">
   <h2><span class="n" style="background:var(--ink)">卷</span>本次考试</h2>
   <p class="sub">{esc(date)} · {esc(name)}</p>
   <div class="stmt" style="font-size:14.5px">{esc(score_line)}</div>
+  {scan_block}
+  {todo_html}
 </div>
 
 <div class="card">

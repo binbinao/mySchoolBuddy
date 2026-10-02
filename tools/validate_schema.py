@@ -188,15 +188,19 @@ def check_wrong(rep, rawmap):
                          "只看最终答案会误判——「方法没想到」和「概念不清」救法完全相反")
 
             # 溯源纪律
+            # sourceRaw 允许是字符串（单张错题照片）或数组（跨页/多张原卷）。
             src = it.get("sourceRaw")
-            if not src:
+            srcs = [src] if isinstance(src, str) else (src or [])
+            if not srcs:
                 rep.warn(where, "缺 sourceRaw", "无法回溯到原卷，断链的记录等于没有证据")
-            elif src not in rawmap:
-                if os.path.exists(os.path.join(ROOT, src)):
-                    rep.err(where, f"sourceRaw 未登记进 raw-manifest：{src}",
+            for s in srcs:
+                if s in rawmap:
+                    continue
+                if os.path.exists(os.path.join(ROOT, s)):
+                    rep.err(where, f"sourceRaw 未登记进 raw-manifest：{s}",
                             "跑 tools/ingest-raw.sh 补登记")
                 else:
-                    rep.err(where, f"sourceRaw 指向的文件不存在：{src}",
+                    rep.err(where, f"sourceRaw 指向的文件不存在：{s}",
                             "原件丢失。检查 RAW/ 下是否被误删或误移")
 
             # 题号
@@ -269,9 +273,22 @@ def check_exams(rep, rawmap):
 
             if not ex.get("verdictHtml") and not ex.get("verdict"):
                 rep.warn(where, "缺诊断结论", "「主要失分在哪、下一步先补什么」是报告的价值所在")
+
+            # sourceRaw 可以是字符串（单页）或数组（多页试卷），
+            # 两种都要校验——多页试卷是常态，不能只当字符串处理。
             src = ex.get("sourceRaw")
-            if src and src not in rawmap and not os.path.exists(os.path.join(ROOT, src)):
-                rep.err(where, f"sourceRaw 指向的文件不存在：{src}", "")
+            srcs = [src] if isinstance(src, str) else (src or [])
+            if not srcs:
+                rep.warn(where, "缺 sourceRaw", "无法回溯到原卷，断链的记录等于没有证据")
+            for s in srcs:
+                if s in rawmap:
+                    continue
+                if os.path.exists(os.path.join(ROOT, s)):
+                    rep.err(where, f"sourceRaw 未登记进 raw-manifest：{s}",
+                            "跑 tools/ingest-raw.sh 补登记")
+                else:
+                    rep.err(where, f"sourceRaw 指向的文件不存在：{s}",
+                            "原件丢失或被误移。检查 RAW/ 下是否还在")
             rep.ok()
 
 
