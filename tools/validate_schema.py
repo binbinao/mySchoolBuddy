@@ -264,12 +264,26 @@ def check_exams(rep, rawmap):
                             "可能是漏记了某道失分题，或分值填错")
 
             for w in ws:
+                # 字段名是 qno 不是 no——写错会让所有报错都显示「第?题」，
+                # 等于把错误藏起来，比不校验更糟。
+                wq = w.get("qno", "?")
                 wf, wl = w.get("full"), w.get("lost")
+                wpending = w.get("scorePending")
+                # 分值纪律对逐题失分同样成立：卷面没标分值就是没有，不能估算。
+                # （2026-10-03 修：此前只校验了错题 items，exam.wrongs 完全漏网，
+                #   q36/q58/q61 分值为 null 却没标 scorePending，统计会当成 0 失分。）
+                if wf is None or wl is None:
+                    if wpending is not True:
+                        rep.err(where, f"第{wq}题 分值缺失但 scorePending 不是 true",
+                                "缺分值又不标记，失分热区会把它当成没失分——最危险的一类错")
+                elif wpending is True:
+                    rep.err(where, f"第{wq}题 分值齐全但 scorePending 仍为 true",
+                            "该回填分值并去掉标记，否则永远进不了热区统计")
                 if wf is not None and wl is not None and wl > wf:
-                    rep.err(where, f"第{w.get('no','?')}题 失分 {wl} > 满分 {wf}", "数值不合法")
+                    rep.err(where, f"第{wq}题 失分 {wl} > 满分 {wf}", "数值不合法")
                 c = w.get("cause")
                 if c and c not in CAUSES:
-                    rep.warn(where, f"第{w.get('no','?')}题 错因不在五类之内：{c}", "")
+                    rep.warn(where, f"第{wq}题 错因不在五类之内：{c}", "")
 
             if not ex.get("verdictHtml") and not ex.get("verdict"):
                 rep.warn(where, "缺诊断结论", "「主要失分在哪、下一步先补什么」是报告的价值所在")

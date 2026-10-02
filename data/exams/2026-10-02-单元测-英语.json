@@ -22,7 +22,7 @@
         "full": null
       },
       "scoreConfirmed": false,
-      "scoreNote": "总分 100 由卷面各大题标题处标注的分值相加确认：I 听力 25 + II 语法 10 + III 完形 8 + IV 句子完成 10 + V 阅读 32 + VI 写作 15 = 100。阅读 V 的 32 分由子题相加确认：A 5 + B 5 + C 8 + D 14 = 32。⚠️ 仅 V-D 大题标题明确标注了单题分值（『第 57 至 60 题，每题 2 分，第 61 题 6 分，共 14 分』），故第 57 题的 full/lost 已按卷面回填为 2/2；其余各大题单题分值卷面未标注，对应 wrongs[].full/lost 留 null，不做等分估算。卷面未见总分，且 V-D 14 分中 58/60 的失分空数与写作 15 分正文均无法从照片判定，故 score.got 留 null，scoreConfirmed 保持 false。",
+      "scoreNote": "总分 100 由卷面各大题标题处标注的分值相加确认：I 听力 25 + II 语法 10 + III 完形 8 + IV 句子完成 10 + V 阅读 32 + VI 写作 15 = 100。阅读 V 的 32 分由子题相加确认：A 5 + B 5 + C 8 + D 14 = 32。⚠️ 仅 V-D 大题标题明确标注了单题分值（『第 57 至 60 题，每题 2 分，第 61 题 6 分，共 14 分』），故第 57/58/61 题的 full 已按卷面回填为 2/2/6（读自卷面，非估算）；其中只有第 57 题红笔明确打叉，lost 回填 2，58 与 61 红笔未明示扣空数，lost 留 null 并标 scorePending。其余各大题单题分值卷面未标注（III/IV/V-C 仅有大题总分），对应 wrongs[].full/lost 留 null，不做等分估算。卷面未见总分，且 V-D 58/60 的失分空数与写作 15 分正文均无法从照片判定，故 score.got 留 null，scoreConfirmed 保持 false。",
       "answerKeyNote": "RAW/试卷答案/ 目录为空，本卷无官方答案卷。所有 answerKey 字段均为依据题目与红笔批改反推得出，不能替代原始答案。",
       "modules": [
         {
@@ -164,9 +164,11 @@
           "childAnswer": "Does this Saturday morning work for you?",
           "full": null,
           "lost": null,
+          "scorePending": true,
           "uncertain": true,
           "cause": "审题错误", "causePending": true,
           "causeNote": "该行未见红笔 √。句子本身通顺，可能是真错，也可能只是批改时漏勾。不替老师判断。",
+          "scoreNote": "IV 句子完成卷面只标大题 10 分，未标单题分值，故 full/lost 一律留 null，不做 10÷5 的等分估算。",
           "note": "需对照原卷标准答案与老师确认"
         },
         {
@@ -174,12 +176,14 @@
           "module": "V-D 简答",
           "answerKey": null,
           "childAnswer": "写了两句，含 some people are worried … others believe AI will cut down …",
-          "full": null,
+          "full": 2,
           "lost": null,
+          "scorePending": true,
           "uncertain": true,
           "cause": "表达不规范",
           "causePending": true,
           "causeNote": "无官方答案卷可对照，暂不下定论。",
+          "scoreNote": "满分 2 分读自卷面 V-D 标题「第 57 至 60 题，每题 2 分」，非估算。失分留 null：孩子有作答但首句被涂抹划掉、老师批注 What was?，红笔未明示扣空数，无法确定失 1 空还是 2 空。",
           "note": "需老师确认实际得分"
         },
         {
@@ -187,11 +191,13 @@
           "module": "V-D 开放题",
           "answerKey": null,
           "childAnswer": "已作答，给出两条建议（以 AI 为工具提升自己、learn how AI works）",
-          "full": null,
+          "full": 6,
           "lost": null,
+          "scorePending": true,
           "uncertain": true,
           "cause": "表达不规范", "causePending": true,
           "causeNote": "得分需老师确认。",
+          "scoreNote": "满分 6 分读自卷面 V-D 标题「第 61 题 6 分」，非估算。失分留 null：题目已作答（两句建议，语法基本通顺），但卷面该题无任何红笔批改，无法判定得分。注意这是全卷 V-D 里分值最高的开放题，若长期按 0 失分计入热区会严重误导优先级。",
           "note": "需老师确认实际得分"
         }
       ],
