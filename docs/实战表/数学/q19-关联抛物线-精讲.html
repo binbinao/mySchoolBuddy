@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>q19 关联抛物线 · 精讲</title>
+<style>
+:root{
+  --bg:#ffffff; --page:#fafafa; --card:#ffffff;
+  --ink:#1c1c1e; --ink2:#6e6e73; --ink3:#8e8e93;
+  --line:rgba(0,0,0,.09); --line2:rgba(0,0,0,.14);
+  --gold:#f59e0b; --gold-soft:#fff8ec; --gold-line:#f6d9a0;
+  --blue:#185fa5; --blue-soft:#f0f6fc; --blue-line:#bcd8ef;
+  --red:#c0392b; --red-soft:#fdf0ee; --red-line:#f2c4bd;
+  --green:#0f6e56; --green-soft:#edf7f3; --green-line:#b7ddcf;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04);
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--page); color:var(--ink);
+  font:16px/1.75 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  padding:0 0 96px;
+}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px}
+
+/* ---------- header ---------- */
+header{padding:44px 0 28px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.kicker{font-size:13px;color:var(--ink3);letter-spacing:.04em;margin-bottom:10px}
+h1{font-size:27px;line-height:1.35;font-weight:600;margin:0 0 14px;letter-spacing:-.01em}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:12.5px;padding:4px 11px;border-radius:20px;background:#f1f1f3;color:var(--ink2);border:1px solid var(--line)}
+.tag.hot{background:var(--red-soft);color:var(--red);border-color:var(--red-line)}
+
+/* ---------- card ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:26px 26px 24px;margin-bottom:20px}
+.card>*:first-child{margin-top:0}
+.card>*:last-child{margin-bottom:0}
+h2{font-size:19px;font-weight:600;margin:0 0 6px;letter-spacing:-.005em}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:7px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;margin-right:10px;vertical-align:2px}
+.sub{font-size:14px;color:var(--ink2);margin:0 0 20px}
+h3{font-size:15.5px;font-weight:600;margin:26px 0 10px}
+p{margin:0 0 14px}
+.hint{font-size:13.5px;color:var(--ink3)}
+
+/* ---------- callout ---------- */
+.note{border-radius:11px;padding:15px 17px;font-size:15px;margin:16px 0;border:1px solid}
+.note b{font-weight:600}
+.note.gold{background:var(--gold-soft);border-color:var(--gold-line)}
+.note.blue{background:var(--blue-soft);border-color:var(--blue-line)}
+.note.red{background:var(--red-soft);border-color:var(--red-line)}
+.note.green{background:var(--green-soft);border-color:var(--green-line)}
+
+/* ---------- figure ---------- */
+figure{margin:18px 0 8px;background:#fcfcfd;border:1px solid var(--line);border-radius:12px;padding:10px 6px 4px}
+figure svg{display:block;width:100%;height:auto}
+figcaption{font-size:13px;color:var(--ink3);text-align:center;padding:6px 10px 10px}
+
+/* ---------- code ---------- */
+.code{position:relative;background:#f6f7f9;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 0 14px;font:15px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-x:auto;white-space:pre}
+.copy{position:absolute;top:8px;right:8px;font:12px/1 -apple-system,sans-serif;padding:5px 9px;border-radius:6px;border:1px solid var(--line2);background:#fff;color:var(--ink2);cursor:pointer;opacity:0;transition:opacity .15s}
+.code:hover .copy,.copy:focus-visible{opacity:1}
+.copy:hover{background:#f0f0f2;color:var(--ink)}
+.copy.ok{color:var(--green);border-color:var(--green-line);background:var(--green-soft)}
+
+/* ---------- table ---------- */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;color:var(--ink3);font-weight:500;background:#fafafb}
+tr:last-child td{border-bottom:none}
+.tick{color:var(--green);font-weight:600}
+.cross{color:var(--red);font-weight:600}
+
+/* ---------- steps ---------- */
+.step{border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden;background:#fff}
+.step.done{border-color:var(--green-line)}
+.step-h{display:flex;align-items:flex-start;gap:13px;padding:16px 18px;cursor:pointer;user-select:none}
+.step-h:hover{background:#fafafb}
+.step-n{flex:0 0 27px;height:27px;border-radius:8px;background:#f1f1f3;color:var(--ink2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;margin-top:1px}
+.step.done .step-n{background:var(--green-soft);color:var(--green)}
+.step-t{flex:1;font-size:15.5px;font-weight:600;line-height:1.5}
+.step-a{flex:0 0 auto;color:var(--ink3);font-size:13px;margin-top:5px;transition:transform .2s}
+.step.open .step-a{transform:rotate(90deg)}
+.step-b{display:none;padding:0 18px 18px 58px}
+.step.open .step-b{display:block}
+.step.locked .step-h{opacity:.5;pointer-events:none}
+
+/* ---------- answer box ---------- */
+.box{border-radius:10px;padding:15px 17px;margin:16px 0;font-size:15px;border:1px solid}
+.box-ans{background:var(--green-soft);border-color:var(--green-line)}
+.box-ans .lbl{font-size:12.5px;color:var(--green);font-weight:600;letter-spacing:.03em;margin-bottom:7px}
+.box-key{background:var(--blue-soft);border-color:var(--blue-line);font:16px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;color:var(--blue);text-align:center;padding:17px}
+
+/* ---------- input ---------- */
+.qa{background:#fafafb;border:1px solid var(--line);border-radius:10px;padding:15px 17px;margin:14px 0}
+.qa .q{font-size:15px;font-weight:600;margin-bottom:4px}
+.qa .qsub{font-size:13.5px;color:var(--ink2);margin-bottom:11px}
+.inrow{display:flex;gap:9px;flex-wrap:wrap}
+input[type=text]{flex:1;min-width:170px;padding:10px 13px;border:1px solid var(--line2);border-radius:8px;font:15px/1.5 inherit;background:#fff;color:var(--ink);outline:none}
+input[type=text]:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,158,11,.14)}
+.btn{padding:10px 17px;border:1px solid var(--line2);background:#fff;border-radius:8px;font:15px inherit;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.btn:hover{background:#f4f4f6;color:var(--ink)}
+.btn.pri{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.pri:hover{background:#2c2c2e}
+.fb{font-size:14px;margin-top:10px;display:none;padding-top:10px;border-top:1px dashed var(--line)}
+.fb.show{display:block}
+.fb.ok{color:var(--green)}
+.fb.no{color:var(--ink2)}
+
+/* ---------- reveal ---------- */
+details{border:1px solid var(--line);border-radius:10px;margin:12px 0;background:#fcfcfd}
+summary{cursor:pointer;padding:13px 17px;font-size:14.5px;font-weight:500;color:var(--ink2);list-style:none;display:flex;align-items:center;gap:9px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"";width:0;height:0;border-left:5px solid var(--ink3);border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform .2s;flex:0 0 auto}
+details[open] summary::before{transform:rotate(90deg)}
+summary:hover{color:var(--ink)}
+.dbody{padding:0 17px 15px;border-top:1px solid var(--line);padding-top:14px}
+
+/* ---------- parent ---------- */
+.parent{background:#1c1c1e;color:#f5f5f7;border-radius:var(--r);padding:24px 26px;margin-bottom:20px}
+.parent h2{color:#fff;font-size:18px}
+.parent .sub{color:#a1a1aa}
+.parent table{font-size:14.5px}
+.parent th{background:#2c2c2e;color:#a1a1aa;border-bottom-color:#3a3a3c}
+.parent td{border-bottom-color:#3a3a3c;color:#e8e8ed}
+.parent td:first-child{color:#fbbf24;font-weight:600;width:74px}
+.parent .note{background:#2c2c2e;border-color:#3a3a3c;color:#d4d4d8}
+.parent code{background:#2c2c2e;color:#fbbf24;font:14px ui-monospace,Menlo,monospace;padding:1.5px 6px;border-radius:4px}
+
+/* ---------- progress ---------- */
+.prog{position:sticky;top:0;background:rgba(250,250,250,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:20;padding:11px 0;margin-bottom:8px}
+.prog-in{max-width:780px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:13px;font-size:13px;color:var(--ink2)}
+.bar{flex:1;height:4px;background:#e8e8ec;border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold);width:0;border-radius:3px;transition:width .3s}
+.reset{font-size:12.5px;color:var(--ink3);background:none;border:none;cursor:pointer;padding:2px 4px;text-decoration:underline}
+.reset:hover{color:var(--ink)}
+
+@media(max-width:600px){
+  body{font-size:15.5px}
+  h1{font-size:22px}
+  .card{padding:20px 18px}
+  .step-b{padding-left:18px}
+  .parent{padding:20px 18px}
+}
+</style>
+</head>
+<body>
+
+<div class="prog">
+  <div class="prog-in">
+    <span id="ptxt">还没开始</span>
+    <span class="bar"><i id="pbar"></i></span>
+    <button class="reset" id="rst">重置</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header>
+  <div class="kicker">数学 · 二次函数 · 新定义题</div>
+  <h1>q19 关联抛物线 · 精讲</h1>
+  <div class="meta">
+    <span class="tag">上海卷</span>
+    <span class="tag">沪教版 二次函数</span>
+    <span class="tag">上次诊断：概念不清</span>
+    <span class="tag hot">复核后：方法没想到</span>
+  </div>
+</header>
+
+<!-- ===== 开场 ===== -->
+<div class="card">
+  <div class="note gold">
+    <b>先说结论：你做对了 4 步，错在最后 1 步。</b><br>
+    而且是最可惜的那种错——你连最难的那个方程都列对了，只差"解一下、翻译回去"这两下。
+  </div>
+  <p class="hint">这一页就是带你把那最后一步走通。看完你自己重做一遍，别的都不用管。</p>
+</div>
+
+<!-- ===== 1 看图 ===== -->
+<div class="card">
+  <h2><span class="n">1</span>先别算，先把图看懂</h2>
+  <p class="sub">这道题文字绕，但图形关系其实一句话就能说清。</p>
+
+  <div class="note blue">
+    <b>「关联」的意思是：互相站在对方身上。</b><br>
+    M 是 y₁ 的顶点，但 M <b>站在 y₂ 上</b>；N 是 y₂ 的顶点，但 N <b>站在 y₁ 上</b>。<br>
+    两个方向<b>都要</b>成立，缺一个都不叫关联。
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 680 500" role="img" aria-labelledby="fg1t fg1d">
+      <title id="fg1t">关联抛物线的双向条件示意图</title>
+      <desc id="fg1d">y₁ 开口向上顶点在 M(2,3)，y₂ 开口向下顶点在 N，M 落在 y₂ 上、N 落在 y₁ 上，M N D 三点共线，D 在 x 轴正半轴。</desc>
+      <g stroke="#e8e8ec" stroke-width="0.5">
+        <line x1="100" y1="60" x2="100" y2="440"/><line x1="180" y1="60" x2="180" y2="440"/>
+        <line x1="260" y1="60" x2="260" y2="440"/><line x1="340" y1="60" x2="340" y2="440"/>
+        <line x1="420" y1="60" x2="420" y2="440"/><line x1="500" y1="60" x2="500" y2="440"/>
+        <line x1="580" y1="60" x2="580" y2="440"/>
+        <line x1="60" y1="386" x2="620" y2="386"/><line x1="60" y1="331" x2="620" y2="331"/>
+        <line x1="60" y1="277" x2="620" y2="277"/><line x1="60" y1="223" x2="620" y2="223"/>
+        <line x1="60" y1="169" x2="620" y2="169"/><line x1="60" y1="114" x2="620" y2="114"/>
+      </g>
+      <line x1="60" y1="440" x2="628" y2="440" stroke="#8e8e93" stroke-width="1.2"/>
+      <line x1="100" y1="452" x2="100" y2="48" stroke="#8e8e93" stroke-width="1.2"/>
+      <g font-size="12" fill="#8e8e93" text-anchor="middle">
+        <text x="100" y="466">0</text><text x="180" y="466">1</text><text x="260" y="466">2</text>
+        <text x="340" y="466">3</text><text x="420" y="466">4</text><text x="500" y="466">5</text><text x="580" y="466">6</text>
+      </g>
+      <g font-size="12" fill="#8e8e93" text-anchor="end">
+        <text x="93" y="444">0</text><text x="93" y="390">1</text><text x="93" y="335">2</text>
+        <text x="93" y="281">3</text><text x="93" y="227">4</text><text x="93" y="173">5</text><text x="93" y="118">6</text><text x="93" y="64">7</text>
+      </g>
+      <text x="634" y="445" font-size="13" fill="#6e6e73">x</text>
+      <text x="106" y="42" font-size="13" fill="#6e6e73">y</text>
+      <text x="88" y="452" font-size="13" fill="#6e6e73" text-anchor="end">O</text>
+
+      <line x1="200" y1="247" x2="580" y2="440" stroke="#b4b2a9" stroke-width="1" stroke-dasharray="5 4"/>
+      <text x="392" y="330" font-size="12.5" fill="#8e8e93" transform="rotate(0 392 330)">直线 MN</text>
+
+      <path d="M100 60 Q260 494 420 60" fill="none" stroke="#185fa5" stroke-width="2.4"/>
+      <path d="M60 413 Q100 331 100 331 Q200 163 300 331 Q330 390 348 432" fill="none" stroke="#c0392b" stroke-width="2.4"/>
+
+      <circle cx="217" cy="247" r="6.5" fill="#f0f6fc" stroke="#185fa5" stroke-width="2.2"/>
+      <text x="196" y="232" font-size="15" font-weight="600" fill="#185fa5">N</text>
+      <text x="243" y="240" font-size="12" fill="#185fa5">顶点(1.25, 3.56)</text>
+
+      <circle cx="260" cy="277" r="6.5" fill="#fdf0ee" stroke="#c0392b" stroke-width="2.2"/>
+      <text x="272" y="296" font-size="15" font-weight="600" fill="#c0392b">M</text>
+      <text x="296" y="300" font-size="12" fill="#c0392b">顶点(2, 3)</text>
+
+      <circle cx="580" cy="440" r="6" fill="#fff8ec" stroke="#f59e0b" stroke-width="2.2"/>
+      <text x="586" y="426" font-size="15" font-weight="600" fill="#d97706">D</text>
+      <text x="566" y="466" font-size="12" fill="#d97706" text-anchor="end">(6, 0)</text>
+
+      <text x="446" y="126" font-size="13.5" font-weight="600" fill="#185fa5">y₁ = (x−2)²+3</text>
+      <text x="446" y="360" font-size="13.5" font-weight="600" fill="#c0392b">y₂ = −(x−1.25)²+3.56</text>
+    </svg>
+    <figcaption>这是<b>正确</b>的样子。注意 N 在 M 的<b>左上方</b>，不在右边</figcaption>
+  </figure>
+
+  <h3>为什么 N 在左上，不在右上？</h3>
+  <p>因为直线 MN 是<b>往右下走</b>的（M 高、D 低）。M 在 N 的右边，N 就必须在 M 的左边。这是从图上就能看出来的"位置锁定"。</p>
+  <p>你写的 <code>−(x−6)²−3</code> 把顶点放到了 (6,−3)——那是 <b>D 的正下方</b>，整条抛物线掉到 x 轴以下去了。题目里的 y₂ 顶点必须在 y₁ 上，y₁ 全在 x 轴上方，这一条就过不去。</p>
+</div>
+
+<!-- ===== 2 做对了 ===== -->
+<div class="card">
+  <h2><span class="n">2</span>你已经做对的部分</h2>
+  <p class="sub">先把这部分看清楚——这不是安慰，是事实。</p>
+
+  <table>
+    <thead><tr><th style="width:52%">你写的</th><th>对不对</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>y₁ 展开成 <code>x²−4x+7</code></td><td class="tick">✓</td><td>配方正确</td></tr>
+      <tr><td>M(2, 3)</td><td class="tick">✓</td><td>顶点坐标对</td></tr>
+      <tr><td>D(6, 0)</td><td class="tick">✓</td><td>tan 用对了</td></tr>
+      <tr><td>直线 MN：<code>y = −(3/4)x + 9/2</code></td><td class="tick">✓</td><td>斜率、截距都对</td></tr>
+      <tr><td><b>方程 4x²−13x+10 = 0</b></td><td class="tick">✓</td><td><b>完全正确，一步不差</b></td></tr>
+      <tr><td>顶点写成 (6, −3)</td><td class="cross">✗</td><td>拼凑出来的</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note green">
+    <b>那个方程是这道题最难的一步，你列对了。</b><br>
+    我把标准解法跟你的手写逐字对过，<code>4x²−13x+10=0</code> 和标准答案<b>一模一样</b>。<br>
+    所以你缺的不是"想不到"，是<b>"想到了没往下走"</b>。
+  </div>
+</div>
+
+<!-- ===== 3 断点 ===== -->
+<div class="card">
+  <h2><span class="n">3</span>断点到底在哪</h2>
+  <p class="sub">把两个答案摆一起看。</p>
+
+  <div style="display:grid;grid-template-columns:1fr;gap:12px;margin:18px 0">
+    <div class="box" style="background:var(--red-soft);border-color:var(--red-line)">
+      <div style="font-size:12.5px;color:var(--red);font-weight:600;margin-bottom:7px">你写的</div>
+      <div style="font:16px/1.6 ui-monospace,Menlo,monospace;color:var(--red);font-weight:600">y = −(x−6)² − 3</div>
+      <div style="font-size:13.5px;color:var(--ink2);margin-top:8px">顶点 (6, −3)　← 跑到 x 轴下面去了</div>
+    </div>
+    <div class="box box-ans">
+      <div style="font-size:12.5px;color:var(--green);font-weight:600;margin-bottom:7px">正确的</div>
+      <div style="font:16px/1.6 ui-monospace,Menlo,monospace;color:var(--green);font-weight:600">y = −(x−1.25)² + 3.5625</div>
+      <div style="font-size:13.5px;color:var(--ink2);margin-top:8px">顶点 (1.25, 3.5625)　← 在 y₁ 上 ✓</div>
+    </div>
+  </div>
+
+  <h3>那个 (6, −3) 是怎么来的？</h3>
+  <p>我给你算清楚：</p>
+  <div class="code">6  ← D 的横坐标，直接抄过来
+−3 ← M 的纵坐标 3，取了相反数
+<span class="hint">（大概是觉得"y₂ 开口向下，所以纵坐标要是负的"）</span>
+
+6 和 −3 凑一块儿 → (6, −3)</div>
+
+  <p><b>问题就出在这：</b>你把顶点的横坐标和纵坐标，当成了<b>两个可以随便拿的独立数字</b>。</p>
+  <p>但抛物线的顶点是<b>一个点</b>，它的横坐标和纵坐标<b>被同一个参数绑在一起</b>——b 一变，横纵一起变。你不能一个从 D 那儿拿，一个从 M 那儿拿。</p>
+
+  <div class="note red">
+    <b>一句话总结你的坑：</b><br>
+    方程列对了，解都没解就跑去拼顶点。解出来的 x <b>只是横坐标</b>，纵坐标还得回方程里再算一次——<b>这"再算一次"就是你漏掉的动作。</b>
+  </div>
+</div>
+
+<!-- ===== 4 五步法 ===== -->
+<div class="card">
+  <h2><span class="n">4</span>五步法（一步一个动作）</h2>
+  <p class="sub">点开每一步，先自己想，再看。<b>不要一次全展开。</b></p>
+
+  <!-- step 1 -->
+  <div class="step" data-s="1">
+    <div class="step-h"><div class="step-n">1</div><div class="step-t">把定义翻译成两个条件</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <p>"关联"不是图形，是<b>两条数学条件</b>。新定义题第一件事永远是把它写成式子：</p>
+      <div class="code">条件①  M 站在 y₂ 上  →  把 M 的坐标代进 y₂
+条件②  N 站在 y₁ 上  →  把 N 的坐标代进 y₁</div>
+      <p>两条缺一不可。少一条就解出<b>退化的假答案</b>（下面第 3 步会碰到）。</p>
+      <div class="qa">
+        <div class="q">小试：你觉得"互为关联"这个说法，强调的是<b>一个</b>方向还是<b>两个</b>方向？</div>
+        <div class="qsub">不用写过程，选一个就行</div>
+        <div class="inrow">
+          <input type="text" id="q1" placeholder="一个 / 两个">
+          <button class="btn pri" data-chk="q1" data-a="两个">检查</button>
+        </div>
+        <div class="fb" id="f1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- step 2 -->
+  <div class="step locked" data-s="2">
+    <div class="step-h"><div class="step-n">2</div><div class="step-t">用 M 反推，把 b 定下来</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <p>y₂ 的顶点在 M，说明 M 这个点在 y₂ 的图像上：</p>
+      <div class="code">2b + c₂ = 7</div>
+      <p>这就把 c₂ 绑在 b 上了。y₂ 写成顶点式，顶点横坐标是 <b>b/2</b>：</p>
+      <div class="code">y₂ = −(x − b/2)² + b²/4 + c₂
+顶点 N = ( b/2,  b²/4 + c₂ )</div>
+      <div class="note blue">
+        所以整个题只剩<b>一个未知数 b</b>。<br>
+        <b>关键：b/2 是 N 的横坐标</b>——记住这句，第 4 步全靠它。
+      </div>
+    </div>
+  </div>
+
+  <!-- step 3 -->
+  <div class="step locked" data-s="3">
+    <div class="step-h"><div class="step-n">3</div><div class="step-t">解方程 —— 你缺的就是这步</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <p>把 N 的坐标代进 y₁（条件②）：</p>
+      <div class="code">4x² − 13x + 10 = 0        ← 这就是你写的那个方程
+
+Δ = 13² − 4×4×10 = 169 − 160 = 9
+√Δ = 3
+
+x₁ = (13 + 3)/8 = 2
+x₂ = (13 − 3)/8 = 5/4</div>
+      <div class="note red">
+        <b>为什么 x₁ = 2 要舍掉？</b><br>
+        x=2 代回去，N = (2, 3)，<b>和 M 一模一样</b>。两个顶点重合了，y₂ 就退化成 y₁ 自己——同一个抛物线跟自己"互为关联"没有意义。<br>
+        题目里说的是"互为关联"，<b>默认两个顶点不重合</b>。
+      </div>
+      <div class="note gold">
+        <b>这一步是这类题的固定扣分点。</b>算出一个解就急着写答案，很容易把这个"假解"也写上去。<br>
+        <b>养成习惯：方程解完，先代回去看一眼合不合理。</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- step 4 -->
+  <div class="step locked" data-s="4">
+    <div class="step-h"><div class="step-n">4</div><div class="step-t">把 x 翻译回顶点式 ★ 你的断点</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <div class="note red" style="margin-top:0">
+        <b>★ 这就是你漏掉的动作。慢慢看。</b>
+      </div>
+      <p>解出来的 <code>x₂ = 5/4</code> 是 <b>N 的横坐标</b>。而上一步说过，N 的横坐标 <b>= b/2</b>。所以：</p>
+      <div class="code">5/4 = b/2   →   b = 5/2
+再回条件①：  2×(5/2) + c₂ = 7   →   c₂ = 2
+
+顶点式写回：
+y₂ = −(x − 5/4)² + 57/16
+一般式：
+y₂ = −x² + (5/2)x + 2</div>
+      <h3>为什么纵坐标要"再算一次"</h3>
+      <p>因为 <b>5/4 是 x，不是 y</b>。你不能因为解出了 5/4，就认为顶点的纵坐标也是 5/4。</p>
+      <p>纵坐标只有一条路能拿到：<b>代回 y₂ 算</b>。</p>
+      <div class="code">−(5/4 − 5/4)² + 57/16 = 0 + 57/16 = 57/16   ✓</div>
+      <p>也可以用 y₁ 算：<code>(5/4−2)²+3 = (−3/4)²+3 = 9/16+3 = 57/16</code> ✓ 两条路结果一样，说明没算错。</p>
+      <div class="note blue">
+        <b>把这一步记成一句话：</b><br>
+        解出 x → 这是<b>横</b>坐标 → 顶点的 y <b>回方程里再算</b> → 写成顶点式。
+      </div>
+    </div>
+  </div>
+
+  <!-- step 5 -->
+  <div class="step locked" data-s="5">
+    <div class="step-h"><div class="step-n">5</div><div class="step-t">验证（30 秒，一定要做）</div><div class="step-a">›</div></div>
+    <div class="step-b">
+      <p>两个条件各验一次，心里才踏实：</p>
+      <div class="code">验条件①  M 在 y₂ 上：
+  y₂(2) = −(2 − 5/4)² + 57/16
+       = −(3/4)² + 57/16
+       = −9/16 + 57/16 = 48/16 = 3 = M 的纵坐标   ✓
+
+验条件②  N 在 y₁ 上：
+  y₁(5/4) = (5/4 − 2)² + 3
+          = (−3/4)² + 3
+          = 9/16 + 48/16 = 57/16 = N 的纵坐标   ✓</div>
+      <div class="box box-ans">
+        <div class="lbl">最终答案</div>
+        <div style="font:17px/1.6 ui-monospace,Menlo,monospace;font-weight:600;color:var(--green)">y₂ = −x² + (5/2)x + 2 = −(x − 5/4)² + 57/16</div>
+      </div>
+      <p class="hint">答案用一般式还是顶点式写都行，但务必把 y₂ 前面写上，别只写一个表达式。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 5 那个坑 ===== -->
+<div class="card">
+  <h2><span class="n">5</span>这个坑长什么样</h2>
+  <p class="sub">下次遇到"解方程求顶点"，提醒自己这一句。</p>
+
+  <div class="note gold">
+    <b>横纵坐标不是独立的，是被同一个参数绑着的。</b>
+  </div>
+
+  <p>设 y = ax²+bx+c，顶点横坐标是 <code>−b/2a</code>，纵坐标是 <code>(4ac−b²)/4a</code>。两个里面都有 b。<p class="hint" style="display:inline">b 一动，两个一起动。</p></p>
+
+  <table>
+    <thead><tr><th>你可能的做法</th><th>问题</th></tr></thead>
+    <tbody>
+      <tr><td>横坐标从 D 抄一个，纵坐标从 M 抄一个</td><td class="cross">两个数不配套，不是任何抛物线的顶点</td></tr>
+      <tr><td>解出 x 就直接当顶点写</td><td class="cross">x 只是横坐标，纵坐标缺失</td></tr>
+      <tr><td>解出 x，代回 y₂ 算出 y，再写顶点式</td><td class="tick">✓ 正确路径</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note blue">
+    <b>顺手记一个秒验技巧：</b>如果 y₂ 的顶点在 y₁ 上，那 y₂ 的顶点<b>纵坐标一定 ≥ 0</b>（因为 y₁=(x−2)²+3 最低点是 3）。<br>
+    <b>写出负的顶点纵坐标，不用往下算就知道错了。</b>这一眼能省你两分钟。
+  </div>
+</div>
+
+<!-- ===== 6 检验题 ===== -->
+<div class="card">
+  <h2><span class="n">6</span>两道检验题</h2>
+  <p class="sub"><b>先自己做，答案折叠着。</b>做不出来再展开。</p>
+
+  <h3>第 1 题（原题变式）</h3>
+  <p>y₁ 和 y₂ 的关联关系不变，y₁ 还是 <code>(x−2)²+3</code>，M、N、D 仍共线，D 仍在 x 轴正半轴，但把条件改成：</p>
+  <div class="code">tan∠MDO = 1/2</div>
+  <p>求 y₂ 的解析式。</p>
+
+  <details>
+    <summary>做完了，看思路</summary>
+    <div class="dbody">
+      <div class="code">① 定 D：  3/(d−2) = 1/2  →  d = 8,  D(8,0)
+② 定直线：k = (3−0)/(2−8) = −1/2
+          y = −(1/2)x + 4
+③ 联立：  x²−4x+7 = −(1/2)x+4
+          2x² − 7x + 6 = 0
+④ 求解：  Δ = 49−48 = 1
+          x = 2 或 x = 3/2
+⑤ 舍根：  x=2 → N 落在 (2,3) = M，退化，舍
+          x=3/2 保留
+⑥ 翻译：  b/2 = 3/2 → b = 3
+          2b+c₂=7 → c₂ = 1
+⑦ 写回：  y₂ = −(x − 3/2)² + 13/4
+          = −x² + 3x + 1</div>
+      <p><b>关键一步是 ⑥</b>——和原题一模一样的动作。这就是这套题的全部套路。</p>
+    </div>
+  </details>
+
+  <h3>第 2 题（换个考点，同一手法）</h3>
+  <p>已知顶点 P 的抛物线 <code>y = (x−3)² + 5</code>，与抛物线 <code>y = −x² + 4x + c</code> 互为关联，求 c 的值。</p>
+
+  <details>
+    <summary>做完了，看思路</summary>
+    <div class="dbody">
+      <div class="code">① P 是 y 的顶点 → P(3, 5)
+② P 在 y = −x²+4x+c 上（条件①）：
+   −9 + 12 + c = 5
+   c = 2
+③ 双向检验：抛物线 y=−x²+4x+2 的顶点是 (2, 6)
+   代入 y = (x−3)²+5：  (2−3)²+5 = 1+5 = 6  ✓ 成立
+④ 所以互为关联，c = 2</div>
+      <p>这题 c 很好算，但<b>第 ③ 步的验证不能省</b>——只有 c=2 才能同时满足两个方向。顺手验一遍更稳。</p>
+    </div>
+  </details>
+</div>
+
+<!-- ===== 7 复述 ===== -->
+<div class="card">
+  <h2><span class="n">7</span>说给我听（别跳过）</h2>
+  <p class="sub">这两题答得出来，说明你是真懂了，不只是看懂。</p>
+
+  <div class="qa">
+    <div class="q">1. 解出来的 x 到底是"什么"的坐标？为什么不能直接拿来当顶点的横纵坐标？</div>
+    <div class="qsub">用自己的话写，写不出来就回去看第 4 步</div>
+    <div class="inrow">
+      <input type="text" id="q2" placeholder="在这里说你的理解…">
+      <button class="btn" data-chk="q2" data-a="它是横坐标">对照一下</button>
+    </div>
+    <div class="fb" id="f2"></div>
+  </div>
+
+  <div class="qa">
+    <div class="q">2. x₁ = 2 这组解为什么必须舍掉？</div>
+    <div class="qsub">提示：想想"互为关联"对两个顶点有什么要求</div>
+    <div class="inrow">
+      <input type="text" id="q3" placeholder="N 和 M 重合了…">
+      <button class="btn" data-chk="q3" data-a="N 和 M 重合">对照一下</button>
+    </div>
+    <div class="fb" id="f3"></div>
+  </div>
+</div>
+
+<!-- ===== 给家长 ===== -->
+<div class="card parent">
+  <h2><span class="n" style="background:#fbbf24;color:#1c1c1e">家长</span>今晚 20 分钟怎么用</h2>
+  <p class="sub">这一页是给孩子自用的。下面是给你看的。</p>
+
+  <table>
+    <thead><tr><th>时间</th><th>做什么</th><th>注意什么</th></tr></thead>
+    <tbody>
+      <tr><td>8 分钟</td><td>让他<b>关掉这一页</b>，重做原题</td><td>重点盯：解出 4x²−13x+10=0 之后，他写什么</td></tr>
+      <tr><td>7 分钟</td><td>做检验题第 1 题</td><td>卡住就回来看第 4 步，别直接给答案</td></tr>
+      <tr><td>5 分钟</td><td>让他讲第 7 节那两个问题</td><td>说不出来 = 只是"看懂"，不是"会用"</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <b>别做的事：</b>别让他抄这一页的完整解答。这题的全部价值在第 4 步那个思维转换，抄一遍等于没做。<br><br>
+    <b>可以做的：</b>他讲对了就明确说"这一步你讲对了"。这题的成就感来源不是满分，是他第一次自己想通"解出来的只是横坐标"。
+  </div>
+
+  <div class="note" style="margin-bottom:0">
+    <b>关于诊断：</b>这一题原先判为"概念不清"，复核手写后改为<b>"方法没想到"</b>——因为那个方程他列对了，概念是通的，缺的是方法。<br>
+    这个改动很重要：<b>概念不清要回去读概念，方法没想到只需练一个固定动作。</b>练法完全不同，别搞错方向。
+  </div>
+</div>
+
+<p class="hint" style="text-align:center;padding:20px 0">
+  进度会存在这台设备上 · 做完记得点上面的"重置"清空
+</p>
+
+</div>
+
+<script>
+(function(){
+  var KEY='msb.q19.progress.v1';
+  var steps=Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var bar=document.getElementById('pbar');
+  var ptxt=document.getElementById('ptxt');
+  var opened={};
+
+  try{opened=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){opened={};}
+
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(opened));}catch(e){}}
+
+  function render(){
+    var n=0;
+    steps.forEach(function(s,i){
+      var id=s.dataset.s, isOpen=!!opened[id];
+      s.classList.toggle('open',isOpen);
+      // 锁定判定：第一步永远可开；其余步骤需前一步已展开
+      var prevOpen = i===0 ? true : !!opened[steps[i-1].dataset.s];
+      s.classList.toggle('locked',!prevOpen);
+      s.classList.toggle('done',isOpen);
+      if(isOpen)n++;
+    });
+    var pct=Math.round(n/steps.length*100);
+    bar.style.width=pct+'%';
+    ptxt.textContent = n===0 ? '还没开始' : '五步法 '+n+' / '+steps.length;
+  }
+
+  steps.forEach(function(s,i){
+    s.querySelector('.step-h').addEventListener('click',function(){
+      var id=s.dataset.s;
+      opened[id]=!opened[id];
+      // 开一个就自动开前一个，保证顺序
+      if(opened[id]){for(var j=0;j<i;j++)opened[steps[j].dataset.s]=true;}
+      save();render();
+    });
+  });
+
+  document.getElementById('rst').addEventListener('click',function(){
+    if(!confirm('清空这一页的阅读进度？答案和讲解不受影响。'))return;
+    opened={};save();render();
+  });
+
+  // 填空检查
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest('[data-chk]');
+    if(!btn)return;
+    var id=btn.dataset.chk, ans=(btn.dataset.a||'').trim();
+    var val=(document.getElementById(id).value||'').trim();
+    var fb=document.getElementById('f'+id.slice(1));
+    if(!fb)return;
+    if(!val){fb.className='fb show no';fb.textContent='先写点什么再对答案。';return;}
+    // 宽松匹配：答案关键词都命中就算过
+    var keys=ans.split(/\s*\/\s*/).filter(Boolean);
+    var hit=keys.some(function(k){return val.indexOf(k)>-1;});
+    if(hit){
+      fb.className='fb show ok';
+      fb.textContent='✓ 对了。'+({q1:'记住"两个方向"这四个字。',q2:'再强调一次：x 是横坐标，纵坐标要回方程里算。',q3:'所以要舍掉，不能两个答案都写。'}[id]||'');
+    }else{
+      fb.className='fb show no';
+      fb.textContent='再想想。对照一下参考答案：'+ans;
+    }
+  });
+
+  // 回车即检查
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Enter')return;
+    var t=e.target;
+    if(t&&t.type==='text'){
+      var wrap=t.closest('.qa');
+      if(wrap){var b=wrap.querySelector('[data-chk]');if(b)b.click();}
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
