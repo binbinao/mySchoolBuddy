@@ -187,6 +187,10 @@ else
   [ "$NEWW" -gt 0 ]   && PARTS="${PARTS}错题 ${NEWW} 条，"
   [ "$NEWE" -gt 0 ]   && PARTS="${PARTS}试卷 ${NEWE} 份，"
   [ "$NEWDOC" -gt 0 ] && PARTS="${PARTS}讲义 ${NEWDOC} 份"
+  # 工具/脚本改动单独说明，否则只能写「派生数据与工具改动」这种含糊的话，
+  # 三个月后回头看 git 历史根本想不起来当时改了什么。
+  NEWTOOL=$(git diff --cached --name-only --diff-filter=AM -- tools | wc -l | tr -d ' ')
+  [ "$NEWTOOL" -gt 0 ] && PARTS="${PARTS}工具 ${NEWTOOL} 个"
   [ -z "$PARTS" ] && PARTS="派生数据与工具改动"
   MSG="${MSG}${PARTS}"
 
