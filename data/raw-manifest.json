@@ -41,6 +41,62 @@
           "二次函数"
         ]
       }
+    },
+    {
+      "file": "RAW/试卷/20261002-单元测-英语-p1.jpg",
+      "kind": "image",
+      "bytes": 416349,
+      "sha256": "2755fbe7289f070c9ad3e372caa2e763e58740f7bba5b2ad8744704f1eba6c03",
+      "width": 1989,
+      "height": 1600,
+      "originalBytes": 454846,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷/20261002-单元测-英语-p2.jpg",
+      "kind": "image",
+      "bytes": 482186,
+      "sha256": "0893cab2a52a53fb9b9a0e8aae65db85ae1f8719c6ef3c78bb0c4a59866c7970",
+      "width": 2000,
+      "height": 1520,
+      "originalBytes": 618058,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷/20261002-单元测-英语-p3.jpg",
+      "kind": "image",
+      "bytes": 490001,
+      "sha256": "8bfe63084396d0ac89a8967fc172638a2de02e3f2355e8d72e5c2139ee82543b",
+      "width": 2000,
+      "height": 1554,
+      "originalBytes": 596914,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/试卷/20261002-单元测-英语-p4.jpg",
+      "kind": "image",
+      "bytes": 515554,
+      "sha256": "4c06a47f588d6e278282db2766ebce23f469ad9315f6af4f6d404a6063f19fd5",
+      "width": 2000,
+      "height": 1596,
+      "originalBytes": 600908,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
     }
   ]
 }
