@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "schema": "raw.v1",
+    "note": "RAW 原件索引。每条记录指向 RAW/ 下一个已压缩入库的原件；解析产物（错题、卷面结构分析）通过 sourceRaw 字段反向溯源到这里。详见 RAW/README.md",
+    "created": "2026-10-02",
+    "updated": "2026-10-02"
+  },
+  "items": [
+    {
+      "file": "RAW/错题照片/20261002-数学-第5题.jpg",
+      "kind": "image",
+      "bytes": 293201,
+      "sha256": "676b09ba4bd9eda3c6606dcdac42e8c98c4104195e70d696fddb2144c20aca85",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 366832,
+      "status": "已解析",
+      "parsed": {
+        "wrongIds": [
+          "w-20261002-02"
+        ],
+        "modules": [
+          "相似三角形（平行线分线段成比例）"
+        ]
+      }
+    }
+  ]
+}
