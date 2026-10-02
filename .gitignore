@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 临时文件
+*.tmp
+*.log
+*.bak
+*~
+
+# 隐私：本地导出的数据备份（含孩子个人信息，不入库）
+data/_local/
+data/*.local.json
+*-backup.json
+*-backup-*.json
+
+# 试卷原卷扫描件/图片（体积大且含个人信息，按需本地保留，不入库）
+data/_scans/
+
+# 依赖（tools/ 若引入 Node 工具链）
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# 注意：data/ 下的 JSON 数据文件是有意纳入版本管理的，
+# 这是本项目的核心资产，用于追踪失分结构随时间的变化。
+# 仅排除 data/_local/、data/_scans/ 等本地私有目录。
