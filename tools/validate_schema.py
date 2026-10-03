@@ -254,6 +254,38 @@ def check_exams(rep, rawmap):
                 rep.err(where, f"各模块实得之和 {sum(mgot)} ≠ 试卷得分 {got}",
                         "至少有一个模块的实得记错了")
 
+            # 2026-10-03 第五次核验新增：模块 got 不得与同一模块的失分题自相矛盾。
+            # 背景：听力模块 got=25（满分）却在同一行的 evidence 里写着「11 仅错 1 空」，
+            # 又在 wrongs 里有第 11 题。同一模块不能既满分又失分——这种矛盾肉眼极难发现，
+            # 因为单看哪一处都「像对的」，而且当时 0 错误（说明旧校验器没覆盖这条路径）。
+            for m in mods:
+                mg, mf = m.get("got"), m.get("full")
+                mname = m.get("name", "?")
+                if mg is None or mf is None:
+                    continue
+                # 模块键取第一个词（"I 听力"→I，"V-D 简答"→V-D），
+                # 必须整词相等：曾用 startswith 导致 "I" 命中 "III 完形填空"、
+                # "II" 也命中 "III"，凭空报出两条不存在的错误。
+                def mkey(s):
+                    return str(s or "").strip().split(" ")[0]
+                mk = mkey(mname)
+                if not mk:
+                    continue
+                mws = [w for w in (ex.get("wrongs") or []) if mkey(w.get("module")) == mk]
+                certain = [w for w in mws if w.get("uncertain") is not True]
+                if not certain:
+                    continue
+                if mg >= mf:
+                    rep.err(where,
+                            f"模块「{mname}」got={mg} 已是满分（{mf}），"
+                            f"但该模块有 {len(certain)} 道确定失分题（题号 "
+                            f"{'、'.join(str(w.get('qno', '?')) for w in certain)}）",
+                            "同一模块不能既满分又失分。要么 got 调低，"
+                            "要么把该模块的失分题改标 uncertain/causePending。"
+
+                            "若卷面无单题分值导致实得算不出，正确做法是 got 留 null，"
+                            "而不是写满分——写满分会让失分热区统计整块漏掉这一模块")
+
             # 逐题失分之和应等于总失分
             ws = ex.get("wrongs") or []
             wlost = [w.get("lost") for w in ws if w.get("lost") is not None]
