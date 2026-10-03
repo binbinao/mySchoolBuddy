@@ -1294,6 +1294,159 @@ def check_page_matches_data(rep, rawmap):
     rep.ok()
 
 
+def check_five_stage_paradigm(rep, rawmap):
+    """错题精讲页必须满足「五段范式」，且 HTML 与 JSON 双侧一致（第十三次核验新增）。
+
+    2026-10-04 第十三次核验抓到的缺陷，是前十二轮闸门**全都只审 exams 侧**的必然结果：
+
+      · `check_page_matches_data()` 从 `data/exams/*.json` 取事实，
+        **只校验试卷拆解页与整卷分析页**；
+      · `data/wrong/*.json` 的 `steps` / `variants` / `thinkQuestions` /
+        断点标记**只被检查了「非空」**（第四轮那道「done 但字段为空」），
+        **内容对不对完全没有闸门**；
+      · 而错题精讲页恰恰是**唯一**承载教学判断的产物——它带 `page` 字段却
+        **从来没有被任何页面级闸门读过**。
+
+    回退法自证（这才是发现它的原因）：删掉 q5 全部断点步骤 + 把「问答对调」
+    变式换成普通变式，校验器报 **0 错误**；同样地只改 HTML 侧标题，也报 0 错误。
+    ⇒ 数据层与页面层**双侧失守**，且两个方向都抓不到。
+
+    判定口径全部按 MEMORY「五段范式」的硬性标准，且都选**可自动判定**的信号：
+      ① 变式固定配比 = 简单变式(只改一个数值) + 同类型(换考点同手法)
+         + **问答对调(已知与所求互换)**。第三条 MEMORY 写明「不可省」，
+         因为「很多孩子是记住套路不是真懂，只有对调能测出来」——
+         少一题，整段变式的存在意义就塌了。
+      ② 想五题最后一题必须是「什么情况下这个方法会失效」，
+         这是方法适用边界，也是防死记硬背的唯一一道题。
+      ③ steps 至少一步带 `breakpoint`（断点是精讲页的核心教学结论，
+         没有断点就退化成普通答案解析页）。
+      ④ 每步三件套：动作/依据/检验，缺一即「有跳跃」。
+      ⑤ HTML 侧标题与 JSON 侧 variants 逐条对应，且 HTML 不得残留
+         未被 JSON 承认的变式标题（反之亦然）。
+    """
+    # 五段范式的类型标记：简写形式（页面标题里用「 · 」分隔）也要认
+    KIND_PAT = re.compile(r"(简单变式|只改一个数值|原题变式|同类型|换个考点|换考点|问答对调|对调)")
+
+    for rel_j in sorted(glob.glob(os.path.join(ROOT, "data", "wrong", "*.json"))):
+        rel = os.path.relpath(rel_j, ROOT)
+        d = load(rel_j, rep, rel)
+        if not d:
+            continue
+        for it in d.get("items", []):
+            iid = it.get("id", "?")
+            where = f"{rel}#{iid}"
+
+            # —— ① 变式固定配比 ——
+            vs = it.get("variants") or []
+            if vs:
+                kinds = [KIND_PAT.search(str(v.get("type", ""))) for v in vs]
+                found = [k.group(1) if k else "" for k in kinds]
+                blob = " ".join(found)
+                has_easy = bool(re.search(r"(简单变式|只改一个数值|原题变式)", blob))
+                has_same = bool(re.search(r"(同类型|换个考点|换考点)", blob))
+                has_swap = bool(re.search(r"(问答对调|对调)", blob))
+                missing = [n for n, ok in (("简单变式", has_easy),
+                                           ("同类型", has_same),
+                                           ("问答对调", has_swap)) if not ok]
+                if missing:
+                    rep.err(where,
+                            f"三题变式配比不完整，缺：{'、'.join(missing)}",
+                            "MEMORY 五段范式把配比定为硬性标准："
+                            "简单变式(只改一个数值) + 同类型(换考点同手法) + "
+                            "**问答对调(已知与所求互换)**。问答对调**不可省**——"
+                            "很多孩子是「记住套路」不是「真懂」，只有对调能测出来。")
+                # 简单变式必须真的「只改一个数值」：类型里写「只改一个数值」
+                # 却没有任何数字变化，是自我声明与内容打架
+                for v in vs:
+                    t = str(v.get("type", ""))
+                    if re.search(r"(只改一个数值)", t) and not re.search(r"\d", str(v.get("change", ""))):
+                        rep.err(where,
+                                f"变式标称「{t}」，但 change 里没有任何数值变化",
+                                "「简单变式」的定义就是只改一个数值。名下无实会把这一题"
+                                "降级成换个问法的同类型题，白占一个练习位。")
+
+            # —— ② 想五题最后一题必须是「何时失效」 ——
+            tq = it.get("thinkQuestions") or []
+            if tq:
+                last = tq[-1]
+                qtext = " ".join(str(last.get(k, "")) for k in
+                                 ("q", "question", "text", "title"))
+                if not re.search(r"(失效|不成立|用不了|不适用|边界)", qtext):
+                    rep.err(where,
+                            "想五题最后一题不是「什么情况下这个方法会失效」",
+                            "MEMORY 明定最后一题必须是方法适用边界题。"
+                            "缺了它，学生会把方法当万灵公式，遇到变形就崩。")
+
+            # —— ③ 断点 ——
+            steps = it.get("steps") or []
+            if steps and not any(s.get("breakpoint") for s in steps if isinstance(s, dict)):
+                rep.err(where,
+                        f"{len(steps)} 个 steps 里没有一个带 breakpoint",
+                        "★ 断点是精讲页的核心教学结论——告诉孩子「你卡在哪一步」。"
+                        "没有断点的页面退化成了普通答案解析页，"
+                        "家长按 MEMORY「先建信心再定位断点」的用法也用不了。")
+
+            # —— ④ 每步三件套：动作/依据/检验 ——
+            for idx, s in enumerate(steps, 1):
+                if not isinstance(s, dict):
+                    continue
+                lack = [k for k in ("action", "basis", "check") if not s.get(k)]
+                if lack:
+                    rep.err(where,
+                            f"第 {idx} 步缺 {'/'.join(lack)}",
+                            "MEMORY 要求每步三件套（动作/依据/检验）——"
+                            "「依据」是为了让他能自己推下一步，「检验」是为了当场自查。"
+                            "缺任何一件都会退化成有跳跃的讲解。")
+
+            # —— ⑤ HTML 侧一致性 ——
+            page = it.get("page")
+            if not page:
+                rep.warn(where, "缺 page 字段",
+                         "没有页面路径，JSON 与精讲页无法互相追溯，"
+                         "下面的页面级检查也覆盖不到这条")
+                continue
+            ap_ = os.path.join(ROOT, page)
+            if not os.path.exists(ap_):
+                rep.err(where, f"page 指向的页面不存在：{page}", "链接断裂")
+                continue
+            try:
+                src = open(ap_, encoding="utf-8").read()
+            except Exception:
+                continue
+            # 页面上的变式标题（<h3>第 N 题（…）</h3>）必须与 JSON 的 variants 一一对应
+            heads = re.findall(r"<h3[^>]*>\s*第\s*\d+\s*题（([^）]*)）", src)
+            if heads and len(heads) != len(vs):
+                rep.err(where,
+                        f"页面变式标题 {len(heads)} 个，数据层 variants {len(vs)} 条",
+                        "同一份精讲页的两侧必须一致。第九轮铁律五："
+                        "同一事实散落 N 处，改一处就会漏 N−1 处。")
+            for h, v in zip(heads, vs):
+                # 归一到三类再比，避免「简单变式」与「只改一个数值」被判成打架
+                norm = lambda s: ("简单" if re.search(r"(简单变式|只改一个数值|原题变式)", s)
+                                  else "同类型" if re.search(r"(同类型|换个考点|换考点)", s)
+                                  else "对调" if re.search(r"(问答对调|对调)", s) else "")
+                a, b = norm(h), norm(str(v.get("type", "")))
+                if not a:
+                    # ⚠️ 这个分支是回退法逼出来的：首版写成
+                    #    `if norm(a) != norm(b) and a and b`，
+                    #    于���页面上出现**四类之外的类型名**（如把「问答对调」改成
+                    #    「普通变式 · 随手一题」）时 a 为空 → 条件短路 → **静默放过**。
+                    #    这与第九轮「上一条免责说明替下一条豁免」同型：
+                    #    闸门对「认不出来的东西」必须是**报错**而不是放过。
+                    rep.err(where,
+                            f"页面变式标题「{h}」不属于固定配比的三类",
+                            "三题变式的类型只能是：简单变式(只改一个数值) / "
+                            "同类型(换考点同手法) / 问答对调(已知与所求互换)。"
+                            "写不出属于哪一类，说明这一题没按配比设计——"
+                            "尤其不能拿它顶替问答对调那一题。")
+                elif a != b:
+                    rep.err(where,
+                            f"页面第「{h}」题与数据层「{v.get('type')}」类型不一致",
+                            "页面与数据层说的不是同一件事。以数据层为准，"
+                            "或两边一起改——不要只改一处。")
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -1313,6 +1466,7 @@ def main():
     check_no_fabricated_score(rep, rawmap)
     check_module_got_grounded(rep, rawmap)
     check_page_matches_data(rep, rawmap)
+    check_five_stage_paradigm(rep, rawmap)
     check_papers_derived(rep)
     check_doc_numbers(rep)
     check_data_readme(rep)
