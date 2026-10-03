@@ -79,6 +79,25 @@ tools/build_skeletons.py --dry-run
 
 额外检查：模块满分之和 = 试卷总分、逐题失分之和 = 总失分、错因在五类之内、已判错因但没附中间步骤判读。
 
+覆盖的**数据入口**共 5 个（漏掉任何一个入口，该入口的数据就等于无约束）：
+
+| 入口 | 查什么 |
+|---|---|
+| `data/raw-manifest.json` | sha256 与文件一致 |
+| `data/wrong/` | 分值纪律、溯源 |
+| `data/exams/` | 分值纪律、**模块 got 不得与本模块确定失分题矛盾** |
+| `data/tasks/` | 标记 done 的任务，其 `fields` 在数据层不得为空；`meta.pending` 与实际待办数一致 |
+| `data/resources/` | `count` 对条数、`stats` 三项之和恒等、`fetched` 对实际 rawFile 数、**`unchanged` 即报错** |
+
+另有 3 项跨层闸门：
+
+- **`check_cause_enum()`** — 错因五类枚举在 7 处定义点（方法论表格 / `CAUSES` / 两个 `<select>` / `app` 的 `ci` 着色表 / README 示例 / 生成器 `CAUSE_TONE`）必须逐字一致。缺项会静默退化成灰色 chip，**属「看起来正常、实际失效」**。
+- **`check_embedded_snapshots()`** — 页面内嵌的数据副本（如试卷地图页的 `const DATA`）必须与数据层**逐字节相同**。副本一旦漂移，页面不会报错，只会让内容静默过期。
+- **派生量恒等** — 能被算出来的数字不要手写。`meta.stats` 由 `papers` 现算，三项之和恒等于 `count`。
+
+> ⚠️ **闸门出假阳性 = 把真错误淹掉。** 上线前先跑一次看它报什么：已踩过两次坑（`startswith` 匹配模块名让「I」误命中「III」凭空多报 2 条；把筛选器哨兵值 `value=""`／文本「全部」当枚举外值误报）。
+> ⚠️ **回退法自证**：改完闸门要手动制造违规，确认它**立刻**抓得出；抓不出说明检查根本没生效。
+
 ```bash
 tools/validate_schema.py           # 有错误 exit 1
 tools/validate_schema.py --warn    # 有问题也 exit 0

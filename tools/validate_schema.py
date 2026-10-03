@@ -609,6 +609,115 @@ def check_resources(rep, rawmap):
         rep.ok()
 
 
+def check_embedded_snapshots(rep):
+    """页面内嵌的数据副本必须与数据层逐字节相同（第八次核验新增）。
+
+    2026-10-03 第八次核验发现的第八类缺陷，也是前七轮**全部漏网的方向**：
+    前七轮查的全是「数据层内部是否自洽」「数据层与手写数字是否一致」，
+    从未查过**页面里冻结的那份数据副本**。
+
+    真实缺陷：docs/实战表/上海试卷地图.html 第 93 行 `const DATA = {...}`
+    是 data/resources/shanghai-papers.json 的一份**手工拷贝**，
+    拷贝之后数据层被第七轮修正（count 17→21、fetched 0→11、删除 unchanged），
+    **页面一个字节都没跟着变**。后果：
+      · 页面少渲染 4 张试卷卡片（2021中考数学 / 2022中考数学 / 2022真题-武 / 2026道法）
+      · meta.count 与 meta.stats 是**死字段**，页面上没有任何一处显示它们
+        ——统计数字错了反而没人看得见，真正吃亏的是那 4 张消失的卡片
+      · 页面还带着已从数据层删除的 `unchanged: 10` 概念
+
+    为什么七道闸门都抓不到：闸门全部作用于「磁盘上的 JSON 文件」，
+    而漂移发生在「JSON 被拷进 HTML 之后」。按定义 grep JSON 查不到它；
+    打开页面肉眼看，四张卡片少了几张也不会有人立刻察觉。
+
+    处置原则不是「再手工同步一次」（那只是把漂移推迟到下次采集），
+    而是**让副本可被机器验证**——漂移一旦产生就报错，采集脚本改动即刻可见。
+    """
+    pairs = [
+        ("docs/实战表/上海试卷地图.html", "const DATA = ",
+         "data/resources/shanghai-papers.json", "上海试卷地图页"),
+    ]
+    for rel_html, marker, rel_json, label in pairs:
+        hp = os.path.join(ROOT, rel_html)
+        if not os.path.exists(hp):
+            continue
+        src = open(hp, encoding="utf-8").read()
+        i = src.find(marker)
+        if i < 0:
+            continue
+        i += len(marker)
+        # 平衡括号，取出完整对象字面量
+        depth, j, instr, esc = 0, i, False, False
+        while j < len(src):
+            c = src[j]
+            if instr:
+                if esc:
+                    esc = False
+                elif c == "\\":
+                    esc = True
+                elif c == '"':
+                    instr = False
+            else:
+                if c == '"':
+                    instr = True
+                elif c == "{":
+                    depth += 1
+                elif c == "}":
+                    depth -= 1
+                    if depth == 0:
+                        break
+            j += 1
+        else:
+            rep.err(rel_html, f"{marker.strip()} 对象未闭合，无法校验内嵌副本",
+                    "内嵌数据块结构损坏，页面可能整体报错")
+            continue
+        block = src[i:j + 1]
+
+        jd = os.path.join(ROOT, rel_json)
+        if not os.path.exists(jd):
+            continue
+        disk = load(jd, rep, rel_json)
+        if not disk:
+            continue
+        expect = json.dumps(disk, ensure_ascii=False, indent=1)
+        if block == expect:
+            continue
+
+        # 漂移已发生 —— 报出具体差异，而不是只说「不一致」
+        try:
+            pg = json.loads(block)
+        except Exception as e:
+            rep.err(rel_html, f"内嵌副本不是合法 JSON：{e}",
+                    f"{label} 的 {marker.strip()} 块已损坏")
+            continue
+        ds, ps = disk.get("meta", {}), pg.get("meta", {})
+        diffs = []
+        dc, pc = ds.get("count"), ps.get("count")
+        if dc != pc:
+            diffs.append(f"count 数据层 {dc} / 页面 {pc}")
+        dsta, psta = ds.get("stats") or {}, ps.get("stats") or {}
+        for k in sorted(set(dsta) | set(psta)):
+            if dsta.get(k) != psta.get(k):
+                diffs.append(f"stats.{k} 数据层 {dsta.get(k)} / 页面 {psta.get(k)}")
+        dnames = {p.get("id") for p in disk.get("papers", []) if isinstance(p, dict)}
+        pnames = {p.get("id") for p in pg.get("papers", []) if isinstance(p, dict)}
+        if dnames != pnames:
+            only_disk = sorted(dnames - pnames)
+            only_page = sorted(pnames - dnames)
+            if only_disk:
+                diffs.append(f"数据层有 {len(only_disk)} 条页面没有：{'、'.join(only_disk[:6])}")
+            if only_page:
+                diffs.append(f"页面有 {len(only_page)} 条数据层没有：{'、'.join(only_page[:6])}")
+        rep.err(rel_html,
+                f"{label}内嵌的数据副本与 {rel_json} 已漂移：" + "；".join(diffs),
+                "页面把数据层拷了一份手工副本，两边从此各活各的。"
+                "副本漂移不会让页面报错，只会让内容静默过期——"
+                "少掉的卡片没人会发现。"
+                "修复：用数据层重新生成该内嵌块"
+                f"（json.dumps(d, ensure_ascii=False, indent=1)），"
+                "不要手工改数字")
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -624,6 +733,7 @@ def main():
     check_tasks(rep, rawmap)
     check_resources(rep, rawmap)
     check_cause_enum(rep)
+    check_embedded_snapshots(rep)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 
