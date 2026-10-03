@@ -262,8 +262,7 @@ def main():
                 "sourceUrl": VIEW.format(pid=pid),
                 "paperId": pid,
                 "access": "preview",
-                "trust": "medium",
-                "trustLevel": "B",
+                "trustLevel": "medium",
                 "trustNote": "组卷网公开详情页题干全文；公式以下标/纯文本呈现，"
                              "几何图形与作图缺失，扫描版原卷需另找。",
                 "rawFile": None,
@@ -278,6 +277,10 @@ def main():
     print(f"\n索引合计 {len(papers)} 套", flush=True)
     if a.list_only:
         idx["meta"]["updated"] = datetime.now().strftime("%Y-%m-%d")
+        # 派生量一律现算，否则 --list-only 会让索引与 papers 脱节
+        idx["meta"]["count"] = len(papers)
+        idx["subjects"] = sorted({p["subject"] for p in papers if p.get("subject")})
+        idx["regions"] = sorted({p["region"] for p in papers if p.get("region")})
         with open(INDEX, "w", encoding="utf-8") as f:
             json.dump(idx, f, ensure_ascii=False, indent=2)
         print("已写索引（list-only）")
@@ -364,6 +367,12 @@ def main():
                           "fetched=有 rawFile 的条数，failed=有 fetchError 的条数，"
                           "metaOnly=其余（尚未抓取全文）")
     idx["meta"]["stats"] = recomputed
+    # 2026-10-03 第十次核验补：顶层 subjects / regions 同样是 papers 的派生量。
+    # 本脚本此前只重算 count 与 stats，漏了这两个列表 ⇒ 采集一次就把它们弄漂移
+    # （真实故障：subjects 漏「道德与法治」，页面科目统计条少算1）。
+    # 与 stats 同理，一律现算，不留手写副本。
+    idx["subjects"] = sorted({p["subject"] for p in papers if p.get("subject")})
+    idx["regions"] = sorted({p["region"] for p in papers if p.get("region")})
     with open(INDEX, "w", encoding="utf-8") as f:
         json.dump(idx, f, ensure_ascii=False, indent=2)
     man["meta"]["updated"] = datetime.now().strftime("%Y-%m-%d")

@@ -143,7 +143,10 @@ def main():
             "access": s.get("access", "unknown"),
             "accessNote": s.get("accessNote", ""),
             "curriculumNote": s.get("curriculumNote", ""),
-            "trusthLevel": s.get("trust", "unverified"),
+            # 字段名是 trustLevel（Level 前只有一个 t）。历史写成 trusthLevel，
+            # 而 scan_zujuan_papers.py 用的是正确拼写，两边写同一个 JSON →
+            # 采集一次就让索引里同时出现两种键，页面读 trusthLevel 时新条目静默失效。
+            "trustLevel": s.get("trust", "unverified"),
             "trustNote": s.get("trustNote", ""),
             "hasAnswer": s.get("hasAnswer", "unknown"),
             "rawFile": None,

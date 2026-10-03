@@ -34,6 +34,10 @@ CAUSES = {"概念不清", "方法没想到", "计算失误", "审题错误", "�
 # 下面的 check_cause_enum() 负责让执行器与规范源保持一致。
 CAUSE_DOC = "docs/方法论/错因分类与复习排期.md"
 
+# 试卷索引的信任度值域。历史上有两套刻度并存：主索引用这套，
+# scan_zujuan_papers.py 曾写 "B"。两套混在一列里，页面统计条会把新条目算漏。
+TRUST_LEVELS = {"high", "medium", "unverified", "suspect"}
+
 
 class Report:
     def __init__(self, quiet=False):
@@ -829,6 +833,125 @@ def check_no_fabricated_score(rep, rawmap):
     rep.ok()
 
 
+def check_papers_derived(rep):
+    """试卷索引的派生字段与采集脚本的字段名必须自洽（第十次核验新增）。
+
+    第十次核验抓到第十类缺陷：**同一个概念在仓库里有两套拼写**。
+      · fetch_shanghai_papers.py 写`trusthLevel`（Level 前多一个 h，21 条全是它）
+      · scan_zujuan_papers.py 写 `trustLevel`（正确拼写）
+      · 页面六处读 `p.trusthLevel`
+    两个采集脚本写的是**同一个JSON 文件**，所以跑一次 zujuan 采集，
+    索引里就会同时出现两种键。后果全是静默的：
+      · 页面统计条「标注存疑」恒为 0——`filter(p=>p.trusthLevel==="suspect")`
+        对新条目取到 undefined，一条都不匹配
+      · 存疑徽章与筛选器对新条目全部失效
+      · 页面不报错、卡片照常渲染，肉眼完全看不出已经坏了
+    值域也分叉：主文件用 high/medium/unverified/suspect，zujuan 脚本曾写 "B"。
+
+    同一轮还发现 `subjects` 是**手工维护的派生列表**（第七类的同型复发）：
+    它漏了「道德与法治」，而页面统计条正是读它 ⇒ 科目数少算 1。
+    派生量原则：能被算出来的不要手写。
+    """
+    rel = "data/resources/shanghai-papers.json"
+    p = os.path.join(ROOT, rel)
+    if not os.path.exists(p):
+        return
+    d = load(p, rep, rel)
+    if not d:
+        return
+    papers = [x for x in d.get("papers", []) if isinstance(x, dict)]
+
+    # 1) trustLevel 拼写必须唯一，且不得残留历史错拼
+    typo = [x.get("id") for x in papers if "trusthLevel" in x]
+    if typo:
+        rep.err(rel, f"{len(typo)} 条仍用错拼 trusthLevel：{'、'.join(typo[:5])}",
+                "这是历史错拼（Level 前多一个 h）。页面按 trustLevel 读，"
+                "这些条目会静默失去存疑徽章/筛选/统计——"
+                "页面不报错，只是内容悄悄失效。改数据层字段名，别改页面。")
+    # 2) 每条都必须有 trustLevel，且取值在主值域内
+    for x in papers:
+        v = x.get("trustLevel")
+        if v is None:
+            rep.err(rel, f"{x.get('id', '?')} 没有 trustLevel",
+                    "存疑徽章、筛选与「标注存疑」统计条都读它，缺了就当非存疑")
+        elif v not in TRUST_LEVELS:
+            rep.err(rel, f"{x.get('id', '?')} 的 trustLevel={v!r} 不在值域内",
+                    f"值域是 {'/'.join(sorted(TRUST_LEVELS))}。"
+                    "zujuan 采集脚本曾写 'B'，那是另一套刻度，会让统计条把新条目算漏")
+
+    # 3) 派生列表必须与 papers 现算一致（不手写派生量）
+    for key, pick in (("subjects", "subject"), ("regions", "region")):
+        listed = d.get(key)
+        if listed is None:
+            continue
+        actual = {x.get(pick) for x in papers if x.get(pick)}
+        if set(listed) != actual:
+            miss = sorted(actual - set(listed))
+            extra = sorted(set(listed) - actual)
+            parts = []
+            if miss:
+                parts.append("缺 " + "、".join(miss))
+            if extra:
+                parts.append("多 " + "、".join(extra))
+            rep.err(rel, f"{key} 与 papers 现算不一致（{'；'.join(parts)}）",
+                    f"{key} 是 papers 的派生量，必须现算。页面统计条与筛选器读它，"
+                    "手写就会漏项——列表漏了，页面上那个维度直接少一块，"
+                    "且不报错。改法：由papers 现算重写，不要手工补名字")
+        rep.ok()
+    rep.ok()
+
+
+def check_doc_numbers(rep):
+    """docs/ 下的手工统计数字必须与数据层一致（第十次核验新增）。
+
+    前九轮修的都是「数据层 ↔ 页面内嵌副本」，`docs/*.md` 是**第五个**漂移面：
+    它是纯文本，既不在 JSON 也不在 `const` 块里，任何按结构比对的闸门都覆盖不到。
+    真实缺陷：上海试卷采集-现状与阻塞.md 的科目表合计 17，而 count=21
+    （漏「全科」3 + 「跨学科」1）；同页正文另有 manifest 数漂移的历史前科。
+
+    这里只对**能由数据层自动判定**的事实建闸门（合计恒等、计数比对），
+    不做全文数字正则扫描——覆盖广但靠关键词打补丁的闸门，
+    假阳性会把真错误淹掉（第九轮已踩过：11 条里9 条是假阳性）。
+    """
+    rel = "docs/试卷库建设/上海试卷采集-现状与阻塞.md"
+    p = os.path.join(ROOT, rel)
+    if not os.path.exists(p):
+        return
+    txt = open(p, encoding="utf-8").read()
+
+    res_p = os.path.join(ROOT, "data/resources/shanghai-papers.json")
+    man_p = os.path.join(ROOT, "data/raw-manifest.json")
+    if not (os.path.exists(res_p) and os.path.exists(man_p)):
+        return
+    res = load(res_p, rep, "data/resources/shanghai-papers.json")
+    man = load(man_p, rep, "data/raw-manifest.json")
+    if not res or not man:
+        return
+    papers = [x for x in res.get("papers", []) if isinstance(x, dict)]
+
+    # 1) 文档正文声明的 manifest 条数必须与实际一致
+    items = man.get("items", [])
+    n_img = sum(1 for i in items if i.get("kind") == "image")
+    n_txt = sum(1 for i in items if i.get("kind") == "text")
+    m = re.search(r"manifest\s*(\d+)\s*条", txt)
+    if m and int(m.group(1)) != len(items):
+        rep.err(rel, f"文档写 manifest {m.group(1)} 条，实际 {len(items)} 条"
+                    f"（image {n_img} + text {n_txt}）",
+                "手工数字漂移过至少两次。以 data/raw-manifest.json 为准，"
+                "改文档不要改数据")
+    # 2) 文档里若列出科目表，各行套数之和必须等于 count
+    m = re.search(r"九类合计\s*\*\*(\d+)\s*套\*\*", txt)
+    if m and int(m.group(1)) != len(papers):
+        rep.err(rel, f"文档写科目表合计 {m.group(1)} 套，索引实际 {len(papers)} 套",
+                "科目表漏列的科目不会让页面报错，只会让读者按缺项做决策。"
+                "以 data/resources/shanghai-papers.json 的 papers 现算为准")
+    if not (m or re.search(r"manifest\s*\d+\s*条", txt)):
+        rep.warn(rel, "读不出文档里的统计数字",
+                 "本闸门对本文件失效，确认表格结构没变")
+        return
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -846,6 +969,8 @@ def main():
     check_cause_enum(rep)
     check_embedded_snapshots(rep)
     check_no_fabricated_score(rep, rawmap)
+    check_papers_derived(rep)
+    check_doc_numbers(rep)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 
