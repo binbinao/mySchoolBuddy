@@ -952,6 +952,126 @@ def check_doc_numbers(rep):
     rep.ok()
 
 
+def check_data_readme(rep):
+    """data/README.md 是**写入方的 schema 规范**，它的口径错了会污染下轮数据。
+
+    第十一次核验发现的最严重缺陷：前���轮的闸门全部在检查「已经写进 JSON 的数据对不对」，
+    从没检查过**「指导人怎么写数据的文档对不对」**。
+
+    `data/README.md` 当时写着：
+
+        | `full` / `lost` | 是 | 满分 / 实失分，**缺了这两个字段就做不了失分点分析** |
+
+    这与项目**分值纪律的核心原则直接相反**——纪律要求「照片上没有分值标注就是 null，
+    绝不估算」，实际两条数学错题也都是 `null + scorePending`。按 README 写出来的数据，
+    要么把 `full`/`lost` 当成必填数字（诱导估算），要么不写（无法区分「没统计」与「没失分」）。
+
+    > 与前十类的本质差别：前十类是**数据错了**，这一类是**规范教人把纪律写反**。
+    > 修数据只是改一个条目，改规范是改掉下一轮数据继续错下去的原因。
+
+    这里同样只对**能自动判定的事实**建闸门（口径关键词、文件清单与磁盘一致），
+    不做全文数字正则扫描（第九轮已证明那样假阳性 9/11）。
+    """
+    rel = "data/README.md"
+    p = os.path.join(ROOT, rel)
+    if not os.path.exists(p):
+        return
+    txt = open(p, encoding="utf-8").read()
+
+    # 1) 分值口径：必须同时出现「可为 null」与 scorePending，且不得写成无条件必填
+    has_null_rule = ("可为 null" in txt) or ("允许是 `null`" in txt) or ("值为 `null`" in txt)
+    has_sp = "scorePending" in txt
+    # 必填列有两个写法：表头写「必填」时填 `| 是 |`，也可能直接写「必填」二字。
+    # 只判「必填」二字会漏掉 `| 是 |` 这种——**闸门自身失效却报 0 错误**，第九轮同型坑。
+    bad_line = None
+    for line in txt.splitlines():
+        if "`full` / `lost`" not in line and "`full`/`lost`" not in line:
+            continue
+        if "scorePending" in line or "可为 null" in line or "允许是" in line:
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        # 字段说明表形如 | 字段 | 必填 | 说明 |
+        req = cells[1] if len(cells) >= 3 else ""
+        if req in ("是", "必填", "必填", "Y", "yes"):
+            bad_line = line.strip()
+            break
+    if bad_line is not None:
+        rep.err(rel, f"分值字段仍被写成无条件必填：{bad_line}",
+                "与分值纪律相反。正确口径是「键必须存在、值可为 null，"
+                "配 scorePending: true」。照原文写会把纪律写反")
+    if not (has_null_rule and has_sp):
+        rep.err(rel, "分值纪律（null + scorePending）在本文档里读不到",
+                "README 是新人/AI 的第一份参照，缺了这条就会诱导估算。"
+                "应写明：卷面无分值标注则留 null + scorePending，绝不估算")
+        return
+    # 章节本身必须还在，且必须是**标题行**。
+    # 首版用 `"分值纪律" in txt` 全文匹配，被文档里两处「见下方分值纪律一节」的交叉引用顶住，
+    # 改掉章节标题反而报 0 错误——**闸门自身的漏洞比没建闸门更危险**。
+    has_section = any(
+        ln.lstrip().lstrip("#").lstrip().startswith(("⚠️", "W", "w", "*"))
+        and "分值纪律" in ln
+        for ln in txt.splitlines()
+        if ln.lstrip().startswith("#")
+    )
+    if not has_section:
+        rep.err(rel, "「分值纪律」章节不见了",
+                "只剩零散关键词、章节标题被改写，读者找不到这条纪律。"
+                "章节名是给人看的锚点，不是装饰。"
+                "注意：不能用全文关键词判定，文档里的交叉引用会造成假阴性")
+        return
+
+    # 3) 同一句话在根 README 里还有第二份副本（铁律五：同一事实散落 N 处）。
+    # 只改 data/README.md 而不管根 README，等于把漂移推迟到下一个照根 README 干活的人。
+    rel2 = "README.md"
+    p2 = os.path.join(ROOT, rel2)
+    if os.path.exists(p2):
+        t2 = open(p2, encoding="utf-8").read()
+        # 根 README 用散文句「必须记 full（满分）和 lost（实失）」
+        anchor = "必须记 `full`"
+        if anchor in t2:
+            for i, ln in enumerate(t2.splitlines()):
+                if anchor not in ln:
+                    continue
+                # 该行往下 3 行内必须出现 null / scorePending 的口径说明
+                window = "\n".join(t2.splitlines()[i:i + 4])
+                if "scorePending" not in window:
+                    rep.err(rel2, "根 README 仍把 full/lost 写成无条件下必填",
+                            "同一事实散落两处（根 README + data/README.md）。"
+                            "只改一处 = 下一个人照另一处干活继续写反。"
+                            "须补一句「值可为 null，无卷面分值标注时配 scorePending」")
+                    break
+
+    # 2) 文件清单表的状态列必须与磁盘实际一致（派生量不手写）
+    st = {"exams/": "待建", "wrong/": "待建", "progress/": "待建"}
+    rows = {}
+    for line in txt.splitlines():
+        for d in st:
+            if line.startswith(f"| `{d}`") or line.startswith(f"| `{d}`".replace("/", "/ ")):
+                cells = [c.strip() for c in line.strip().strip("|").split("|")]
+                if len(cells) >= 3:
+                    rows[d] = cells[2].strip("* ")
+    if not rows:
+        rep.warn(rel, "读不出文件清单表",
+                 "本闸门对清单表失效，确认表格结构没变")
+        return
+    for d, claimed in rows.items():
+        ap = os.path.join(ROOT, "data", d.rstrip("/"))
+        real_files = []
+        if os.path.isdir(ap):
+            real_files = [f for f in os.listdir(ap) if not f.startswith(".")]
+        nonempty = bool(real_files)
+        truth = "已建" if nonempty else "待建"
+        # 声称待建但目录有实际内容 / 声称已建但目录空 → 漂移
+        if nonempty and claimed.startswith("待建"):
+            rep.err(rel, f"`{d}` 标「{claimed}」，但目录里已有 {len(real_files)} 个文件",
+                    "清单表是纯文本，前面九轮的闸门覆盖不到。"
+                    "以磁盘实际为准改文档，不要改数据")
+        elif not nonempty and not claimed.startswith("待建"):
+            rep.err(rel, f"`{d}` 标「{claimed}」，但目录里没有任何实际文件",
+                    "以磁盘实际为准改文档，不要凭空声称已建")
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -971,6 +1091,7 @@ def main():
     check_no_fabricated_score(rep, rawmap)
     check_papers_derived(rep)
     check_doc_numbers(rep)
+    check_data_readme(rep)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 

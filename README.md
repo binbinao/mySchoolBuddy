@@ -105,6 +105,9 @@ git add RAW data/raw-manifest.json && git commit -m "raw: 20260928 期末数学�
 对照 `RAW/` 里的原件，把错题和卷面结构填进 `data/wrong/` 与 `data/exams/`，schema 见 `data/README.md`。
 
 > **每条错题必须记 `full`（满分）和 `lost`（实失）** —— 缺这两个字段只能做题数统计，做不了失分点分析。
+>
+> ⚠️ 但**键必须在、值可以为 `null`**：照片上没有分值标注就是没有，
+> 此时写 `null` + `scorePending: true`，**绝不估算**。完整口径见 `data/README.md` 的「分值纪律」。
 
 ### 3. 用应用
 
