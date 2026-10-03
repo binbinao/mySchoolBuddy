@@ -344,8 +344,11 @@ def find_manual_page(out_dir, item, qno):
     """
     if not os.path.isdir(out_dir):
         return None
-    keys = [norm(item.get("answerKey")), norm(item.get("childAnswer")),
-            norm(item.get("myAnswer"))]
+    # 2026-10-04 第十四次核验修正：原先这里还读 `myAnswer`。
+    # 它与规范字段 `childAnswer` 是**同一概念的两种拼写**，而 `or` 兜底让两者
+    # 可以长期并存且都不报错（第十轮铁律五：拼写分裂＝静默失效）。
+    # 已删 `myAnswer` 分支：只认 childAnswer 一个拼写。
+    keys = [norm(item.get("answerKey")), norm(item.get("childAnswer"))]
     keys = [k for k in keys if len(k) >= 4]
     for fn in sorted(os.listdir(out_dir)):
         if not (fn.endswith("-精讲.html") or fn.endswith(".html")):
@@ -429,13 +432,24 @@ def build_stem_html(item, qno):
     其次用 stem（纯文本，自动加限定词高亮）；
     再次退回 title（自动剥掉「第N题」前缀，避免和页头题号重复）；
     都没有才报待补。
+
+    2026-10-04 第十四次核验：`stemHtml` 这个键**全库一条都没有**——
+    数据层只有 `stem`。原先它排在最前面，读的却是一个永远为空的键，
+    属「读了一个不存在的字段却照样 0 错误」。这里保留 stemHtml 优先
+    （人工若真要放逐字转录的富文本版，这是正确的位置），
+    但把回落链写成 `stemHtml → stem → title` 三段显式分支，
+    让「用了哪一级」在代码里看得见，不再靠 or 链的巧合。
     """
     if item.get("stemHtml"):
         stem = item["stemHtml"]
+    elif item.get("stem"):
+        raw = item["stem"]
+        # 剥掉「第5题」「q19.」这类前缀——页头已经写了题号，重复了看着乱
+        raw = re.sub(r"^\s*(第\s*\d+\s*题|q\d+\s*[.、．]?)\s*", "", str(raw))
+        stem = hl_keywords(raw)
     else:
-        raw = item.get("stem") or item.get("title") or ""
+        raw = item.get("title") or ""
         if raw:
-            # 剥掉「第5题」「q19.」这类前缀——页头已经写了题号，重复了看着乱
             raw = re.sub(r"^\s*(第\s*\d+\s*题|q\d+\s*[.、．]?)\s*", "", str(raw))
             stem = hl_keywords(raw)
         else:
@@ -565,7 +579,10 @@ def build_wrong_page(item, out_path, manifest, qno=None):
 </div>"""
 
     correct = item.get("answerKey")
-    child = item.get("childAnswer") or item.get("myAnswer")
+    # 2026-10-04 第十四次核验修正：删掉 `or item.get("myAnswer")` 别名兜底。
+    # 同概念的两种拼写并存 = 拼写分裂（第十轮铁律五）：改了带 h 的那个，
+    # 读错拼的那个，于是「你写的」框会静默显示成正确答案，孩子看不出自己错在哪。
+    child = item.get("childAnswer")
     if correct and child:
         cmp_html = f"""<div class="card">
   <h2><span class="n">2</span>断点到底在哪</h2>

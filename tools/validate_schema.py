@@ -952,6 +952,141 @@ def check_doc_numbers(rep):
     rep.ok()
 
 
+def check_answer_fields(rep, rawmap):
+    """答案字段（事实源头）必须齐全、拼写唯一、不得凭空多出同义键（第 15 道闸门）。
+
+    2026-10-04 第十四次核验抓到的缺陷，性质比前十三类都靠前：
+
+      前十三轮十几道闸门查过——分值纪律、错因枚举、溯源、模块合计、
+      跨页一致、五段范式、内嵌副本、派生量……**唯独没查过答案本身**。
+      而答案恰恰是整个数据层的**事实源头**：
+        · `childAnswer` 决定「已做对的部分」能写什么、
+          「断点到底在哪」那个两栏对照框才有内容；
+        · `answerKey` 决定断点判定成立与否。
+
+      **回退法自证（这就是发现它的手段）**：
+        把 q19 的 `correctAnswer` 改成 `y=-(x-9)²-99`（与官方答案完全不同），
+        再把 `answerKey` 整个字段删掉 —— 校验器报 **98 项通过 · 0 错误**。
+      删掉正确答案这件事，比分值估错严重得多：分值估错只是统计偏差，
+      **答案错了整套教学判断全部反着走**，而孩子会照着错答案继续练。
+
+    同时清掉了两处存量拼写分裂（第十轮铁律五：同一概念不能有两种拼写）：
+      · `correctAnswer` —— 与 `answerKey` 同义，**全站零读取方**，
+        写了没人看、改了没人发现，是拼写分裂的温床；
+      · `myAnswer` —— 与 `childAnswer` 同义，生成器曾用
+        `childAnswer or myAnswer` 兜底，两值可以长期并存且都不报错；
+        改了带 h 的那个，`or` 右边会**静默生效**，孩子看到的「你写的」
+        可能变成正确答案，断点框整个失去意义。
+
+    判定口径（全部按「能自动判定」选，不做全文扫描）：
+      ① 错因**已定论**（有 `cause` 且 `causePending` 不为 true）的题必须有
+         `answerKey` 与 `childAnswer`；
+      ② 出现 `correctAnswer` / `myAnswer` / `rightAnswer` 等同义别名即报错；
+      ③ `answerKey` 与 `childAnswer` 内容完全相同 = 疑似把孩子的错答抄成了正确答案
+         （判错因的前提就不成立），且此时不该有失分记录；
+      ④ 有 `answerKey` 必须写 `answerKeySource` —— 本项目英语卷**没有官方答案卷**。
+
+    ⚠️ **本闸门管不了什么（必须写明，否则会误以为已覆盖）**：
+    「答案内容本身对不对」**无法自动判定**。回退法实测：把第 11 题的
+    `answerKey` 从 `stay balanced` 改成 `give up smoking`，本闸门**不报错**——
+    这是能力边界不是漏洞：英语/语文答案是自由文本，机器无从判断语义对错。
+    本闸门只保证「答案**存在**、拼写唯一、有依据、与孩子作答**不是同一个**」。
+    「答案**正确**」仍只能靠核卷（MEMORY 核卷纪律：判分前必须放大原卷）
+    与第十四次人工复算——**机器能守住结构，守不住语义**。
+    """
+    # 同义别名黑名单：这些键一旦出现，就是「同一概念第二种拼写」
+    ALIASES = ("correctAnswer", "myAnswer", "rightAnswer",
+               "childanswer", "stdAnswer", "answer")
+
+    def _scan(items, rel, tag):
+        for it in items:
+            if not isinstance(it, dict):
+                continue
+            where = f"{rel}#{it.get('id', it.get('qno', '?'))}"
+
+            # ② 同义别名一律报错（认不出来的东西必须报错，不能放过）
+            for bad in ALIASES:
+                if bad in it:
+                    rep.err(where,
+                            f"出现同义别名键 `{bad}`",
+                            "答案字段的规范拼写只有 `answerKey`（正确答案）"
+                            "与 `childAnswer`（孩子原答案）两个，"
+                            "不接受第二个拼写——第十轮铁律五：同一概念两种拼写时，"
+                            "改了带 h 的那个会让读方**静默失效**，"
+                            "页面不报错、卡片照常渲染，肉眼看不出已坏。"
+                            f"`{bad}` 已被 `answerKey`/`childAnswer` 取代。")
+
+            key = it.get("answerKey")
+            child = it.get("childAnswer")
+            # ① 必填：**已定论**的错因必须有 answerKey 与 childAnswer。
+            #
+            # ⚠️ 这里踩过一次闸门自身的坑（第九轮同型：误报 = 把真错误淹掉）：
+            # 首版把 `causePending: true` 也算「已判错因」，于是 exams 侧
+            # 36/58/61 三题全部误报。翻数据才看清——这三题恰恰是**错因尚未定论**的存疑题
+            # （`uncertain: true`，红笔未明示批改，且**全卷没有官方答案卷**），
+            # 正确答案客观上不可知。**要求它们填 answerKey 等于逼人编造官方答案**，
+            # 直接违反「不编造官方答案」这条纪律。
+            # ⇒ 判据是「错因是否已定论」：`causePending: true` 表示还没判，
+            #   此时缺 answerKey 是**合法状态**，不该报错（但仍会在 ④ 里提醒写依据）。
+            cause = it.get("cause")
+            pending = it.get("causePending") is True
+            settled = bool(cause) and not pending
+            if settled and not (key and child):
+                miss = [n for n, v in (("answerKey", key),
+                                       ("childAnswer", child)) if not v]
+                rep.err(where,
+                        f"错因已定论为「{cause}」但缺答案字段：{'、'.join(miss)}",
+                        "答案字段是事实源头：`childAnswer` 决定「已做对的部分」"
+                        "能写什么，`answerKey` 决定「断点到底在哪」才成立。"
+                        "MEMORY 错因纪律要求**回看孩子的中间步骤**才能判因——"
+                        "没有孩子原答案，判读根本无从谈起。\n"
+                        "若此题确实判不出来，用 `causePending: true` 标明存疑"
+                        "（那样缺 answerKey 是合法的），不要硬凑一个答案。")
+
+            # ③ 正确答案与孩子原答案完全相同 = 抄错
+            if key and child and str(key).strip() == str(child).strip():
+                rep.err(where,
+                        "answerKey 与 childAnswer 内容完全相同",
+                        "正确答案和孩子原答案一模一样，说明孩子的错答被抄成了正确答案。"
+                        "判错因的前提（他确实错了）就不成立——"
+                        "回原卷核一遍：是记错了孩子的作答，还是这题其实没失分。")
+
+            # ④ 反推来的答案必须写明依据
+            src = it.get("answerKeySource")
+            if key and not src:
+                rep.err(where, "有 answerKey 但没写 answerKeySource",
+                        "答案是卷面印的，还是据红笔反推的？"
+                        "本项目英语单元测**没有官方答案卷**，"
+                        "反推的答案不写依据，将来没人敢信它——"
+                        "「答案错了整套教学判断全部反着走」，这是本项目最贵的一类错。")
+
+    wd = os.path.join(ROOT, "data", "wrong")
+    if os.path.isdir(wd):
+        for fn in sorted(os.listdir(wd)):
+            if fn.endswith(".json"):
+                rel = f"data/wrong/{fn}"
+                d = load(os.path.join(wd, fn), rep, rel)
+                if d:
+                    _scan(d.get("items", []), rel, "wrong")
+
+    ed = os.path.join(ROOT, "data", "exams")
+    if os.path.isdir(ed):
+        for fn in sorted(os.listdir(ed)):
+            if not fn.endswith(".json"):
+                continue
+            rel = f"data/exams/{fn}"
+            d = load(os.path.join(ed, fn), rep, rel)
+            if not d:
+                continue
+            exams = d.get("exams") or d.get("items") or [d]
+            if isinstance(exams, dict):
+                exams = [exams]
+            for ex in exams:
+                if isinstance(ex, dict):
+                    _scan(ex.get("wrongs") or [], rel, "exam")
+    rep.ok()
+
+
 def check_data_readme(rep):
     """data/README.md 是**写入方的 schema 规范**，它的口径错了会污染下轮数据。
 
@@ -1069,6 +1204,27 @@ def check_data_readme(rep):
         elif not nonempty and not claimed.startswith("待建"):
             rep.err(rel, f"`{d}` 标「{claimed}」，但目录里没有任何实际文件",
                     "以磁盘实际为准改文档，不要凭空声称已建")
+
+    # 2026-10-04 第十四次核验：答案字段的语义边界必须写在规范里。
+    # 只写「有闸门」而不写「闸门管不到答案对错」，下一个人会误以为
+    # 答案正确性已被机器守住 —— 而实测第 11 题改成完全不同的答案也不报错。
+    if "check_answer_fields" in txt:
+        has_limit = ("管不住" in txt) or ("判不了" in txt) or ("能力边界" in txt)
+        if not has_limit:
+            rep.err(rel, "写了答案字段闸门，却没写明它管不住「答案对错」",
+                    "自由文本答案（英语/语文）机器判不了语义。"
+                    "实测把第 11 题 answerKey 从 `stay balanced` 改成 "
+                    "`give up smoking`，校验器不报错——这是能力边界。"
+                    "规范里必须写明：**机器守结构，语义靠核卷**，"
+                    "否则下一个人会误以为答案正确性已被守住。")
+
+    # 答案字段的规范名必须写进文档，且必须列出禁止的同义别名
+    for need in ("answerKey", "childAnswer"):
+        if need not in txt:
+            rep.err(rel, f"答案字段规范未定义 `{need}`",
+                    "第十四次核验发现：README 完全没有答案字段定义，"
+                    "而答案是数据层的事实源头。教人写数据的文档缺字段定义"
+                    "＝持续产出没人认的键（第十一类：规范教人把纪律写反）。")
     rep.ok()
 
 
@@ -1467,6 +1623,7 @@ def main():
     check_module_got_grounded(rep, rawmap)
     check_page_matches_data(rep, rawmap)
     check_five_stage_paradigm(rep, rawmap)
+    check_answer_fields(rep, rawmap)
     check_papers_derived(rep)
     check_doc_numbers(rep)
     check_data_readme(rep)
