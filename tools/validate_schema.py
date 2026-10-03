@@ -24,10 +24,14 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CAUSES = {"概念不清", "方法没想到", "计算失误", "审题错误", "表达不规范"}
+# 错因枚举是「规范 + 执行器」两层结构，定义源在 docs/方法论/错因分类与复习排期.md。
+# 下面的 check_cause_enum() 负责让执行器与规范源保持一致。
+CAUSE_DOC = "docs/方法论/错因分类与复习排期.md"
 
 
 class Report:
@@ -364,6 +368,11 @@ def check_tasks(rep, rawmap):
     # 标了 done 但声称要补的字段其实没落地——「done ≠ 做完了」的机器闸门。
     # （2026-10-03 修：q19 的 steps/variants/thinkQuestions 只存在于人工精讲页 HTML，
     #   从未回写 JSON，生成器与一切数据分析都读不到，任务却已标 done。）
+    #
+    # 2026-10-03 第六次核验修正：本闸门原先只查 data/wrong/，exam-* 任务因
+    #   .get() 返回 None 被 continue 跳过 —— 等于半个闸门。回退法自证：
+    #   把 exam 的 verdictHtml/wrongs 清空后校验仍 0 错误（只多一条警告）。
+    #   任务 id 前缀即 kind：wrong- → data/wrong/，exam- → data/exams/。
     wrong_items = {}
     wd = os.path.join(ROOT, "data", "wrong")
     if os.path.isdir(wd):
@@ -374,24 +383,151 @@ def check_tasks(rep, rawmap):
             for it in (wdd or {}).get("items", []):
                 wrong_items[it.get("id")] = it
 
+    exam_items = {}
+    ed2 = os.path.join(ROOT, "data", "exams")
+    if os.path.isdir(ed2):
+        for fn in sorted(os.listdir(ed2)):
+            if not fn.endswith(".json"):
+                continue
+            edd = load(os.path.join(ed2, fn), rep, f"data/exams/{fn}")
+            exs = (edd or {}).get("exams") or (edd or {}).get("items") or []
+            if isinstance(exs, dict):
+                exs = [exs]
+            for ex in exs:
+                if isinstance(ex, dict) and ex.get("id"):
+                    exam_items[ex["id"]] = ex
+
     for t in items:
         if t.get("status") != "done":
             continue
         want = t.get("fields") or []
         if not want:
             continue
-        # 任务 id 形如 wrong-w-20261002-01，对应错题 id 去掉前缀后的 w-20261002-01
+        # 任务 id 形如 wrong-w-20261002-01（对应错题 id 去掉 wrong- 前缀）
+        # 或 exam-e-20261002-01（对应试卷 id 去掉 exam- 前缀）。
         tid = str(t.get("id", ""))
-        wid = tid.replace("wrong-", "", 1) if tid.startswith("wrong-") else tid
-        it = wrong_items.get(wid)
-        if it is None:
+        if tid.startswith("wrong-"):
+            target = wrong_items.get(tid[len("wrong-"):])
+        elif tid.startswith("exam-"):
+            target = exam_items.get(tid[len("exam-"):])
+        else:
+            target = None
+        if target is None:
+            # 前缀认得、但 id 找不到对应数据项 —— 这是断链，不是「跳过」。
+            rep.err("data/tasks/pending.json",
+                    f"任务 {tid} 标为 done，但在 data/ 里找不到对应数据项",
+                    "任务声明要补的字段无从校验。检查 id 前缀与实际数据项的 id 是否对得上")
             continue
-        missing = [f for f in want if not it.get(f)]
+        missing = [f for f in want if not target.get(f)]
         if missing:
             rep.err("data/tasks/pending.json",
                     f"任务 {t.get('id')} 标为 done，但 JSON 里字段仍为空：{'、'.join(missing)}",
                     f"内容可能只写进了 {t.get('target')} 的 HTML，数据层读不到。"
                     "按纪律要同时回写 data/ 里的 JSON，否则生成器与统计都拿不到")
+
+
+# ── 5. 错因枚举跨层一致性（防分叉）─────────────────────────────
+def check_cause_enum(rep):
+    """五类错因在仓库里有 4 处定义，规范源是 docs/方法论/错因分类与复习排期.md。
+
+    2026-10-03 修。此前实际存在两套互相矛盾的定义：
+      · 规范源 + 生成器 + app 的两个 <select> → 含「表达不规范」
+      · README 的 schema 示例 + app 的 ci 映射表 → 含「时间不够」，缺「表达不规范」
+    前五轮只对齐了 select，漏了 ci 与 README。
+    注意 ci 映射表不是死代码：它控制错题 chip 的着色（ci[w.cause]||0），
+    缺一项就意味着该错因的标签退化成默认灰 —— 肉眼看着「有标签」，看不出是配色失效。
+
+    靠人记四份清单必然再分叉，故做机器比对。
+    """
+    # 规范源：取方法论表格第一列的 **加粗** 类别名
+    doc = os.path.join(ROOT, CAUSE_DOC)
+    src = set()
+    if os.path.exists(doc):
+        with open(doc, encoding="utf-8") as f:
+            for line in f:
+                m = re.match(r"^\|\s*\*\*(.+?)\*\*\s*\|", line.strip())
+                if m and m.group(1) in CAUSES | {"时间不够"}:
+                    src.add(m.group(1))
+    if src and src != CAUSES:
+        rep.err(CAUSE_DOC,
+                f"规范源表格的类别是 {'/'.join(sorted(src))}，与 CAUSES "
+                f"({'/'.join(sorted(CAUSES))}) 不一致",
+                "改哪边都行，但必须两边一致。改 CAUSES 要同步改 app 的两个 select、"
+                "ci 映射表与 README")
+        return
+    if not src:
+        rep.warn(CAUSE_DOC, "读不出错因表格的类别行", "枚举闸门对本文件失效，确认表格结构没变")
+
+    # app/index.html：两个 <select> + ci 映射表
+    app = os.path.join(ROOT, "app", "index.html")
+    if os.path.exists(app):
+        with open(app, encoding="utf-8") as f:
+            html = f.read()
+        for sel in ("w-cause", "f-cause"):
+            m = re.search(rf'id="{sel}"[^>]*>(.*?)</select>', html, re.S)
+            if not m:
+                rep.err("app/index.html", f"找不到 #{sel} 下拉框", "家长录错题/筛选都依赖它")
+                continue
+            # 「全部」是筛选器的空值哨兵（value=""），不是错因类别，必须先剔除，
+            # 否则闸门会把「全部」当成枚举外的值误报——闸门自己出假阳性，
+            # 等于把真错误淹掉（2026-10-03 首次跑就踩到）。
+            raw_opts = re.findall(
+                r"<option(\s[^>]*)?>([^<]*)</option>", m.group(1))
+            opts = set()
+            for attrs, label in raw_opts:
+                label = label.strip()
+                if not label:
+                    continue
+                # 显式 value="" 或纯文本「全部」都视为哨兵
+                if 'value=""' in (attrs or "") or label in ("全部", "—", "-"):
+                    continue
+                opts.add(label)
+            if sel == "f-cause" and not opts:
+                continue
+            if opts != CAUSES:
+                missing = [c for c in sorted(CAUSES) if c not in opts]
+                extra = [c for c in sorted(opts) if c not in CAUSES]
+                parts = []
+                if missing:
+                    parts.append("缺 " + "、".join(missing) + "，按纪律补上")
+                if extra:
+                    parts.append("枚举外有 " + "、".join(extra) + "，删掉")
+                rep.err("app/index.html",
+                        f"#{sel} 的选项与五类枚举不一致"
+                        + (f"（现有 {'、'.join(sorted(opts))}）" if opts else ""),
+                        "家长从 UI 录的题会天然违反枚举，而校验器只查数据文件不查 UI 选项，"
+                        "两边永远对不上。" + "；".join(parts))
+            rep.ok()
+
+        # ci 映射表：它控制 chip 着色，缺项会让错因标签退化成默认灰
+        m = re.search(r"const ci\s*=\s*\{(.*?)\}", html, re.S)
+        if not m:
+            rep.err("app/index.html", "找不到错因配色映射表 const ci",
+                    "着色靠它，缺失会让错因标签全部退化成默认灰色")
+        else:
+            keys = set(re.findall(r"'([^']+)'\s*:", m.group(1)))
+            if keys != CAUSES:
+                rep.err("app/index.html",
+                        f"ci 配色映射表覆盖 {'/'.join(sorted(keys))}，与五类枚举不一致",
+                        "缺项不会报错，只会让该错因的标签显示成默认灰——"
+                        "属于『看起来正常、实际失效』的静默缺陷。缺 " +
+                        "、".join(c for c in sorted(CAUSES) if c not in keys))
+            rep.ok()
+
+    # README 的 schema 示例
+    rdm = os.path.join(ROOT, "README.md")
+    if os.path.exists(rdm):
+        with open(rdm, encoding="utf-8") as f:
+            r = f.read()
+        m = re.search(r'"cause":\s*"?([^"\n]*?)"?\s*,?\n', r)
+        if m:
+            listed = {x.strip() for x in m.group(1).split("|")}
+            listed = {x for x in listed if x and not x.startswith("…")}
+            if listed and listed != CAUSES:
+                rep.err("README.md",
+                        f"schema 示例的 cause 写了 {'/'.join(sorted(listed))}，与五类枚举不一致",
+                        "README 是新人第一份参照，照着抄就会录错")
+            rep.ok()
 
 
 def main():
@@ -407,6 +543,7 @@ def main():
     check_wrong(rep, rawmap)
     check_exams(rep, rawmap)
     check_tasks(rep, rawmap)
+    check_cause_enum(rep)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 
