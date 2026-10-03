@@ -122,7 +122,13 @@ def main():
             pass
 
     records = []
-    stats = {"fetched": 0, "metaOnly": 0, "failed": 0, "unchanged": 0}
+    # 2026-10-03 第七次核验修：原 stats 是「本次运行增量」（fetched/metaOnly/failed
+    # 累加，另有 unchanged 复用旧文件），落盘后与 meta.count（累积套数）语义冲突：
+    # 出现 count=21 而 stats 之和=17、fetched=0 但实际已抓 11 份的情况。
+    # 增量数落盘即失去意义（下次运行就变了），且与总量并排必被误读。
+    # 改为：stats 一律由 records 现算，三项之和恒等于 count。
+    # 增量的用途（看本次抓了多少）改由本函数返回值/日志承担，不再落盘。
+    stats = {"fetched": 0, "metaOnly": 0, "failed": 0, "unchanged": 0}  # 本次运行增量，仅供打印
 
     for s in items:
         rec = {
@@ -211,6 +217,20 @@ def main():
         records = sorted(merged.values(), key=lambda r: order.get(r["id"], 9999))
     records = [r for r in records if not r.get("discard")]
 
+    # 落盘的 stats 一律现算（2026-10-03 第七次核验），增量 stats 只用于上面的打印。
+    # merged 模式下 records 含本次未处理的旧记录，只有现算才能得到真实的全库库存。
+    stats_onfile = {"fetched": 0, "metaOnly": 0, "failed": 0}
+    for r in records:
+        if r.get("rawFile"):
+            stats_onfile["fetched"] += 1
+        elif r.get("fetchError"):
+            stats_onfile["failed"] += 1
+        else:
+            stats_onfile["metaOnly"] += 1
+    stats_onfile["note"] = ("由 papers 数组现算，非单次运行增量，三项之和恒等于 count："
+                            "fetched=有 rawFile 的条数，failed=有 fetchError 的条数，"
+                            "metaOnly=其余（尚未抓取全文）")
+
     # 写索引
     doc = {
         "meta": {
@@ -220,7 +240,7 @@ def main():
                      "access=paywall/login 表示需人工到平台下载后放 RAW/试卷库/。"),
             "created": datetime.now().strftime("%Y-%m-%d"),
             "count": len(records),
-            "stats": stats,
+            "stats": stats_onfile,
             "discipline": "索引只记可核实元数据；题目内容一律来自实际抓取，不编造。",
         },
         "shanghaiPolicy": {

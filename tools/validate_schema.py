@@ -530,6 +530,85 @@ def check_cause_enum(rep):
             rep.ok()
 
 
+def check_resources(rep, rawmap):
+    """data/resources/ 是第 4 个数据入口，此前完全无人校验。
+
+    2026-10-03 第七次核验新增。这个入口装的是公共试卷资源索引
+    （data/resources/shanghai-papers.json，21 套上海中考/一模卷索引），
+    与 data/exams/ 不是一回事——**它不是孩子参加过的考试**，
+    纪律上「不进 data/exams/」，但它同样是仓库的事实数据，同样会被引用。
+
+    真实缺陷（与前六轮同型，都是「0 错误也抓不到」）：
+      · meta.count = 21（累积套数），meta.stats 之和 = 17（某次运行的增量），
+        且 stats.fetched = 0 —— 实际已抓取 11 份全文。
+      · 根因：stats 在 fetch_shanghai_papers.py 里是「本次运行增量」，
+        而 scan_zujuan_papers.py 重写 count 时没重算 stats，两者语义冲突。
+      · 为什么没人发现：增量统计与累积总量并排放在同一处，单看任一处都像对的。
+
+    本闸门把 stats 变成**可验证的派生量**：三项之和必须恒等于 count，
+    且 fetched 必须等于实际有 rawFile 的条数、文件必须真实存在。
+    """
+    rd = os.path.join(ROOT, "data", "resources")
+    if not os.path.isdir(rd):
+        return
+    for fn in sorted(os.listdir(rd)):
+        if not fn.endswith(".json"):
+            continue
+        rel = f"data/resources/{fn}"
+        d = load(os.path.join(rd, fn), rep, rel)
+        if not d:
+            continue
+        papers = d.get("papers")
+        if not isinstance(papers, list):
+            continue
+
+        # meta.count 与实际条数
+        declared = d.get("meta", {}).get("count")
+        if declared is not None and declared != len(papers):
+            rep.err(rel, f"meta.count={declared} 与 papers 实际 {len(papers)} 条不符",
+                    "count 是被文档和页面直接引用的数字，对不上会让所有引用都变成错的")
+
+        # stats 三项之和必须恒等于 count（增量统计与累积总量混用时的典型症状）
+        st = d.get("meta", {}).get("stats") or {}
+        if st:
+            parts = {k: st.get(k) for k in ("fetched", "metaOnly", "failed")
+                     if isinstance(st.get(k), int)}
+            if len(parts) == 3:
+                s = sum(parts.values())
+                if declared is not None and s != declared:
+                    rep.err(rel,
+                            f"meta.stats 三项之和 {s}（{'+'.join(str(v) for v in parts.values())}）"
+                            f" ≠ meta.count {declared}",
+                            "stats 必须是由 papers 现算的派生量，三项之和恒等于 count。"
+                            "若 stats 记的是「本次运行增量」，它落盘即失去意义"
+                            "（下次运行就变），且必然与累积总量对不上")
+                # fetched 必须等于实际有 rawFile 的条数
+                real_fetched = sum(1 for p in papers if isinstance(p, dict) and p.get("rawFile"))
+                if st.get("fetched") != real_fetched:
+                    rep.err(rel,
+                            f"meta.stats.fetched={st.get('fetched')} 但实际有 rawFile 的是 {real_fetched} 条",
+                            "「已抓取」是判断资源库真实库存的数字，"
+                            "写错会让人以为资源没抓到而重复抓取")
+            # unchanged 是运行时概念（本次没重新下载），落盘后无从考证，
+            # 与 fetched 语义重叠，会让总数对不上。见到即提示清除。
+            if "unchanged" in st:
+                rep.err(rel, "meta.stats 含 unchanged 字段",
+                        "unchanged 是单次运行概念，与 fetched 重叠且落盘即失真，"
+                        "会让三项之和 ≠ count。已从两个采集脚本中移除")
+
+        # 每条 rawFile 必须真实存在，且已登记 manifest（溯源纪律同样适用）
+        for p in papers:
+            if not isinstance(p, dict):
+                continue
+            rf = p.get("rawFile")
+            if not rf:
+                continue
+            if rf not in rawmap and not os.path.exists(os.path.join(ROOT, rf)):
+                rep.err(rel, f"{p.get('id', '?')} 的 rawFile 指向的文件不存在：{rf}",
+                        "索引声称已归档但文件不在，断链的记录等于没有证据")
+        rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -543,6 +622,7 @@ def main():
     check_wrong(rep, rawmap)
     check_exams(rep, rawmap)
     check_tasks(rep, rawmap)
+    check_resources(rep, rawmap)
     check_cause_enum(rep)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)

@@ -344,6 +344,26 @@ def main():
 
     idx["meta"]["updated"] = datetime.now().strftime("%Y-%m-%d")
     idx["meta"]["count"] = len(papers)
+    # 2026-10-03 第七次核验修：meta.stats 原本只在 fetch_shanghai_papers.py 的
+    # 单次运行里累加（fetched/metaOnly/failed/unchanged 都是「本次增量」），
+    # 本脚本重写 count 却没重算 stats，导致两者语义冲突：
+    # count=21（累积套数）而 stats 之和=17（某次运行的增量），fetched=0 但实际已抓 11 份。
+    # 增量统计与累积总量并排放在同一处，读者必然误读，且没有任何机器校验。
+    # 改为：stats 全部从 papers 数组现算，且三项之和恒等于 count。
+    # 删掉 unchanged —— 它是运行时概念（「本次没重新下载」），落盘后无从考证，
+    # 且与 fetched 语义重叠，留着只会让总数对不上。
+    recomputed = {"fetched": 0, "metaOnly": 0, "failed": 0}
+    for p in papers:
+        if p.get("rawFile"):
+            recomputed["fetched"] += 1
+        elif p.get("fetchError"):
+            recomputed["failed"] += 1
+        else:
+            recomputed["metaOnly"] += 1
+    recomputed["note"] = ("由 papers 数组现算，非单次运行增量，三项之和恒等于 count："
+                          "fetched=有 rawFile 的条数，failed=有 fetchError 的条数，"
+                          "metaOnly=其余（尚未抓取全文）")
+    idx["meta"]["stats"] = recomputed
     with open(INDEX, "w", encoding="utf-8") as f:
         json.dump(idx, f, ensure_ascii=False, indent=2)
     man["meta"]["updated"] = datetime.now().strftime("%Y-%m-%d")

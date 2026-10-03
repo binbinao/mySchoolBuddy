@@ -5,15 +5,15 @@
     "created": "2026-10-02",
     "count": 21,
     "stats": {
-      "fetched": 0,
-      "metaOnly": 6,
-      "failed": 1,
-      "unchanged": 10
+      "fetched": 11,
+      "metaOnly": 10,
+      "failed": 0,
+      "note": "由 papers 数组现算，非单次运行增量，三项之和恒等于 count：fetched=有 rawFile 的条数，failed=有 fetchError 的条数，metaOnly=其余（尚未抓取全文）"
     },
     "discipline": "索引只记可核实元数据；题目内容一律来自实际抓取，不编造。",
     "extractionLimits": "抓取自网页预览版，数学/化学的**公式符号存在丢失**：上标下标、分数线、根号、希腊字母在 HTML→纯文本转换中会退化（如 ³√3+³√3 变成 '3 + 3 = 2 3'）。**题干与分值结构可信，具体公式必须回原页核对**。给孩子讲题前务必打开 sourceUrl 确认。",
     "limitAffected": 8,
-    "updated": "2026-10-02"
+    "updated": "2026-10-03"
   },
   "shanghaiPolicy": {
     "总分": 750,
