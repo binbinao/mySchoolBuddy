@@ -1072,6 +1072,228 @@ def check_data_readme(rep):
     rep.ok()
 
 
+def check_module_got_grounded(rep, rawmap):
+    """模块 got 必须有卷面依据：含存疑题、或自述为折算/估计时不得给具体值（第十二次核验新增）。
+
+    2026-10-04 第十二次核验抓到的缺陷，是第五次核验的**同型复发**：
+      · 第五轮判定 `modules[I 听力].got` 必须留 null——听力 C 只标「10 分」共 5 空、
+        无单空分值，24 与 25 都是 10÷5 的等分折算；
+      · 但同一份数据里 `III 完形填空 got=7`、`IV 句子完成 got=8` **照样写着具体数**。
+        放大原卷确认：III 标题只标「（8 分）」共 8 空、IV 标题只标「（10 分）」共 5 空，
+        **同样没有单题分值**——7 是「8 题对 7 题」的**题数**被当成了分数，
+        8 是 10−2 的等分折算（其 gotNote 甚至自述「保守估计」）。
+
+    为什么前十一道闸门一道都抓不到：
+      · 第五轮那道只审「got 是否与本模块确定失分题矛盾」，III/IV 的 got 小于满分，
+        不构成矛盾，闸门判定「合法」；
+      · 第九轮那道只审**页面**是否引用 got 为 null 的模块当时的 X/Y——
+        数据层自己就写着 7 和 8，nullmod 集合里根本没有 III/IV，闸门无从触发；
+      · 人的注意力被「听力已经处理过了」锚定，**同一个错误换个模块就看不见**。
+
+    可复用的规律：**修掉一个实例不等于修掉这一类。**
+    纪律若只在具体模块上落实（"听力的 got 要留 null"），
+    下一个录入者会把同一逻辑套到 III/IV/V-C 上再犯一次。
+    所以这里按**可自动判定的口径**落成闸门，而不是靠人记住「还有哪几个模块要留空」。
+
+    判定口径（两个信号，都不依赖具体模块名）：
+      ① 该模块存在 `uncertain: true` 的失分题 → 得分天然算不出（红笔未明示即不推定为 0）；
+      ② 该模块的 gotNote 自述含「折算 / 估计 / 等分」→ 说明这个值自己都承认不是实得。
+    命中任一即报错。留 null + gotNote 写明理由是正确做法。
+    """
+    for rel_j in sorted(glob.glob(os.path.join(ROOT, "data", "exams", "*.json"))):
+        rel = os.path.relpath(rel_j, ROOT)
+        d = load(rel_j, rep, rel)
+        if not d:
+            continue
+        for ex in d.get("exams", []):
+            where = f"{rel}#{ex.get('id', '?')}"
+            ws = ex.get("wrongs") or []
+
+            def mkey(s):
+                return str(s or "").strip().split(" ")[0]
+
+            for m in ex.get("modules", []):
+                mg, mname = m.get("got"), m.get("name", "?")
+                if mg is None:
+                    continue          # 已留 null，合法
+                mk = mkey(mname)
+                unc = [w.get("qno") for w in ws
+                       if mkey(w.get("module")) == mk and w.get("uncertain") is True]
+                note = str(m.get("gotNote") or "")
+                self_admit = re.search(r"(折算|估计|等分)", note)
+                if unc:
+                    rep.err(where,
+                            f"模块「{mname}」got={mg}，但该模块有存疑失分题"
+                            f"（题号 {'、'.join(str(x) for x in unc)}）",
+                            "存疑题的红笔未明示扣分，**不能按「没红笔就算对」推定为 0 失分**，"
+                            "因此该模块实得算不出。正确做法：got 留 null + gotNote 写明存疑题号。"
+                            "（第五次核验已用同一理由把听力 got 改为 null，III/IV 应比照办理）")
+                elif self_admit:
+                    rep.err(where,
+                            f"模块「{mname}」got={mg}，但其 gotNote 自述为"
+                            f"「{self_admit.group(0)}」值",
+                            "自己都写明是折算/估计，就不是实得分数。"
+                            "正确做法：got 留 null，把折算依据写进 gotNote 供人参考，"
+                            "不要让统计把它当成实际得分")
+    rep.ok()
+
+
+def check_page_matches_data(rep, rawmap):
+    """页面写的 X/Y 必须与数据层一致，且必须能看见夹在标签里的数字（第十二次核验新增）。
+
+    第十二次核验同时暴露了第九轮那道闸门的**两个盲区**：
+
+    盲区一（看不见夹标签的写法）：`check_no_fabricated_score` 的正则是
+        `(\\d+)\\s*/\\s*(\\d+)`，只能匹配纯文本的 `7/8`。
+        而柱状图与表格里写的是 `<b>7</b> / 8`、`style="text-align:right">7<`——数字被
+        `<b>`、`</b>` 隔开，**正则匹配不到，闸门静默放过**。
+        人工读页面看到的是「7 / 8」，格式差异只有看源码才发现。
+
+    盲区二（只审单向、不审打架）：那道闸门只管「null 模块被引用」，
+        管不到**两个非 null 模块在两页上写同一个事实却数字不同**——
+        本轮《整卷分析》写句子完成 9/10、《试卷拆解》与数据层都是 8，谁也不报警。
+
+    本检查按「事实」而非按「文件」建闸门（第九轮铁律五）：
+      · 扩展正则，允许数字之间夹 HTML 标签；
+      · 从数据层取出每个模块的 (题号区间, 满分, got)，
+        在页面里找同名模块的 X/Y，与数据层逐一比对，不一致即报错。
+    满分是卷面直接标注的，**任何页面写错满分都是硬错误**；
+    got 为 null 的模块若页面仍写 X/Y，则必须在同句说明为何不折算（沿用第九轮豁免口径）。
+    """
+    facts = []   # (rel, 模块名, 题号区间, 满分, got)
+    for rel_j in sorted(glob.glob(os.path.join(ROOT, "data", "exams", "*.json"))):
+        rel = os.path.relpath(rel_j, ROOT)
+        d = load(rel_j, rep, rel)
+        if not d:
+            continue
+        for ex in d.get("exams", []):
+            for m in ex.get("modules", []):
+                facts.append((rel, m.get("name", ""), m.get("qRange", ""),
+                              m.get("full"), m.get("got"), m.get("gotNote")))
+    if not facts:
+        rep.ok()
+        return
+    # 允许数字之间夹标签：<b>7</b> / 8、>7</td>…/10<
+    PAIR = re.compile(r"(\d+)\s*(?:</?[a-zA-Z][^>]{0,40}>\s*)*/\s*(\d+)")
+    # 模块表里「实得」常写成**裸数字**（<td>9</td>）而不是 9/10，
+    # 只靠 PAIR 会完全看不见这类表——本轮注入「II 语法实得改 9」即漏网。
+    # 口径收窄到**同一 <tr> 行**：先定位含模块名的表格行，再看该行里裸数字是否等于 got。
+    ROW = re.compile(r"<tr\b.*?</tr>", re.I | re.S)
+    pages = glob.glob(os.path.join(ROOT, "docs", "**", "*.html"), recursive=True)
+    hits = 0
+    for p in sorted(pages):
+        rel = os.path.relpath(p, ROOT)
+        try:
+            src = open(p, encoding="utf-8").read()
+        except Exception:
+            continue
+        # —— A. 表格行里的裸数字实得 ——
+        # 口径必须**按列位置**判定，不能只看「这一行里有哪些数字」：
+        # 早先版本把题号列「49-56」里的 49/56 也当成候选数字，导致
+        # V-C 完形（数据层与页面都是 8，完全正确）被误报——闸门出假阳性等于把真错误淹掉。
+        # 现在只取**题号列之后、最后一列之前**的数字（模块得分表的实得列就在这个位置）。
+        for row in ROW.findall(src):
+            plain = re.sub(r"<[^>]+>", " ", row)
+            plain = re.sub(r"\s+", " ", plain)
+            cells = [re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", c)).strip()
+                     for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", row, re.I | re.S)]
+            for _, mname, qrange, mfull, mgot, mnote in facts:
+                if mfull is None:
+                    continue
+                short = mname.split()[-1] if " " in mname else mname
+                # 模块名必须独占首列，避免「V-C 完形」被「阅读理解」等行误命中
+                if not cells or not (cells[0].strip() == mname.strip()
+                                     or cells[0].strip() == short.strip()):
+                    continue
+                # 题号列恒为第 2 列（含区间），末列是依据说明，均不参与
+                mid = [c for c in cells[2:-1] if re.fullmatch(r"\d+", c)]
+                if not mid:
+                    continue
+                vals = {int(c) for c in mid}
+                if mgot is None:
+                    # 数据层判无依据：表格里就不该出现裸的实得数字。
+                    # ⚠️ 这条不能省：早先版本开头就 `if mgot is None: continue`，
+                    # 结果「数据层已留 null、页面却把实得填回 7 和 8」这种状态完全查不出来——
+                    # 而它恰恰是本轮修掉的那个缺陷的**页面侧残留**。
+                    # 满分列本身是卷面直接标注的，必须豁免；其余裸数字即违规实得。
+                    extra = vals - {int(mfull)}
+                    if extra:
+                        rep.err(rel, f"「{mname}」数据层 got 留 null（无卷面依据），"
+                                     f"但表格行里仍有实得数字 {sorted(extra)}",
+                                "模块表要和数据层一致：实得列写「待确认」、得分率写「—」，"
+                                "不要把等分折算值填回去。")
+                        hits += 1
+                    continue
+                # 实得列应等于 got；满分列应等于 full。
+                # 只在「拿到了 got 但同列出现了既非满分也非 got 的第三个值」时报警。
+                if int(mgot) not in vals:
+                    continue
+                extra = vals - {int(mgot), int(mfull)}
+                if extra:
+                    rep.err(rel, f"「{mname}」表格行出现 {sorted(extra)}，"
+                                 f"与数据层（满分 {mfull}、实得 {mgot}）都不符",
+                            "同一模块在页面上不能有三个数。核对是哪一列填错。")
+                    hits += 1
+        # —— B. X/Y 形式（含柱状图与正文）——
+        for _, mname, qrange, mfull, mgot, mnote in facts:
+            if not mname or not mfull:
+                continue
+            short = mname.split()[-1] if " " in mname else mname
+            # 页面上用来指代该模块的写法：模块全名、简称、题号区间
+            keys = {k for k in (mname, short, qrange) if k}
+            if not any(k in src for k in keys):
+                continue
+            for mo in PAIR.finditer(src):
+                g, b = mo.group(1), mo.group(2)
+                if int(b) != int(mfull) or int(g) == int(b):
+                    continue
+                # 定位该数字所属的「块」：向上找最近的标签开边界（如 <div class="bar-row">），
+                # 向下同理取到该块结束。
+                # ⚠️ 不能只取「所在句子」：柱状图里数字独占一行
+                #   `<div class="bar-val"><b>9</b> / 10</div>`，
+                #   剥掉标签后整句只剩 "9 / 10"，**模块名在上一行的 bar-label 里**，
+                #   按句读取窗口会漏掉它 ⇒ 闸门对柱状图完全失灵（首版注入违规报 0 错误）。
+                blo = src.rfind("<div", 0, mo.start())
+                bhi = src.find("</div>", mo.end())
+                lo = blo if blo >= 0 else max(0, mo.start() - 300)
+                hi = (bhi + 5) if bhi >= 0 else min(len(src), mo.end() + 300)
+                # 块太小时向外扩一屏，保证能带上模块名与免责说明
+                if hi - lo < 260:
+                    lo = max(0, lo - 200)
+                    hi = min(len(src), hi + 200)
+                text = re.sub(r"<[^>]+>", " ", src[lo:hi])
+                text = re.sub(r"\s+", " ", text)
+                if not any(k in text for k in keys):
+                    continue
+                if mgot is not None and int(g) == int(mgot):
+                    continue          # 与数据层一致
+                if mgot is None:
+                    # 数据层已判无依据：同句说明理由才算合法引用。
+                    # ⚠️ 这里**只能**看页面同句的措辞，绝不能用数据层的 gotNote 当豁免依据——
+                    #   首版写成 `... or mnote`，而 got=null 的模块 gotNote 必然非空，
+                    #   等于给所有违规数字发免死金牌，注入违规后闸门报 0 错误。
+                    #   （与第九轮「上一条 <li> 的免责说明替下一条豁免」是同一个形态：
+                    #     豁免范围一旦越过句子边界，闸门就静默失效。）
+                    if re.search(r"(不(作|给|估算|折算)|无(单|卷面|依据)|未标注|"
+                                 r"只用于|不得当|折算|等分|存疑|待(家长|老师|确认)|"
+                                 r"留\s*null|不给|无依据|非得分)", text):
+                        continue
+                    rep.err(rel, f"「{mname}」在页面上写成 {g}/{b}，"
+                                 f"但数据层 got 留 null（无卷面依据）",
+                            "改成定性描述（如「8 题对 7 题」）而不是 X/Y。")
+                    hits += 1
+                else:
+                    rep.err(rel, f"「{mname}」在页面上写成 {g}/{b}，"
+                                 f"与数据层 got={mgot} 不一致",
+                            "同一份卷子的同一个模块在两页上不能有两个实得。"
+                            "以数据层为准改页面，或先改数据层并写明依据。")
+                    hits += 1
+    if hits:
+        rep.ok()
+        return
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -1089,6 +1311,8 @@ def main():
     check_cause_enum(rep)
     check_embedded_snapshots(rep)
     check_no_fabricated_score(rep, rawmap)
+    check_module_got_grounded(rep, rawmap)
+    check_page_matches_data(rep, rawmap)
     check_papers_derived(rep)
     check_doc_numbers(rep)
     check_data_readme(rep)
