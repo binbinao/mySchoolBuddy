@@ -21,6 +21,7 @@
 """
 
 import argparse
+import glob
 import hashlib
 import json
 import os
@@ -718,6 +719,116 @@ def check_embedded_snapshots(rep):
     rep.ok()
 
 
+def check_no_fabricated_score(rep, rawmap):
+    """页面不得把无卷面依据的折算值当作「实得分数」引用（第九次核验新增）。
+
+    2026-10-03 第九次核验发现的第九类缺陷：
+    第五轮已判定「modules[I 听力].got 必须留 null」（听力 C 只标 10 分共 5 空、
+    无单空分值，24 与 25 都是 10÷5 的等分折算），同一页的提示条也写明
+    「两页都不要再引用具体数字当实得」——**但同页另一处仍写着「听力大段正确（24/25）」**。
+
+    为什么前八道闸门都抓不到：
+      · 第八轮那道（check_embedded_snapshots）只比对**结构化内嵌副本**
+        （试卷地图页的 const DATA），而这里是**手写进正文的散文数字**，
+        既不在 JSON 里、也不在 const 块里，压根不在任何比对范围；
+      · 前七轮查的是「数据层是否自洽」，这里的数据层本来就是对的（null），
+        错的是页面没跟上——**单看数据层永远看不出页面在引用一个被否决的数字**；
+      · 人工肉眼读页面，「24/25」出现在提示条附近，很容易以为已被处理。
+
+    可复用的规律：**同一个事实散落在 N 处，改一处就漏 N−1 处。**
+    提示条写清楚了不等于正文里没有残留。
+
+    本检查的判定口径（**故意收窄，避免闸门自身出假阳性**）：
+    只审「**数据层 got 为 null 的模块**」——这些模块是纪律明确判定过
+    「无卷面依据、不得给实得」的。页面若在讲这个模块时写出 X/Y 形式的实得，即为违规。
+
+    为什么不用「扫描全站所有 X/Y」：第九次核验首版就是这么写的，结果 11 条里
+    **9 条是假阳性**——数学比例（AF:FC=2:3）、选择项（A. 3/2）、
+    题号（第 35/36 题）、样板页的历史基线分（119/150）全被误报。
+    闸门出假阳性等于把真错误淹掉，等于没闸门。
+    「按定义找一个能自动判定的窄口径」比「覆盖广但要靠关键词打补丁」可靠。
+    """
+    # 数据层里 got 明确为 null 的模块 → 这些模块页面不得给出 X/Y 实得
+    nullmod = {}   # 模块名 -> 该卷 full
+    for rel_j in glob.glob(os.path.join(ROOT, "data", "exams", "*.json")):
+        rel = os.path.relpath(rel_j, ROOT)
+        d = load(rel_j, rep, rel)
+        if not d:
+            continue
+        for ex in d.get("exams", []):
+            for m in ex.get("modules", []):
+                if m.get("got", "missing") is None and m.get("gotNote"):
+                    nullmod.setdefault(m.get("name", ""), m.get("full"))
+    if not nullmod:
+        rep.ok()
+        return
+    SCORE_PAIR = re.compile(r"(\d+)\s*/\s*(\d+)")
+    pages = glob.glob(os.path.join(ROOT, "docs", "**", "*.html"), recursive=True)
+    pages += [os.path.join(ROOT, "app", "index.html")]
+    hits = 0
+    for p in sorted(pages):
+        rel = os.path.relpath(p, ROOT)
+        try:
+            src = open(p, encoding="utf-8").read()
+        except Exception:
+            continue
+        for m in SCORE_PAIR.finditer(src):
+            g, b = m.group(1), m.group(2)
+            if int(g) == int(b) or int(g) > int(b) or int(b) == 0:
+                continue
+            if str(b) not in {str(v) for v in nullmod.values() if v}:
+                continue
+            # 窗口取紧邻：解释句必须与该数字同处一句话，否则不算豁免。
+            # 第九次核验踩过的坑：窗口开 300 字符时，
+            # 上一条 <li> 里「不给 24/25 这类实得数字」的说明
+            # 会替下一条 <li> 里的违规 24/25 豁免 ⇒ 闸门失灵却报 0 错误。
+            # 边界对齐到句读：只认同句内的免责说明。
+            lo = max(0, m.start() - 160)
+            hi = min(len(src), m.end() + 120)
+            seg = src[lo:hi]
+            # 截到数字所在句子的边界（。！？；与换行）
+            for ch in "。！？；\n":
+                k = seg.rfind(ch, 0, m.start() - lo)
+                if k >= 0:
+                    lo2 = lo + k + 1
+                    break
+            else:
+                lo2 = lo
+            for ch in "。！？；\n":
+                k = seg.find(ch, m.end() - lo)
+                if k >= 0:
+                    hi2 = lo + k
+                    break
+            else:
+                hi2 = hi
+            seg = src[lo2:hi2]
+            text = re.sub(r"<[^>]+>", " ", seg).replace("\n", " ")
+            # 提及该模块 = 上下文出现模块名或其简称
+            mod_hit = None
+            for name in nullmod:
+                short = name.split()[-1] if " " in name else name
+                if name in text or short in text:
+                    mod_hit = name
+                    break
+            if not mod_hit:
+                continue
+            # 同句内解释了「为何不作实得」才是合法引用
+            if re.search(r"(不(作|给|估算|折算)|无(单|卷面|依据)|未标注|"
+                         r"只用于柱长|不得当|折算|存疑|待(家长|老师|确认)|留\s*null)", text):
+                continue
+            ln = src[:m.start()].count("\n") + 1
+            rep.err(rel, f"第 {ln} 行在「{mod_hit}」上出现 {g}/{b} 实得分数，"
+                         f"但该模块数据层 got 留 null（无卷面依据）",
+                    "页面把纪律已否决的折算值当实得在用。"
+                    "改成定性描述（如「15 题只错 1 空」）而不是 X/Y；"
+                    "真要引用请在同处写明为何不折算。")
+            hits += 1
+    if hits:
+        rep.ok()
+        return
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -734,6 +845,7 @@ def main():
     check_resources(rep, rawmap)
     check_cause_enum(rep)
     check_embedded_snapshots(rep)
+    check_no_fabricated_score(rep, rawmap)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 
