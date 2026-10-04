@@ -154,13 +154,17 @@ def append_manifest(records, tag):
         with open(MANIFEST, encoding="utf-8") as f:
             data = json.load(f)
     items = data.setdefault("items", [])
-    have = {it.get("path") for it in items}
+    # ⚠️ 标准键是 `file`（ingest-raw.sh / check_raw / check_manifest_key_consistency 都只认它）。
+    # 下面两处曾误写 `path`：`it.get("path")` 让 have 恒为 {None} ⇒ 去重完全失效；
+    # `r["path"]` 而 rec 只有 `file` 键 ⇒ 每次登记必抛 KeyError。
+    # 症状是脚本跑完最后一步才炸，而图片早已落盘 ⇒ 极易被「手工补登记」掩盖过去。
+    have = {it.get("file") for it in items}
     for r in records:
         p = os.path.join(ROOT, r["file"])
         if r["file"] in have or not os.path.exists(p):
             continue
         items.append({
-            "file": r["path"], "kind": "image", "bytes": r["bytes"],
+            "file": r["file"], "kind": "image", "bytes": r["bytes"],
             "sha256": sha256(p), "width": r["width"], "height": r["height"],
             "source": r["source"],
             "fetched": datetime.now().strftime("%Y-%m-%d %H:%M"),

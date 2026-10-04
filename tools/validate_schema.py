@@ -38,6 +38,19 @@ CAUSE_DOC = "docs/方法论/错因分类与复习排期.md"
 # scan_zujuan_papers.py 曾写 "B"。两套混在一列里，页面统计条会把新条目算漏。
 TRUST_LEVELS = {"high", "medium", "unverified", "suspect"}
 
+# 会往 data/raw-manifest.json 写记录的脚本清单。
+# ⚠️ 这张表必须随采集工具增删同步维护——新增采集脚本却不登记进表，
+# 等于第 2 条源码级检查对它完全失效（与「新增 check 必须进 main()」同型：
+# **没人记得登记的入口，就是没有闸门的入口**）。
+# 判据：脚本里出现过 MANIFEST / raw-manifest 字样，且在 items 上 append 记录。
+_MANIFEST_WRITERS = [
+    "ingest-raw.sh",
+    "batch_fetch_renrendoc.py",
+    "fetch_renrendoc_papers.py",
+    "fetch_paper_images.py",
+    "fetch_shanghai_papers.py",
+]
+
 
 class Report:
     def __init__(self, quiet=False):
@@ -2864,6 +2877,12 @@ def check_manifest_key_consistency(rep):
     ⇒ 这道闸门查两件事：
       1. manifest 里不许同时出现 `file` 与 `path` 两种拼法
       2. **采集类脚本写 manifest 时必须用 `file`**（列名单，靠扫描源码查）
+
+    ⚠️ **本函数曾定义但没被 `main()` 调用**（2026-10-04 抓到）：
+    闸门存在 ≠ 闸门在跑。它守的 bug 是活的——`batch_fetch_renrendoc.py`
+    的 `append_manifest` 曾同时犯「`it.get("path")` 去重恒失效」与「`r["path"]` 必抛 KeyError」，
+    脚本跑完最后一步才炸，而图片早已落盘，于是被「事后手工补登记」掩盖过去。
+    ⇒ **新增 check 必须进 `main()`，否则它守的东西等于没守。**
     """
     man_p = os.path.join(ROOT, "data/raw-manifest.json")
     if not os.path.exists(man_p):
@@ -2879,6 +2898,90 @@ def check_manifest_key_consistency(rep):
                 "**键名分裂会让 check_raw 读不到文件名而崩溃**"
                 "（IsADirectoryError）。标准键是 `file`"
                 "（ingest-raw.sh 写的就是它）。采集工具请统一写 `file`。")
+
+    # ── 第 2 件：采集脚本的源码级检查（新增，原 docstring 声称查但没实现）──
+    # 只查数据层不够：脚本今天写对了，明天又改回 `path`，而 manifest 里暂时还没有 `path` 记录，
+    # 第 1 条检查就抓不到。**根因在写入方，必须查写入方。**
+    #
+    # ⚠️ 判据（三个坑都是本轮回退法实测踩出来的，不是推演出来的）：
+    #   a) 不能简单「见 path 就报错」——`r.get("file") or r.get("path")` 是合法兼容写法
+    #      （先读标准键、回落旧键），误报它等于把真错误淹掉。
+    #   b) 判据不能只覆盖「写」的那一处：读错键名（`it.get("path")` 做去重）同样是 bug，
+    #      且更隐蔽——它不抛异常，只是让 `have` 恒为 {None}，去重**静默失效**。
+    #      首版只写了 (a) 那一侧，回退法注入读侧 bug 报 0 错误才发现。
+    #   c) 豁免不能只认「or 在行尾」这种写法差异——首版的 or-左半边判据
+    #      把 `{it.get("file") or it.get("path") ...}` 误判成违规（反向探针抓出）。
+    #      ⇒ 豁免改为**语义判据**：本行若同时提供了标准键 `file` 的读取，
+    #        则 path 只是回落，判为合法。**不判 or 的位置。**
+    for fn in _MANIFEST_WRITERS:
+        p = os.path.join(ROOT, "tools", fn)
+        if not os.path.exists(p):
+            continue
+        with open(p, encoding="utf-8", errors="replace") as f:
+            src = f.read()
+        hits = []
+        for i, raw_line in enumerate(src.splitlines(), 1):
+            line = raw_line.strip()
+            if line.startswith("#"):
+                continue                      # 注释里的 path 不是 bug
+            if not re.search(r"""\[\s*["']path["']\s*\]|\.\s*get\(\s*["']path["']\s*\)""", line):
+                continue
+            # 豁免：同一行已经读了标准键 file ⇒ path 只是兼容回落，合法
+            if re.search(r"""\[\s*["']file["']\s*\]|\.\s*get\(\s*["']file["']\s*\)""", line):
+                continue
+            if re.search(r"""["']file["']\s*:\s*""", line):
+                why = "用 `path` 赋值 manifest 的 file 字段"
+            elif re.search(r"""\{\s*.*\s*for\s+\w+\s+in\b""", line):
+                why = "用 `path` 作为去重集合的键（会让去重恒失效）"
+            else:
+                why = "把 `path` 当作 manifest 记录的文件名字段"
+            hits.append((i, why))
+        if hits:
+            where = "、".join(f"第 {i} 行（{why}）" for i, why in hits)
+            rep.err(f"tools/{fn}",
+                    f"采集脚本往 raw-manifest 写文件名字段时用了 `path` 键：{where}",
+                    "标准键是 `file`（ingest-raw.sh / check_raw / check_manifest_key_consistency 都只认它）。"
+                    "读 `r[\"path\"]` 而 rec 只有 `file` 键会抛 KeyError；"
+                    "`it.get(\"path\")` 做去重会让 have 恒为 {None}，重复检测完全失效且不报错。"
+                    "兼容写法 `r.get(\"file\") or r.get(\"path\")` 是允许的。")
+    return
+
+
+def check_no_dead_gates(rep):
+    """🔴 **闸门不许是死代码**（本轮抓到 `check_manifest_key_consistency` 定义了却没被调用）。
+
+    背景：这道闸门本身就是为了抓「键名分裂导致校验器崩溃」而写的，
+    结果它自己躺在文件里从没被 `main()` 调用过——**闸门存在 ≠ 闸门在跑**。
+    它守的 bug 是活的：`batch_fetch_renrendoc.py` 同时存在读侧（去重恒失效）
+    与写侧（`r["path"]` 必抛 KeyError）两处错误，跑完最后一步才炸，
+    而图片早已落盘，于是被「事后手工补登记」掩盖过去。
+
+    ⇒ 这道闸门用 AST 判定，**不靠人记得把新 check 加进 main()**：
+      所有以 `check_` 开头的模块级函数，必须在本文件里被调用过一次。
+      这与第十九轮的 `_README_SECTIONS` 同一思路：**把「记得」变成机器判定。**
+
+    ⚠️ 用 AST 而不是文本 grep：`grep check_` 会命中函数**定义行自身**，
+    那样每个死代码都能自己豁免自己（＝发免死金牌）。
+    """
+    import ast
+    me = os.path.abspath(__file__)
+    with open(me, encoding="utf-8") as f:
+        tree = ast.parse(f.read(), filename=me)
+    defined = {n.name: n.lineno for n in tree.body
+               if isinstance(n, ast.FunctionDef) and n.name.startswith("check_")}
+    called = set()
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Call) and isinstance(n.func, ast.Name):
+            called.add(n.func.id)
+    for name, lineno in sorted(defined.items(), key=lambda kv: kv[1]):
+        if name in called:
+            rep.ok()
+        else:
+            rep.err("tools/validate_schema.py",
+                    f"闸门 {name}()（第 {lineno} 行）定义了但从未被调用 = 死代码",
+                    "**死闸门比没建闸门更危险**：它看起来在守一个坑，实际什么都没做，"
+                    "还会让人误以为该问题已被覆盖。请在 main() 里加一行 "
+                    f"{name}(rep)（若需要参数则按其签名补上）。")
     return
 
 
@@ -2891,6 +2994,7 @@ def main():
 
     rep = Report(quiet=args.quiet)
     print("校验 data/ …")
+    check_no_dead_gates(rep)
     rawmap = check_raw(rep, deep=not args.no_sha)
     check_wrong(rep, rawmap)
     check_exams(rep, rawmap)
@@ -2913,6 +3017,7 @@ def main():
     check_math_keypoints(rep)
     check_function_paper(rep)
     check_2022_paper(rep)
+    check_manifest_key_consistency(rep)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 
