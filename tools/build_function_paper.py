@@ -208,6 +208,19 @@ def build(data, dry=False):
     answer_notes = data.get("answer_notes") or {}
     base = "数学-一次函数与抛物线-专题练习卷"
 
+    # ⚠️ 派生量必须现算（第二十一类缺陷，2026-10-05）。
+    #   原先这里是三处手写字面量「全卷 16 题 · 120 分」与
+    #   「一、选择题 24 分　二、填空题 24 分　三、解答题 72 分」，
+    #   而真正的分值在 sections[].questions[].score 里。
+    #   后果：**改一道题的分值，卷面抬头不会跟着变**——
+    #   学生卷印「120 分」、数据层合计已经是 118 分，两者都打开正常，肉眼看不出。
+    #   凡是能从数据算出来的数字都不要手写（MEMORY 铁律八·派生量）。
+    _all_q = [q for s in data["sections"] for q in s["questions"]]
+    _n_all, _tot_all = len(_all_q), sum(q["score"] for q in _all_q)
+    _sec_tot = [(s["title"].split("（")[0], len(s["questions"]),
+                 sum(q["score"] for q in s["questions"]))
+                for s in data["sections"]]
+
     # ────────────── 题目卷 ──────────────
     doc = setup(docx.Document())
     # ⚠️ 抬头只印「范围」这一句，不能把 chapter_note 整段印上去——
@@ -217,9 +230,9 @@ def build(data, dry=False):
          size=9, color=CGREY, after=1, spacing=1.3)
     header_block(
         doc, meta["title"], meta["subtitle"],
-        [f"全卷 16 题 · 120 分 · 建议用时 100 分钟"])
+        [f"全卷 {_n_all} 题 · {_tot_all} 分 · 建议用时 100 分钟"])
     para(doc, "全卷总分", size=10.5, bold=True, after=1)
-    para(doc, "　　一、选择题 24 分　　二、填空题 24 分　　三、解答题 72 分",
+    para(doc, "　　" + "　　".join(f"{t} {_t} 分" for t, _n, _t in _sec_tot),
          size=10, after=4, indent=10)
 
     notice(doc, [

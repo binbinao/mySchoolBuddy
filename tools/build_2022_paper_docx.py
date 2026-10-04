@@ -170,20 +170,36 @@ def build(data, dry=False):
     rule(doc, color=CGOLD)
 
     para(doc, "作答说明", size=11, bold=True, font="黑体", before=2, after=2)
+    # ⚠️ 「本卷有 4 道题我还没算出答案」里的 4 与题号列表，原先是手写字面量。
+    #   真身是 questions[].status 里带「未完成」的题——**补验算一道就该跟着变**，
+    #   而手写不会变，等于对家长说谎（MEMORY 铁律八·派生量）。
+    _missing = [str(q["no"]) for q in qs if "未完成" in str(q.get("status", ""))]
     for i, t in enumerate([
         "**本卷不含选择填空。**她基础题已经全会，**练基础题等于浪费时间**。",
         "每题都要写**完整过程**——只写答案等于没做。",
         "**图形题必须先画图**（22、23、25 题都有图），"
         "在草稿上标出每条线段，**再判断哪两个三角形相似**。",
-        "🔴 **本卷有 4 道题我还没算出答案**（22(2)、23、24(2)、25），"
+        f"🔴 **本卷有 {len(_missing)} 道题我还没算出答案**（{'、'.join(_missing)}），"
         "**答案卷里会写明**。你做完自己做对答案——"
         "我会在你交卷后补上。",
     ], 1):
         para(doc, f"{i}. {t}", size=9.5, after=2, indent=10, spacing=1.4)
 
     para(doc, "全卷总分", size=10.5, bold=True, before=8, after=1)
-    para(doc, "　　19–22 题各 10 分　　23、24 题各 12 分　　25 题 14 分",
-         size=10, after=4, indent=10)
+    # ⚠️ 派生量必须现算（第二十一类缺陷，2026-10-05）。
+    #   原先这里是手写字面量「19–22 题各 10 分　23、24 题各 12 分　25 题 14 分」，
+    #   而分值真身是 questions[].score。改一道题的分值，卷面这行不会跟着变。
+    #   现在按「同分值合并成一段」现算，与上方抬头同源。
+    _by = {}
+    for _q in qs:
+        _by.setdefault(_q["score"], []).append(str(_q["no"]))
+    _segs = []
+    for _sc in sorted(_by, reverse=True):
+        _nos = _by[_sc]
+        _label = (f"{_nos[0]}–{_nos[-1]} 题各 {_sc} 分" if len(_nos) > 1
+                  else f"{_nos[0]} 题 {_sc} 分")
+        _segs.append(_label)
+    para(doc, "　　" + "　　".join(_segs), size=10, after=4, indent=10)
 
     for sec in data["sections"]:
         para(doc, sec["title"], size=12, bold=True, font="黑体", before=8, after=2)
@@ -202,7 +218,7 @@ def build(data, dry=False):
     page_break(doc)
     para(doc, "做完后自查", size=12, bold=True, font="黑体", align="center",
          after=3, color=CGOLD)
-    for t in ["□ 7 道题都写了完整过程",
+    for t in [f"□ {len(qs)} 道题都写了完整过程",
               "□ 图形题先画图标线段，再找相似",
               "□ 遇到「求某个长度」的题，先问「该用哪个三角形」",
               "□ 21(2) 算 cos∠ABC 时分清邻边与斜边（顶点在 B）",

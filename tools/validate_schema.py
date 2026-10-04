@@ -2985,6 +2985,224 @@ def check_no_dead_gates(rep):
     return
 
 
+# ══════════════════════════════════════════════════════════════════════
+# 第 26 道闸门 · 第二十一类缺陷：新增数据入口只查了「必填字段」，
+#                       它的**引用完整性与派生量**从未被查过
+# ══════════════════════════════════════════════════════════════════════
+
+# 梯队中文序号 → tier id。只认这四个，避免把正文里的「第三梯队」之类误当声明。
+_TIER_CN = {"一": "tier1", "二": "tier2", "三": "tier3", "四": "tier4"}
+
+
+def check_reference_integrity(rep):
+    """跨节引用 + 派生量：三份「数学资源」JSON 里此前完全没被查过的两类事实。
+
+    **2026-10-05 第二十一次核验抓到。** 第十九轮给这三个新入口各配了闸门
+    （第 24 道），但**那三道只查「必填字段在不在」**——
+    于是同一批文件里另外两类事实**一次都没被看过**：
+
+      ① **跨节引用完整性**：速查手册的「附录·真题逐题考点对照」里，
+         每道题后面用 `→ M27-1` 指向具体知识点代码。
+         原闸门只校验了 `meta.evidence_sources` 的**路径**存在性，
+         **代码引用指向空气完全查不出**——把 `M27-1` 拼成 `M27-9` 不报错。
+         后果很具体：这一列就是给孩子「做错哪题就去补哪个考点」的导航，
+         指错了不是难看，是**把她引到错误的知识点上**。
+
+      ② **派生量**：`meta.audience`（各梯队条数）、`exam_paper_evidence`
+         的分段分值与合计、`paper_structure` / `structure` 里声明的总分，
+         全是**能从 sections 现算的量**，却都手写着。
+         MEMORY 铁律八早写过「能被算出来的数字不要手写」，
+         但**没有任何一道闸门在查它们**——纪律写了不等于被守着（第十四类同源）。
+
+    **回退法自证（发现手段）**：注入 7 例，**6 例全漏网**（校验器 0 错误）——
+      · 引用不存在的考点代码 M99-9        · audience 梯队条数 7 改成 9
+      · 附录 paper 路径指向不存在的文件     · 附录表格分值 24 改成 30
+      · 2022 卷把「未完成」谎标为「已验算」 · 2022 卷标「已验算」的题答案被清空
+      · 专题卷某题 source 清空            ← 唯一被旧闸门抓到（必填字段表内）
+
+    ⚠️ 口径纪律（第九轮已证明：覆盖广但靠关键词打补丁的闸门会淹掉真错误）：
+      · 梯队解析只认 `第X梯队·…N 条` 这一种形态，且 X 只在一二三四里；
+      · 分值只认 `A-B（N 分）` 与 `共 N 分` 这两种闭式形态；
+      · **不做全文数字扫描**——手册正文里满是「4 分·一元二次方程」这类
+        正常内容，全文扫必然假阳性。
+    """
+    def _err(rel, msg, why):
+        rep.err(rel, msg, why)
+
+    # ── ① 速查手册：考点代码引用完整性 + 派生量 ──────────────
+    kp = os.path.join(ROOT, "data", "resources", "math-keypoints.json")
+    if os.path.exists(kp):
+        rel = "data/resources/math-keypoints.json"
+        d = load(kp, rep, rel)
+        if d:
+            sections = d.get("sections") or []
+            codes, tier_cnt = set(), {}
+            for s in sections:
+                tier = s.get("tier")
+                pts = s.get("points") or []
+                tier_cnt[tier] = tier_cnt.get(tier, 0) + len(pts)
+                for p in pts:
+                    if p.get("code"):
+                        codes.add(str(p["code"]))
+
+            ev = d.get("exam_paper_evidence") or {}
+            # 附录引用的真题原文必须真实存在（与 meta.evidence_sources 同一判据）
+            paper = ev.get("paper")
+            if paper and not os.path.exists(os.path.join(ROOT, str(paper))):
+                _err(rel, f"exam_paper_evidence.paper 指向不存在的路径：{paper}",
+                     "附录整节都建立在这份真题上，路径错了等于出处指向空气")
+
+            # ① 代码引用完整性：附录里 `→ M27-1` 的 code 必须在 sections 里存在
+            dangling = set()
+            for r in ev.get("rows") or []:
+                for pt in r.get("points") or []:
+                    for c in re.findall(r"M[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*", str(pt)):
+                        if c not in codes:
+                            dangling.add(c)
+            if dangling:
+                _err(rel,
+                     f"附录真题对照里引用了未定义的考点代码：{'、'.join(sorted(dangling))}",
+                     "这一列是「做错哪题→补哪个考点」的导航。"
+                     + (f"当前共定义 {len(codes)} 个 code。"
+                        "拼错会让家长按一个不存在的考点去找，"
+                        "**指错比不指更糟**。")
+                     + "改法：把代码改成已定义的 code，或补上该知识点。")
+
+            # ② 派生量：meta.audience 里的梯队条数须与 sections 现算一致
+            aud = str(d.get("meta", {}).get("audience") or "")
+            for cn, num in re.findall(r"第([一二三四])梯队·[^条]{0,8}?(\d+)\s*条", aud):
+                tier = _TIER_CN[cn]
+                if int(num) != tier_cnt.get(tier, 0):
+                    _err(rel,
+                         f"meta.audience 称第{cn}梯队 {num} 条，"
+                         f"实际 sections 现算 {tier_cnt.get(tier, 0)} 条",
+                         "audience 是印在手册封面的梯队说明，"
+                         "它是**派生量**——应随知识点增删自动变。"
+                         "手写就会漂（MEMORY 铁律八）")
+
+            # ② 派生量：附录分段分值之和须等于 why 里声明的总分
+            why = str(ev.get("why") or "")
+            segs = re.findall(r"(\d+)-(\d+)（(\d+)\s*分）", why)
+            if segs:
+                declared = re.findall(r"共\s*(\d+)\s*分", why)
+                ssum = sum(int(s[2]) for s in segs)
+                if declared and int(declared[0]) != ssum:
+                    _err(rel,
+                         f"附录声明「共 {declared[0]} 分」，但分段相加是 {ssum} 分",
+                         "中考卷面结构是她判断「该在哪类题上花时间」的依据，"
+                         "总分对不上会误导复习优先级分配")
+                # 表格里每一行的分值须与 why 里同题号区间的分值一致
+                for r in ev.get("rows") or []:
+                    hit = [s for s in segs
+                           if f"{s[0]}-{s[1]}" == str(r.get("no"))]
+                    if not hit:
+                        continue
+                    # ⚠️ 必须先剥掉尾部括号再取分值（**判据前提不能是
+                    #   「正确内容不具备的性质」**——铁律六第 4 条形态）：
+                    #   解答题行原文是「7 小题 = 78 分（19-21 各 10 分，…25 为 14 分）」，
+                    #   括号里是**逐题分值明细**，不是本段合计。
+                    #   首版直接取「最后一个 N 分」⇒ 抓到 14（单题分）⇒
+                    #   **首跑即 1 条假阳性**，正是第九轮「覆盖广」的坑。
+                    #   剥掉括号后三行都干净：24 / 48 / 78。
+                    _t = re.sub(r"（[^）]*）", "", str(r.get("type") or ""))
+                    rowtot = re.findall(r"(\d+)\s*分", _t)
+                    if rowtot and int(rowtot[-1]) != int(hit[0][2]):
+                        _err(rel,
+                             f"附录「{r.get('no')}」行写 {rowtot[-1]} 分，"
+                             f"但 why 里该区间是 {hit[0][2]} 分",
+                             "同一张表里两处分值打架，而两份都是印给孩子看的")
+
+    # ── ② 专题卷：声明的总分须与现算一致 ──────────────────
+    fp = os.path.join(ROOT, "data", "resources", "function-topic-paper.json")
+    if os.path.exists(fp):
+        rel = "data/resources/function-topic-paper.json"
+        d = load(fp, rep, rel)
+        if d:
+            total = sum(q.get("score") or 0
+                        for s in d.get("sections") or []
+                        for q in s.get("questions") or [])
+            declared = re.findall(
+                r"全卷\s*(\d+)\s*分", str(d.get("meta", {}).get("paper_structure") or ""))
+            if declared and int(declared[0]) != total:
+                _err(rel,
+                     f"meta.paper_structure 声明全卷 {declared[0]} 分，实际合计 {total} 分",
+                     "旧闸门已查合计必须等于 120，但**没查它与 meta 里手写的"
+                     "声明一致**——改一道题的分值，封面还印着旧数字。"
+                     "派生量必须现算（铁律八）")
+
+    # ── ③ 2022 卷：status 与 delivery_note 必须同源 ────────
+    p22 = os.path.join(ROOT, "data", "resources", "math-paper-2022.json")
+    if os.path.exists(p22):
+        rel = "data/resources/math-paper-2022.json"
+        d = load(p22, rep, rel)
+        if d:
+            qs = [q for s in d.get("sections") or []
+                  for q in s.get("questions") or []]
+            total = sum(q.get("score") or 0 for q in qs)
+            declared = re.findall(
+                r"共\s*(\d+)\s*题\s*(\d+)\s*分", str(d.get("meta", {}).get("structure") or ""))
+            if declared:
+                if int(declared[0][0]) != len(qs):
+                    _err(rel,
+                         f"meta.structure 声明 {declared[0][0]} 题，实际 {len(qs)} 题",
+                         "派生量应现算")
+                if int(declared[0][1]) != total:
+                    _err(rel,
+                         f"meta.structure 声明 {declared[0][1]} 分，实际合计 {total} 分",
+                         "派生量应现算（铁律八）")
+
+            # ★ 核心：**没验算过的题不许谎标为已验算**。
+            #   旧闸门只查「status 写未完成时 answer 不得有实质答案」，
+            #   **反方向完全没查**——把 status 从「🔴 未完成」改成「已验算」，
+            #   校验器报 0 错误。
+            #   而这个方向的危害是**本项目最重的一条纪律**：
+            #   2022 卷没有配套答案页，答案全靠 sympy 验算，
+            #   谎标「已验算」= 把没验过的答案当成验过的发给孩子。
+            missing = [str(q.get("no")) for q in qs
+                       if "未完成" in str(q.get("status") or "")]
+            # delivery_note.answer_missing 声明的题号必须与现算一致
+            am = str((d.get("delivery_note") or {}).get("answer_missing") or "")
+            for no in missing:
+                if no and no not in am:
+                    _err(rel,
+                         f"第 {no} 题 status 标「未完成」，"
+                         f"但 delivery_note.answer_missing 里没提它",
+                         "**交付边界必须写在文件里**——卷子最前面那段"
+                         "「本卷有哪几道没算出答案」是家长唯一的知情依据，"
+                         "对不上等于家长不知道哪几道不能对答案")
+            # 反向：声明了未完成但 status 标已验算
+            for q in qs:
+                st = str(q.get("status") or "")
+                ans = str(q.get("answer") or "")
+                no = str(q.get("no"))
+                if "未完成" not in st and not ans.strip():
+                    _err(rel, f"第 {no} 题标「{st[:20]}」但 answer 为空",
+                         "标了已验算却没答案 = 既没验算也没交付。"
+                         "要么补答案，要么把 status 改成「🔴 未完成」")
+                # ★ 答案里明明写着 🔴 未完成，status 却说已验算 —— 自相矛盾。
+                #   旧闸门只查「status 写未完成 ⇒ answer 不得有实质答案」，
+                #   **反方向完全没查**：把 status 从「🔴 未完成」改成「已验算」，
+                #   校验器 0 错误。回退法 C5 实测漏网。
+                #   这正是本卷最重的一条纪律——2022 没有配套答案页，
+                #   答案全靠 sympy 验算，谎标「已验算」= 把没验过的答案
+                #   当成验过的发给孩子。
+                if "🔴" in ans and "未完成" not in st:
+                    _err(rel,
+                         f"第 {no} 题 status 标「{st[:20]}」，"
+                         f"但 answer 里写着 🔴 未完成",
+                         "**自相矛盾**：答案自己说没算出来，状态却说验算过了。"
+                         "2022 卷没有配套答案页，答案全靠 sympy 验算——"
+                         "谎标「已验算」= 把没验过的答案当验过的发出去。"
+                         "补验算后请把 🔴 一并去掉。")
+            if missing:
+                for no in re.findall(r"\b(\d{2})\b", am):
+                    if no not in missing:
+                        rep.warn(rel,
+                                 f"delivery_note 提到第 {no} 题未完成，"
+                                 f"但它的 status 不是「未完成」",
+                                 "可能 delivery_note 过期了（补验算后忘了更新说明）")
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -3018,6 +3236,7 @@ def main():
     check_function_paper(rep)
     check_2022_paper(rep)
     check_manifest_key_consistency(rep)
+    check_reference_integrity(rep)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 
