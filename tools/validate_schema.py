@@ -2622,6 +2622,80 @@ def _num_marks(text):
     return marks
 
 
+def check_function_paper(rep):
+    """data/resources/function-topic-paper.json 是第 9 个数据入口，2026-10-04 新增。
+
+    **为什么单独立 check**：与 math-keypoints 同理——
+    `check_resources` 只认顶层 `papers` 是 list 的结构，
+    本文件顶层是 `sections` ⇒ 会被 continue 跳过（第二十类形态复发）。
+
+    **专题卷的特殊风险**：它是**练习卷**，同一份数据要渲染出
+    「学生卷（无答案）」与「答案卷（有答案）」两份文件。
+    风险点是**答案泄露进学生卷**——本轮实际踩到（第十九类形态复发）：
+    `build_function_paper.py` 里答案卷区块 24 处 `para(doc,...)` 全误写成 `doc`
+    而非 `adoc`，结果答案、步骤、易错点全进学生卷，
+    **而 docx 大小/段落数/打开效果全都正常，肉眼扫不出来**。
+
+    本闸门查数据层的自洽性（分值、字段、来源）；
+    「答案有没有漏进学生卷」由 `build_function_paper.py` 的
+    `selfcheck()` 查产成品——**两个闸门各管一段，不互相替代。**
+    """
+    p = os.path.join(ROOT, "data", "resources", "function-topic-paper.json")
+    if not os.path.exists(p):
+        return
+    rel = "data/resources/function-topic-paper.json"
+    d = load(p, rep, rel)
+    if not d:
+        return
+
+    sections = d.get("sections") or []
+    if not sections:
+        rep.err(rel, "顶层 sections 为空或缺失",
+                "专题卷的全部内容都在 sections 里，空了生成器会产出一份空白卷，"
+                "而 docx 打开完全正常")
+        rep.ok()
+        return
+
+    nos = []
+    total = 0
+    for sec in sections:
+        for q in sec.get("questions") or []:
+            nos.append(q.get("no"))
+            total += q.get("score") or 0
+            for k in ("no", "score", "point", "source", "stem", "answer", "steps"):
+                if not q.get(k):
+                    rep.err(rel, f"第 {q.get('no', '?')} 题缺字段 {k}",
+                            "练习卷缺字段 ⇒ 学生卷与答案卷都会少一整段，"
+                            "而文件能正常打开")
+
+    dup = sorted({n for n in nos if n in (None,) or nos.count(n) > 1})
+    if dup:
+        rep.err(rel, f"题号重复或缺失：{dup}",
+                "题号是学生与家长对照的唯一标识，重复会让「第 24 题」指到两道题")
+
+    # 分值合计：分值是这个项目最敏感的数字（MEMORY 分值纪律）
+    if total != 120:
+        rep.err(rel, f"全卷合计 {total} 分，与 meta 声明的 120 分不符",
+                "分值必须是派生量（现算），手写必然漂移")
+
+    # 试卷类产物不许把答案写进题干
+    import re as _re
+    for sec in sections:
+        for q in sec.get("questions") or []:
+            if _re.search(r"答案(是|为|：|:)\s*[A-D]", str(q.get("stem") or "")):
+                rep.err(rel, f"第 {q['no']} 题题干里出现答案字样：{str(q['stem'])[:40]}",
+                        "题干印答案 ⇒ 学生卷等于把答案抄在题面上，"
+                        "而打开文档完全正常")
+
+    # 自检节必须存在：编题出错时要向使用者交代，不能默默发一份有错的卷
+    if not d.get("self_check", {}).get("items"):
+        rep.err(rel, "缺 self_check.items",
+                "本卷已声明有 3 处编题瑕疵（见 JSON）。"
+                "**交付物必须交代已知瑕疵**——发一份有错的练习卷而不说，"
+                "比卷子有错本身更糟")
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -2651,6 +2725,7 @@ def main():
     check_doc_numbers(rep)
     check_data_readme(rep)
     check_math_keypoints(rep)
+    check_function_paper(rep)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 
