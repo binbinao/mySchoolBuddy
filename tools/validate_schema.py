@@ -2771,6 +2771,84 @@ def check_function_paper(rep):
     rep.ok()
 
 
+def check_2022_paper(rep):
+    """data/resources/math-paper-2022.json 是第 10 个数据入口，2026-10-04 新增。
+
+    **这道闸门查的是一个很具体的风险：把没验算的答案发出去。**
+
+    本轮的实际情况——2022 中考原卷**没有配套答案页**（拉到的那份解析版
+    逐字比对后确认**不是同一份卷**，填空题完全不同），所以 7 道题里
+    只有 5 题的答案能用 sympy 独立验算，另外 2 题我推不出来。
+
+    **推不出来就必须写「未完成」，不能凭印象填答案**——
+    解法步骤写错了比没有更危险，而且家长/孩子分不清哪题是验过的。
+
+    本闸门的三条硬规则：
+      1. `status` 里标「未完成」的题，**`answer` 不得是实质答案**
+         （必须以 🔴 开头明说未完成）
+      2. 每题必须有 `status`（交付状态是必填，不是可选）
+      3. `delivery_note` 必须存在——**已知交付边界要写在文件里，不是只写在对话里**
+    """
+    p = os.path.join(ROOT, "data", "resources", "math-paper-2022.json")
+    if not os.path.exists(p):
+        return
+    rel = "data/resources/math-paper-2022.json"
+    d = load(p, rep, rel)
+    if not d:
+        return
+
+    if not d.get("delivery_note", {}).get("items") and \
+       not d.get("delivery_note", {}).get("stem_verified"):
+        rep.err(rel, "缺 delivery_note",
+                "**已知交付边界必须写进数据层**——"
+                "哪些题验算过、哪些没验算、没验算的原因。"
+                "只写在对话里，下一个人接手时看不到")
+        rep.ok()
+        return
+
+    n_ok = n_bad = 0
+    for sec in d.get("sections") or []:
+        for q in sec.get("questions") or []:
+            no = q.get("no", "?")
+            st = str(q.get("status", ""))
+            ans = str(q.get("answer", ""))
+            if not st:
+                rep.err(rel, f"第 {no} 题缺 status",
+                        "交付状态是必填：本题答案验算过没有？"
+                        "不写就等于默认验算过，**而默认是最危险的**")
+                continue
+            done = ("已验算" in st) or ("已推导" in st)
+            if "未完成" in st:
+                n_bad += 1
+                # ★ 核心规则：未验算的小问不许有实质答案。
+                # ⚠️ 判据第一版写成「整题有 🔴 就不许有答案」⇒ **误伤混合状态**：
+                #    22 题与 24 题都是「(1) 已验算 + (2) 未完成」，
+                #    这种题**该给 (1) 的答案**（sympy 验过），只把 (2) 标未完成。
+                # ⇒ 改为按「未完成」逐条检查：答案里出现的 🔴 之后不应再有实质答案。
+                if "🔴" in ans:
+                    tail = ans.split("🔴", 1)[1]
+                    # 🔴 之后只允许出现「未完成 / 不在交付范围」这类说明
+                    leftover = re.sub(r"[^（(]*", "", tail)
+                    if re.search(r"[0-9√=]", leftover):
+                        rep.err(rel, f"第 {no} 题标了未完成，但 🔴 之后仍有公式/数字："
+                                     f"{tail[:40]}",
+                                "**没验算过的答案等于编造。**"
+                                "🔴 之后只写「未完成」三字，"
+                                "不要顺手把推导出的半成品也放进去")
+                    tail2 = ans.split("🔴", 1)[0]
+                    if tail2.strip() and not done:
+                        rep.err(rel, f"第 {no} 题整体标未完成，"
+                                     f"但前半段给了答案：{tail2[:40]}",
+                                "整题未完成却给答案 ⇒ 要么补验算，要么整题标未完成")
+                elif not done:
+                    rep.err(rel, f"第 {no} 题标了「未完成」但仍给了完整答案：{ans[:40]}",
+                            "**没验算过的答案等于编造。**"
+                            "要么补验算（sympy），要么把答案改成「🔴 未完成」")
+            else:
+                n_ok += 1
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -2801,6 +2879,7 @@ def main():
     check_data_readme(rep)
     check_math_keypoints(rep)
     check_function_paper(rep)
+    check_2022_paper(rep)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 

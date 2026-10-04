@@ -1550,6 +1550,50 @@
    "source": "https://renrendoc.com/paper/342085199.html",
    "fetched": "2026-10-04 22:17",
    "note": "人人文库原卷扫描 2021-zk-math-a"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p01.jpg",
+   "kind": "image",
+   "bytes": 89261,
+   "sha256": "0689855f2b067aeffda3dbd53d42ad30fc16b901b6a02ea1ecdda4b3acbb4579",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/311225880.html",
+   "fetched": "2026-10-04 22:25",
+   "note": "人人文库原卷扫描 2022-zk-math-solution"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p02.jpg",
+   "kind": "image",
+   "bytes": 131682,
+   "sha256": "2e174f5ff22562dff86182d009ecdb962d2d2cc24a9139e69a19e86758aedad4",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/311225880.html",
+   "fetched": "2026-10-04 22:25",
+   "note": "人人文库原卷扫描 2022-zk-math-solution"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p03.jpg",
+   "kind": "image",
+   "bytes": 84915,
+   "sha256": "4758aa8da307e2afb9bdc491e32689fa2dc7b7a0358bbe680b037a6241cd90d4",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/311225880.html",
+   "fetched": "2026-10-04 22:25",
+   "note": "人人文库原卷扫描 2022-zk-math-solution"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p04.jpg",
+   "kind": "image",
+   "bytes": 62639,
+   "sha256": "2e66561406102eb8c142edf69731c9b933ecb9e657bc159d65bdca95bb653c56",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/311225880.html",
+   "fetched": "2026-10-04 22:25",
+   "note": "人人文库原卷扫描 2022-zk-math-solution"
   }
  ]
 }
