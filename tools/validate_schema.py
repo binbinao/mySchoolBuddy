@@ -954,14 +954,33 @@ def check_doc_numbers(rep):
                     f"（image {n_img} + text {n_txt}）",
                 "手工数字漂移过至少两次。以 data/raw-manifest.json 为准，"
                 "改文档不要改数据")
-    # 2) 文档里若列出科目表，各行套数之和必须等于 count
+    # 2) 文档里的科目表若列了套数，各行之和必须等于 count
+    # ⚠️ **2026-10-04 改判据**：原来要求「九类合计 **N** 套」必须能解析出 N，
+    #    才能核对 N 是否等于 len(papers)。但按铁律 8「派生量不手写」，
+    #    文档里的套数本就不该写死——**是我上一轮把它改成派生量后，这道闸门就失效了**
+    #    （报「读不出文档里的统计数字」）。
+    # ⇒ 判据反过来了：**文档若不写死套数 = 正确；写了就必须对得上。**
     m = re.search(r"九类合计\s*\*\*(\d+)\s*套\*\*", txt)
     if m and int(m.group(1)) != len(papers):
         rep.err(rel, f"文档写科目表合计 {m.group(1)} 套，索引实际 {len(papers)} 套",
-                "科目表漏列的科目不会让页面报错，只会让读者按缺项做决策。"
-                "以 data/resources/shanghai-papers.json 的 papers 现算为准")
-    if not (m or re.search(r"manifest\s*\d+\s*条", txt)):
-        rep.warn(rel, "读不出文档里的统计数字",
+                "套数是派生量（= len(papers)），文档不该写死。"
+                "若确要写死，必须与数据层一致；更稳妥的写法是"
+                "「以 data/resources/shanghai-papers.json 的 papers 现算为准」")
+
+    # 3) 反向查：文档里是否把**索引条数**写死
+    # ⚠️ 判据第一次写成 `(\d+)\s*套` 全局扫 ⇒ **误伤**：
+    #    「每科 94 套」「850 套」是**站点规模描述**，不是本仓索引条数，
+    #    不受采集影响。⇒ 收窄成只查「索引条目」那一行的套数。
+    m2 = re.search(r"索引条目\s*\|\s*(\d+)\s*套", txt)
+    if m2 and int(m2.group(1)) != len(papers):
+        rep.warn(rel,
+                 f"文档「索引条目」行写死 {m2.group(1)} 套，实际 {len(papers)} 套",
+                 "索引条数是派生量（= len(papers)），每采集一次漂移一次。"
+                 "改成「以 data/resources/shanghai-papers.json 的 papers 现算为准」")
+
+    if not (m or re.search(r"manifest\s*\d+\s*条", txt)
+            or "papers" in txt or "不写死" in txt):
+        rep.warn(rel, "读不出文档里的统计口径",
                  "本闸门对本文件失效，确认表格结构没变")
         return
     rep.ok()
