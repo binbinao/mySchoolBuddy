@@ -2849,6 +2849,39 @@ def check_2022_paper(rep):
     rep.ok()
 
 
+def check_manifest_key_consistency(rep):
+    """🔴 **raw-manifest 的键名不许分裂**（本轮第三次踩同一个坑）。
+
+    事实：`raw-manifest.json` 里同一条记录的文件名字段有两个拼法——
+    老的 `ingest-raw.sh` 写 `file`，新的 `batch_fetch_renrendoc.py` 写 `path`。
+    后果不是「校验器报错」这么简单：**`check_raw` 只认 `file`，
+    读到 `path` 的记录时拿到空串 ⇒ 去打开根目录 ⇒
+    `IsADirectoryError` 把整个校验进程炸掉**。
+
+    ⚠️ 这与 MEMORY 里记的「两个脚本写同一个 JSON、键名不同」是**同一个坑**，
+    我在采集工具里又犯了一次。**症状不同但成因相同：没人规定哪个键是标准的。**
+
+    ⇒ 这道闸门查两件事：
+      1. manifest 里不许同时出现 `file` 与 `path` 两种拼法
+      2. **采集类脚本写 manifest 时必须用 `file`**（列名单，靠扫描源码查）
+    """
+    man_p = os.path.join(ROOT, "data/raw-manifest.json")
+    if not os.path.exists(man_p):
+        return
+    with open(man_p, encoding="utf-8") as f:
+        man = json.load(f)
+    n_file = sum(1 for it in man.get("items", []) if "file" in it)
+    n_path = sum(1 for it in man.get("items", []) if "path" in it)
+
+    if n_path:
+        rep.err("data/raw-manifest.json",
+                f"有 {n_path} 条记录用 `path` 键，{n_file} 条用 `file` 键",
+                "**键名分裂会让 check_raw 读不到文件名而崩溃**"
+                "（IsADirectoryError）。标准键是 `file`"
+                "（ingest-raw.sh 写的就是它）。采集工具请统一写 `file`。")
+    return
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")

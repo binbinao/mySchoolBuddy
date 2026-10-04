@@ -1,0 +1,323 @@
+{
+  "meta": {
+    "schema": "renrendoc-index/1",
+    "created": "2026-10-04",
+    "purpose": "**人人文库试卷清单** —— 批量采集的输入清单（tools/batch_fetch_renrendoc.py 读它）。",
+    "discovery_note": "⚠️ **人人文库没有可用的站内搜索接口**（`/search?q=` 返回 404）⇒ paperId **只能从外部搜索引擎逐个拿**。本清单是人工/搜索维护的，不是工具自动发现的。**要扩题库就得去搜，然后往这里加条目。**",
+    "referer_trick": "⚠️ **Referer 必须是具体页面 URL**，用站点首页必定 403。这是整条采集链的技术要点。",
+    "formula_quality": "**原卷扫描图公式完整**（分式/分数线/根号/全角标点都在）—— 这是它比 zujuan/教习网强的地方：那两个站的公式会被剥掉。",
+    "count": 32,
+    "domains": [
+      {
+        "prefix": "file4",
+        "path": "view12/M06/.. 或 view/.."
+      },
+      {
+        "prefix": "file2",
+        "path": "fileroot_temp3/YYYY-MM/.."
+      },
+      {
+        "note": "⚠️ **图链域名不止 file4**——2018 那份是 file2 + fileroot_temp3，第一版正则只匹配 file4+view 直接漏掉。已放宽为 file\\d+ + (view|fileroot_temp3)。"
+      }
+    ],
+    "topic_collections": "🔴 **重要发现**：存在成体系的「五年真题分类汇编」（21-25 按考点分类，含原卷版与解析版）——**这是专题学习卷的现成题源，比自己出题靠谱**。已收录物理 8 个专题。",
+    "preview_limit": {
+      "finding": "🔴 **人人文库每份只给 5 张预览图，不是全卷**。",
+      "evidence": "实测：电学计算汇编页面声明 52 页、图链只有 5 张；运动和力声明 29 页、图链 5 张；压强浮力声明 16 页、图链 5 张。",
+      "implication": "**专题汇编只拿到开头 5 页**（约 10-15 题），不是完整的 52 页汇编。⇒ 建题库时不能把它当「完整专题卷」用，只能当「样题来源」。",
+      "to_get_full": "完整版需付费下载（页面上的「下载」按钮）。**本项目走不通这条路**（无付费账号）。⇒ 补全只能靠：① 换别的站 ② 用户手买 ③ 用户手拍已有的纸质卷。",
+      "check_tool": "`tools/batch_fetch_renrendoc.py` 每次都打印「共 N 张」，**N 恒为 5 就是预览**。若某份 N<5 才是真的抓不全。"
+    }
+  },
+  "papers": [
+    {
+      "id": "sh-2016-zk-math",
+      "year": 2016,
+      "subject": "数学",
+      "paperId": "321880489",
+      "kind": "中考真卷",
+      "url": "https://www.renrendoc.com/paper/321880489.html",
+      "note": "学生版"
+    },
+    {
+      "id": "sh-2017-zk-math",
+      "year": 2017,
+      "subject": "数学",
+      "paperId": "294007081",
+      "kind": "中考真卷+解析",
+      "url": "https://renrendoc.com/paper/294007081.html",
+      "note": "含解析版"
+    },
+    {
+      "id": "sh-2018-zk-math",
+      "year": 2018,
+      "subject": "数学",
+      "paperId": "163943971",
+      "kind": "中考真卷+答案",
+      "url": "https://renrendoc.com/paper/163943971.html"
+    },
+    {
+      "id": "sh-2018-zk-math-b",
+      "year": 2018,
+      "subject": "数学",
+      "paperId": "4665232",
+      "kind": "中考真卷+答案",
+      "url": "https://zy.21cnjy.com/4665232.shtml",
+      "note": "21cnjy 域，可能超时"
+    },
+    {
+      "id": "sh-2019-zk-math",
+      "year": 2019,
+      "subject": "数学",
+      "paperId": "529289662",
+      "kind": "中考真卷+答案",
+      "url": "https://m.renrendoc.com/paper/529289662.html"
+    },
+    {
+      "id": "sh-2020-zk-math",
+      "year": 2020,
+      "subject": "数学",
+      "paperId": "266963724",
+      "kind": "中考真卷+解析",
+      "url": "https://m.renrendoc.com/paper/266963724.html"
+    },
+    {
+      "id": "sh-2020-zk-math-b",
+      "year": 2020,
+      "subject": "数学",
+      "paperId": "90714477",
+      "kind": "中考真卷+答案",
+      "url": "https://www.renrendoc.com/paper/90714477.html"
+    },
+    {
+      "id": "sh-2020-zk-math-c",
+      "year": 2020,
+      "subject": "数学",
+      "paperId": "314140917",
+      "kind": "中考真卷+答案",
+      "url": "https://www.renrendoc.com/paper/314140917.html"
+    },
+    {
+      "id": "sh-2020-zk-math-d",
+      "year": 2020,
+      "subject": "数学",
+      "paperId": "212371750",
+      "kind": "中考模拟",
+      "url": "https://renrendoc.com/paper/212371750.html",
+      "note": "⚠️ 疑似模拟卷（填空题与真卷不符），仅留档"
+    },
+    {
+      "id": "sh-2020-zk-math-e",
+      "year": 2020,
+      "subject": "数学",
+      "paperId": "235072278",
+      "kind": "中考真卷+答案",
+      "url": "https://m.renrendoc.com/paper/235072278.html"
+    },
+    {
+      "id": "sh-2021-zk-math-a",
+      "year": 2021,
+      "subject": "数学",
+      "paperId": "342085199",
+      "kind": "中考真卷+详解",
+      "url": "https://m.renrendoc.com/paper/342085199.html",
+      "note": "已入库"
+    },
+    {
+      "id": "sh-2021-zk-math-b",
+      "year": 2021,
+      "subject": "数学",
+      "paperId": "154178612",
+      "kind": "中考真卷+答案",
+      "url": "https://renrendoc.com/paper/154178612.html",
+      "note": "⚠️ 无图链"
+    },
+    {
+      "id": "sh-2022-zk-math-b",
+      "year": 2022,
+      "subject": "数学",
+      "paperId": "231655589",
+      "kind": "中考真卷",
+      "url": "https://www.renrendoc.com/paper/231655589.html",
+      "note": "已入库"
+    },
+    {
+      "id": "sh-2022-zk-math-solution",
+      "year": 2022,
+      "subject": "数学",
+      "paperId": "311225880",
+      "kind": "中考模拟解析",
+      "url": "https://renrendoc.com/paper/311225880.html",
+      "note": "⚠️ 填空题与 2022-b 卷不符，不是同一份卷"
+    },
+    {
+      "id": "sh-2023-zk-math-a",
+      "year": 2023,
+      "subject": "数学",
+      "paperId": "280332427",
+      "kind": "中考真卷+答案",
+      "url": "https://renrendoc.com/paper/280332427.html",
+      "note": "已入库"
+    },
+    {
+      "id": "sh-2023-zk-math-b",
+      "year": 2023,
+      "subject": "数学",
+      "paperId": "255152205",
+      "kind": "中考真卷+解析",
+      "url": "https://renrendoc.com/paper/255152205.html",
+      "note": "已入库"
+    },
+    {
+      "id": "sh-2023-zk-math-c",
+      "year": 2023,
+      "subject": "数学",
+      "paperId": "284917035",
+      "kind": "中考真卷+解析",
+      "url": "https://m.renrendoc.com/paper/284917035.html",
+      "note": "已入库"
+    },
+    {
+      "id": "sh-2023-zk-math-d",
+      "year": 2023,
+      "subject": "数学",
+      "paperId": "285912287",
+      "kind": "中考真卷+答案",
+      "url": "https://m.renrendoc.com/paper/285912287.html"
+    },
+    {
+      "id": "sh-2023-zk-math-e",
+      "year": 2023,
+      "subject": "数学",
+      "paperId": "271459605",
+      "kind": "中考真卷+答案",
+      "url": "https://www.renrendoc.com/paper/271459605.html",
+      "note": "含评分标准"
+    },
+    {
+      "id": "sh-2024-zk-math",
+      "year": 2024,
+      "subject": "数学",
+      "paperId": "333654107",
+      "kind": "中考真卷+答案",
+      "url": "https://m.renrendoc.com/paper/333654107.html",
+      "note": "已入库"
+    },
+    {
+      "id": "sh-2024-zk-math-b",
+      "year": 2024,
+      "subject": "数学",
+      "paperId": "4676612482",
+      "kind": "中考真卷+答案",
+      "url": "https://www.docin.com/paper/p-4676612482.html",
+      "note": "docin 站，图链结构不同"
+    },
+    {
+      "id": "sh-2024-zk-math-c",
+      "year": 2024,
+      "subject": "数学",
+      "paperId": "4735945730",
+      "kind": "中考真卷+答案",
+      "url": "https://www.docin.com/p-4735945730.html",
+      "note": "docin 站"
+    },
+    {
+      "id": "phy-2024-zk",
+      "year": 2024,
+      "subject": "物理",
+      "paperId": "525285442",
+      "kind": "中考真卷+解析",
+      "url": "https://m.renrendoc.com/paper/525285442.html",
+      "group": "整卷"
+    },
+    {
+      "id": "phy-2024-zk-b",
+      "year": 2024,
+      "subject": "物理",
+      "paperId": "395211341",
+      "kind": "中考真卷+答案",
+      "url": "https://www.renrendoc.com/paper/395211341.html",
+      "group": "整卷"
+    },
+    {
+      "id": "phy-5y-运动和力",
+      "year": "2021-2025",
+      "subject": "物理",
+      "paperId": "471119031",
+      "kind": "五年真题汇编",
+      "url": "https://m.renrendoc.com/paper/471119031.html",
+      "group": "专题汇编",
+      "topic": "机械运动 运动和力"
+    },
+    {
+      "id": "phy-5y-简单机械",
+      "year": "2021-2025",
+      "subject": "物理",
+      "paperId": "471119034",
+      "kind": "五年真题汇编",
+      "url": "https://renrendoc.com/paper/471119034.html",
+      "group": "专题汇编",
+      "topic": "简单机械 功和机械能"
+    },
+    {
+      "id": "phy-5y-选填基础",
+      "year": "2021-2025",
+      "subject": "物理",
+      "paperId": "471119040",
+      "kind": "五年真题汇编",
+      "url": "https://www.renrendoc.com:9089/paper/471119040.html",
+      "group": "专题汇编",
+      "topic": "电磁学选填基础题"
+    },
+    {
+      "id": "phy-5y-物理常识",
+      "year": "2021-2025",
+      "subject": "物理",
+      "paperId": "471119041",
+      "kind": "五年真题汇编",
+      "url": "https://renrendoc.com/paper/471119041.html",
+      "group": "专题汇编",
+      "topic": "物理常识与基础概念"
+    },
+    {
+      "id": "phy-5y-热学",
+      "year": "2021-2025",
+      "subject": "物理",
+      "paperId": "471119038",
+      "kind": "五年真题汇编",
+      "url": "https://m.renrendoc.com/paper/471119038.html",
+      "group": "专题汇编",
+      "topic": "热学"
+    },
+    {
+      "id": "phy-5y-电学计算",
+      "year": "2021-2025",
+      "subject": "物理",
+      "paperId": "471119030",
+      "kind": "五年真题汇编",
+      "url": "https://m.renrendoc.com/paper/471119030.html",
+      "group": "专题汇编",
+      "topic": "电学计算题"
+    },
+    {
+      "id": "phy-5y-压强浮力",
+      "year": "2021-2025",
+      "subject": "物理",
+      "paperId": "511138113",
+      "kind": "五年真题分类汇编",
+      "url": "https://www.renrendoc.com/paper/511138113.html",
+      "group": "专题汇编",
+      "topic": "压强与浮力 计算题(原卷版)"
+    },
+    {
+      "id": "phy-5y-电路故障",
+      "year": "2021-2025",
+      "subject": "物理",
+      "paperId": "512980488",
+      "kind": "五年真题分类汇编",
+      "url": "https://www.renrendoc.com/paper/512980488.html",
+      "group": "专题汇编",
+      "topic": "电路故障(原卷版)"
+    }
+  ]
+}

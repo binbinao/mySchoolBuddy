@@ -1222,7 +1222,6 @@
    }
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p01.jpg",
    "kind": "image",
    "bytes": 108640,
    "sha256": "80ecfaa6857551026b02bdd9b4c9c21b55fa2e2e942c09121179f8cc4859652a",
@@ -1230,10 +1229,10 @@
    "height": 1752,
    "source": "https://m.renrendoc.com/paper/333654107.html",
    "fetched": "2026-10-04 22:15",
-   "note": "人人文库原卷扫描 2024-zk-math"
+   "note": "人人文库原卷扫描 2024-zk-math",
+   "file": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p01.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p02.jpg",
    "kind": "image",
    "bytes": 133112,
    "sha256": "b46b53d2b61b599e3d2f10c9352d8030f15942c9b4bce92ec8028bf81e3e6c90",
@@ -1241,10 +1240,10 @@
    "height": 1752,
    "source": "https://m.renrendoc.com/paper/333654107.html",
    "fetched": "2026-10-04 22:15",
-   "note": "人人文库原卷扫描 2024-zk-math"
+   "note": "人人文库原卷扫描 2024-zk-math",
+   "file": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p02.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p03.jpg",
    "kind": "image",
    "bytes": 94603,
    "sha256": "25baa1bd93f7caf8d460daf05886f6260ecec253c89d59a768e60e4bb3f3dbce",
@@ -1252,10 +1251,10 @@
    "height": 1752,
    "source": "https://m.renrendoc.com/paper/333654107.html",
    "fetched": "2026-10-04 22:15",
-   "note": "人人文库原卷扫描 2024-zk-math"
+   "note": "人人文库原卷扫描 2024-zk-math",
+   "file": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p03.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p04.jpg",
    "kind": "image",
    "bytes": 101853,
    "sha256": "230ea09af16cb67e1bc9ff824c733e18072774ddbacfe33740992ec439bee2a2",
@@ -1263,10 +1262,10 @@
    "height": 1752,
    "source": "https://m.renrendoc.com/paper/333654107.html",
    "fetched": "2026-10-04 22:15",
-   "note": "人人文库原卷扫描 2024-zk-math"
+   "note": "人人文库原卷扫描 2024-zk-math",
+   "file": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p04.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p05.jpg",
    "kind": "image",
    "bytes": 29351,
    "sha256": "31bcf3ebc9bc4fc10e45f2cec47d93d302ce53f5f6d22852b348abb1107da7ae",
@@ -1274,10 +1273,10 @@
    "height": 1752,
    "source": "https://m.renrendoc.com/paper/333654107.html",
    "fetched": "2026-10-04 22:15",
-   "note": "人人文库原卷扫描 2024-zk-math"
+   "note": "人人文库原卷扫描 2024-zk-math",
+   "file": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p05.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p01.gif",
    "kind": "image",
    "bytes": 108203,
    "sha256": "e3cae63ca53353c72c0121eb0e065f365788158ddb6c8da472b3befafdd8f2b6",
@@ -1285,10 +1284,10 @@
    "height": 1753,
    "source": "https://www.renrendoc.com/paper/231655589.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2022-zk-math-b"
+   "note": "人人文库原卷扫描 2022-zk-math-b",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p01.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p02.gif",
    "kind": "image",
    "bytes": 156899,
    "sha256": "f3abc860bc16f365695248f20e1a6f66994c9dc9a243662a04c7b09cf56939dc",
@@ -1296,10 +1295,10 @@
    "height": 1753,
    "source": "https://www.renrendoc.com/paper/231655589.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2022-zk-math-b"
+   "note": "人人文库原卷扫描 2022-zk-math-b",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p02.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p03.gif",
    "kind": "image",
    "bytes": 103465,
    "sha256": "1e651bb98f3b5b4ed85de33ef8ce0a04a39e356a15b4bdd850cea1033f7429be",
@@ -1307,10 +1306,10 @@
    "height": 1753,
    "source": "https://www.renrendoc.com/paper/231655589.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2022-zk-math-b"
+   "note": "人人文库原卷扫描 2022-zk-math-b",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p03.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p04.gif",
    "kind": "image",
    "bytes": 80781,
    "sha256": "9ac45f73f5844b1521b30e098142f0bd99a6909ae01b850c2bfb3b7b801c0ab0",
@@ -1318,10 +1317,10 @@
    "height": 1753,
    "source": "https://www.renrendoc.com/paper/231655589.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2022-zk-math-b"
+   "note": "人人文库原卷扫描 2022-zk-math-b",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p04.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p05.gif",
    "kind": "image",
    "bytes": 28220,
    "sha256": "f0a1f806c4f65e5f05b513532c87c488cc8aceb9503ec8b73e21d4efd2665bec",
@@ -1329,10 +1328,10 @@
    "height": 1753,
    "source": "https://www.renrendoc.com/paper/231655589.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2022-zk-math-b"
+   "note": "人人文库原卷扫描 2022-zk-math-b",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p05.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p01.gif",
    "kind": "image",
    "bytes": 98545,
    "sha256": "8fa1e68720597afcbaa696b106a82ae1022417b72a6815a856f91e26aab972c9",
@@ -1340,10 +1339,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/280332427.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-a"
+   "note": "人人文库原卷扫描 2023-zk-math-a",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p01.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p02.gif",
    "kind": "image",
    "bytes": 222895,
    "sha256": "bc06842a250659210ef06c432d0335a53666ae2eeaa96d94a1107d499e61344e",
@@ -1351,10 +1350,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/280332427.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-a"
+   "note": "人人文库原卷扫描 2023-zk-math-a",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p02.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p03.gif",
    "kind": "image",
    "bytes": 72436,
    "sha256": "bd2280799b57ec87662b8674fa8c94792fb3e3a4a78118c2837cb01dd4742d6d",
@@ -1362,10 +1361,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/280332427.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-a"
+   "note": "人人文库原卷扫描 2023-zk-math-a",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p03.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p04.gif",
    "kind": "image",
    "bytes": 71184,
    "sha256": "8350009c36bbd1044467a1bf74cc7195ce2474fb17d25937bf2e9b12d4d1caa6",
@@ -1373,10 +1372,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/280332427.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-a"
+   "note": "人人文库原卷扫描 2023-zk-math-a",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p04.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p05.gif",
    "kind": "image",
    "bytes": 67186,
    "sha256": "e616842010f39651d4dc818346eb31279ba3e8481669035ee817c091847108d0",
@@ -1384,10 +1383,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/280332427.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-a"
+   "note": "人人文库原卷扫描 2023-zk-math-a",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p05.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p01.gif",
    "kind": "image",
    "bytes": 134321,
    "sha256": "74ac551b9f431387bbaa462eb8d1377ab4db3a4bac66e818072c7df352cd732c",
@@ -1395,10 +1394,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/255152205.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-b"
+   "note": "人人文库原卷扫描 2023-zk-math-b",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p01.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p02.gif",
    "kind": "image",
    "bytes": 258185,
    "sha256": "65edad308aa91fe5c6522e0d0d5012aaa7842e4039a22c391e810a2d3427725c",
@@ -1406,10 +1405,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/255152205.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-b"
+   "note": "人人文库原卷扫描 2023-zk-math-b",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p02.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p03.gif",
    "kind": "image",
    "bytes": 142655,
    "sha256": "c433ae92ecc67c15ca79c66f7a21da024aac30e4538ff49c399e42e49edffb3b",
@@ -1417,10 +1416,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/255152205.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-b"
+   "note": "人人文库原卷扫描 2023-zk-math-b",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p03.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p04.gif",
    "kind": "image",
    "bytes": 130379,
    "sha256": "77b1001894db8dd6418702b24e6fb85ed15d2a4d5afdb8ee8bf860facef24987",
@@ -1428,10 +1427,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/255152205.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-b"
+   "note": "人人文库原卷扫描 2023-zk-math-b",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p04.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p05.gif",
    "kind": "image",
    "bytes": 127905,
    "sha256": "e67a1e2ba7a3ceab46175b4eeed78dc218253f18356606128fe1fb9c77338d02",
@@ -1439,10 +1438,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/255152205.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-b"
+   "note": "人人文库原卷扫描 2023-zk-math-b",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p05.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p01.gif",
    "kind": "image",
    "bytes": 87182,
    "sha256": "bdd441cc97824f1afdc3e1299a975371589d8600810f31a972b50faefa385bae",
@@ -1450,10 +1449,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/284917035.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-c"
+   "note": "人人文库原卷扫描 2023-zk-math-c",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p01.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p02.gif",
    "kind": "image",
    "bytes": 200311,
    "sha256": "33111efe0d0b0c100e8946319869672c6fa7ad36fecd76de733903a1641bd372",
@@ -1461,10 +1460,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/284917035.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-c"
+   "note": "人人文库原卷扫描 2023-zk-math-c",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p02.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p03.gif",
    "kind": "image",
    "bytes": 54858,
    "sha256": "aaa298064b2825ed1ef7a41f122ef521446bebd97c71d061ccea6620a9006c5b",
@@ -1472,10 +1471,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/284917035.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-c"
+   "note": "人人文库原卷扫描 2023-zk-math-c",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p03.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p04.gif",
    "kind": "image",
    "bytes": 75877,
    "sha256": "8a8e8c446aac3e92d2a0ce77c11643034d2f63fa9d2d6268f246d7a2281bb59f",
@@ -1483,10 +1482,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/284917035.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-c"
+   "note": "人人文库原卷扫描 2023-zk-math-c",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p04.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p05.gif",
    "kind": "image",
    "bytes": 65003,
    "sha256": "03b644779445363638a99a3ebcfe02dcda11e4036dff2aa17b23b76e1cda536d",
@@ -1494,10 +1493,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/284917035.html",
    "fetched": "2026-10-04 22:16",
-   "note": "人人文库原卷扫描 2023-zk-math-c"
+   "note": "人人文库原卷扫描 2023-zk-math-c",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p05.gif"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p01.jpg",
    "kind": "image",
    "bytes": 60524,
    "sha256": "02cee567b6f01b4e753aad2c19b3415faee4f5806dc6c7fc068bce5876394e74",
@@ -1505,10 +1504,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/342085199.html",
    "fetched": "2026-10-04 22:17",
-   "note": "人人文库原卷扫描 2021-zk-math-a"
+   "note": "人人文库原卷扫描 2021-zk-math-a",
+   "file": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p01.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p02.jpg",
    "kind": "image",
    "bytes": 72676,
    "sha256": "f58424d64d2435b5b60b934bd74bbcad7e08ecc92b9baf33dc9dc886f649892a",
@@ -1516,10 +1515,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/342085199.html",
    "fetched": "2026-10-04 22:17",
-   "note": "人人文库原卷扫描 2021-zk-math-a"
+   "note": "人人文库原卷扫描 2021-zk-math-a",
+   "file": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p02.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p03.jpg",
    "kind": "image",
    "bytes": 51160,
    "sha256": "ca015896431ae425751c83b12d64cb0a4cfcde488b141be09c6eeabc053a8fce",
@@ -1527,10 +1526,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/342085199.html",
    "fetched": "2026-10-04 22:17",
-   "note": "人人文库原卷扫描 2021-zk-math-a"
+   "note": "人人文库原卷扫描 2021-zk-math-a",
+   "file": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p03.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p04.jpg",
    "kind": "image",
    "bytes": 53550,
    "sha256": "119369ba4d1eb3b4792c06f7f6e777eb2e1cb4a97c41786d0282e8d7ec0e8a20",
@@ -1538,10 +1537,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/342085199.html",
    "fetched": "2026-10-04 22:17",
-   "note": "人人文库原卷扫描 2021-zk-math-a"
+   "note": "人人文库原卷扫描 2021-zk-math-a",
+   "file": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p04.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p05.jpg",
    "kind": "image",
    "bytes": 66924,
    "sha256": "ff9bbfcf2607d8f3751bbef95dd8188b93c55defad967be6f082d8f372cc8d91",
@@ -1549,10 +1548,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/342085199.html",
    "fetched": "2026-10-04 22:17",
-   "note": "人人文库原卷扫描 2021-zk-math-a"
+   "note": "人人文库原卷扫描 2021-zk-math-a",
+   "file": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p05.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p01.jpg",
    "kind": "image",
    "bytes": 89261,
    "sha256": "0689855f2b067aeffda3dbd53d42ad30fc16b901b6a02ea1ecdda4b3acbb4579",
@@ -1560,10 +1559,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/311225880.html",
    "fetched": "2026-10-04 22:25",
-   "note": "人人文库原卷扫描 2022-zk-math-solution"
+   "note": "人人文库原卷扫描 2022-zk-math-solution",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p01.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p02.jpg",
    "kind": "image",
    "bytes": 131682,
    "sha256": "2e174f5ff22562dff86182d009ecdb962d2d2cc24a9139e69a19e86758aedad4",
@@ -1571,10 +1570,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/311225880.html",
    "fetched": "2026-10-04 22:25",
-   "note": "人人文库原卷扫描 2022-zk-math-solution"
+   "note": "人人文库原卷扫描 2022-zk-math-solution",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p02.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p03.jpg",
    "kind": "image",
    "bytes": 84915,
    "sha256": "4758aa8da307e2afb9bdc491e32689fa2dc7b7a0358bbe680b037a6241cd90d4",
@@ -1582,10 +1581,10 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/311225880.html",
    "fetched": "2026-10-04 22:25",
-   "note": "人人文库原卷扫描 2022-zk-math-solution"
+   "note": "人人文库原卷扫描 2022-zk-math-solution",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p03.jpg"
   },
   {
-   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p04.jpg",
    "kind": "image",
    "bytes": 62639,
    "sha256": "2e66561406102eb8c142edf69731c9b933ecb9e657bc159d65bdca95bb653c56",
@@ -1593,7 +1592,1845 @@
    "height": 1753,
    "source": "https://renrendoc.com/paper/311225880.html",
    "fetched": "2026-10-04 22:25",
-   "note": "人人文库原卷扫描 2022-zk-math-solution"
+   "note": "人人文库原卷扫描 2022-zk-math-solution",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 102544,
+   "sha256": "3f428eee58758ca335ae25363831443e48ae09f89cb4466db05f095b10ca7573",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-2024-zk-b（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-2024-zk-b-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 155960,
+   "sha256": "0a8f361b50e67dcea3326a77d66c7b0e0c2d1b8b5ab94addf32435248a5f5d0e",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-2024-zk-b（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-2024-zk-b-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 125367,
+   "sha256": "365f1b157951d01bbda9bfdb104b14edc640d7f484306ec961e28483ff0a4c54",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-2024-zk-b（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-2024-zk-b-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 156205,
+   "sha256": "c9dc4a5f5e73723c3cd52d13686ef93bce4d7fa050e7e31d0de99a2a4a060968",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-2024-zk-b（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-2024-zk-b-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 109636,
+   "sha256": "c27573eb39b1227193b5d69e9ddf664b87d9239e6b9a58450f6f7eaabf8e65b3",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-2024-zk-b（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-2024-zk-b-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 110762,
+   "sha256": "207af0da65e7ec309fcc71e6c4b2ee34fb8787cee4c793dccb2f40dedef96692",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-2024-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-2024-zk-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 119182,
+   "sha256": "f4ae50110208ce2055e42101f5023a28fac74f41bdd7fd32e877635945ae73cd",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-2024-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-2024-zk-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 115797,
+   "sha256": "bc2c5598f6b2eb00ec364773451eb4569f24fe732ce7060e7cfe880109a72614",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-2024-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-2024-zk-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 134045,
+   "sha256": "87d66ceb133c2fc702a32a0ff11cb878fbbc2cb1fe83fd98702f3330a91951dc",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-2024-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-2024-zk-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 97622,
+   "sha256": "311786c02b19d09d4dbeb04595899653bbc214d85fd78db4462fdc0431d362f8",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-2024-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-2024-zk-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 134251,
+   "sha256": "10733ac192b93a07b0e3104cd196e0d36eb449a5ea4d5c94549d283bf0f71a58",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-压强浮力（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-压强浮力-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 127536,
+   "sha256": "8bf4a3e221e734e1be177eda43ae669f75a77f450fe21da997066699d4df2499",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-压强浮力（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-压强浮力-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 140036,
+   "sha256": "a241c646134a79f00f61bb7df754246da198762d350a7800f3316b881d1d9978",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-压强浮力（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-压强浮力-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 128045,
+   "sha256": "e558b27eb7a5b15f7cdfcd1edea58dc4a96cfc32970aaa22ad02ef0227fced4d",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-压强浮力（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-压强浮力-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 121429,
+   "sha256": "7354b53d29c2299e5193187501adaac295ea16170106f33df7d3595671eac5ac",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-压强浮力（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-压强浮力-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 137264,
+   "sha256": "dabc6fcd983b501d8e80d7d8a3d16ca6b4b01c025d9f6dedccbb6c23e30e7117",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-热学（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-热学-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 159472,
+   "sha256": "1f8d5ade9b3607a852967cfb728d6a371dc916b40ed57e355035c69efcd7cd14",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-热学（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-热学-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 108934,
+   "sha256": "4037a21407d6148fc125f4c8bb16149f3e46e11dc543228933ec895b0172c18f",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-热学（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-热学-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 162123,
+   "sha256": "2a6b4e1b976d8cb79b9cf47624ec360a879f211db9f5e4feea6112e44905170a",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-热学（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-热学-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 155196,
+   "sha256": "4aaea26b9a1123f479565e7e8bee02baca87216d087132725f7c0292096d66f8",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-热学（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-热学-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 95061,
+   "sha256": "7b5b312e0e480038ecc0e4f3679fcd5fad2cd64b68934ae0fc0b9be2f714b199",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-物理常识（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-物理常识-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 96249,
+   "sha256": "3f6dd13ed2a290e6c035145c6185c5f2b7963acd49f7e112097c9d830e0c4640",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-物理常识（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-物理常识-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 128422,
+   "sha256": "a6db4ca04828e2f8aff24780b3529ac7abd4a3d281b858e5790321eb35d115f1",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-物理常识（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-物理常识-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 131069,
+   "sha256": "d22dcff9b6971b36f8955e718826c06e11c1f7c1b468d6b565ef6073cc0c2d2d",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-物理常识（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-物理常识-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 114734,
+   "sha256": "7a5f6cf903ab31c900a2ca7531ff53f0f352627763fd7470e06511b0d309ad18",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-物理常识（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-物理常识-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 113817,
+   "sha256": "8bb9d0e8990db5a247e6ea9c17ed9f5419702be01fa21020f979efa6fd72aca8",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-电学计算（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-电学计算-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 94782,
+   "sha256": "36d037ae08aee9c617d127f234b67f4b22688c1dcfe0f50e246a4d7ee861f2f0",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-电学计算（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-电学计算-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 101248,
+   "sha256": "514d24d16718990930ef75f5cb38d99ec84b5f3d9631ce634383f5bb843d69ac",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-电学计算（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-电学计算-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 95359,
+   "sha256": "7f82da0505462ccf459056fd78cd45da009c6f3727ecf4024a949421290160b0",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-电学计算（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-电学计算-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 62335,
+   "sha256": "76f0320c475ac521397b101794ac5dbfc9d3c968d996aed0d0d034408a431767",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-电学计算（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-电学计算-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 118288,
+   "sha256": "27070a40335a7cfe544cba51caecc391d2ab882d420ea3105e621e88a536a778",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-电路故障（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-电路故障-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 78371,
+   "sha256": "8c39653ff140b434642a7f7087c14df63145bb8f1c880933e0c6b208de227928",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-电路故障（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-电路故障-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 132373,
+   "sha256": "f2b820b77553bda5f314b29237412e9c34e7318739ed60437beed38ae043746a",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-电路故障（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-电路故障-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 91916,
+   "sha256": "e8efb03ffff426a0c5e917e2ec6c0a1055c702a5569a65da3193a0781f933128",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-电路故障（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-电路故障-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 102812,
+   "sha256": "d92292ede955b28dbe358b31808ea25c33ac72f3e4153fc7531ab0bc972684a0",
+   "width": 1508,
+   "height": 2132,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-电路故障（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-电路故障-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 117431,
+   "sha256": "5a4771de02d03607f8bf0a3dff0afa4860950b226eb383c3fdef41a655b7d9cd",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-简单机械（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-简单机械-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 148477,
+   "sha256": "f906fc25fb0e810d296f052fe6bdbebdb1b0aacbe63dec601e35a8c0a055ef5e",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-简单机械（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-简单机械-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 102102,
+   "sha256": "0754e9f14f8dd473d993ae3ab2ddbcec63a81eddc58b3dfdd3fc6a9fdbb7a126",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-简单机械（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-简单机械-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 100985,
+   "sha256": "678908fde598cd9bf6e9216cab0b3b9339476181287b56e1707d42b991ab7a77",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-简单机械（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-简单机械-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 92775,
+   "sha256": "6426ac19151177b82d239dc4176cfe6c5b2658e5ed8c839114ab4961d78b9b23",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-简单机械（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-简单机械-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 118992,
+   "sha256": "3616e1974923ab1d5387292fe5921d8c2acacd8c8379abaea05c85fe45f39f95",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-运动和力（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-运动和力-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 170178,
+   "sha256": "f6bdc1490d8cbd0ff104b0afc6e82c769e531b9aabee9a5b9b47a429643930d5",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-运动和力（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-运动和力-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 124211,
+   "sha256": "88404bb7f6f3d2f7196f9147f09f06ba28ad2185a9184dce9628d2b33bdaedd6",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-运动和力（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-运动和力-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 65466,
+   "sha256": "e1b98283fc8debbb30ffe4c84141283d2b498536964000a111f01fd4085cdcc6",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-运动和力（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-运动和力-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 112576,
+   "sha256": "466d7a48fcc41c4ea4e745db8703f24c83f7c5a362bc962fc88934567f2ea0f7",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-运动和力（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-运动和力-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 108719,
+   "sha256": "5db2a821cd13d6bdeed35fa0ac18ff326e8d818ce83bc19071ee079448bf2747",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-选填基础（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-选填基础-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 102875,
+   "sha256": "623af8d2c559d8c9ac28e8b86cceef488de485e3e015e80d4c63534ce246e828",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-选填基础（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-选填基础-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 131234,
+   "sha256": "de61d39985952905c0cbaa5da4235f3fefa0e67871b3efa9224d77dadd28e245",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-选填基础（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-选填基础-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 141276,
+   "sha256": "e99043afb5516cd87a908ecf8bc9ac2bf456d444b8f0a95563c66ba2176fc2a6",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-选填基础（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-选填基础-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 122479,
+   "sha256": "1ca43616868ca75da1ee01394fd60e3dc136f201d4af5bea2548c9bfa5547067",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 phy-5y-选填基础（补登记）",
+   "file": "RAW/试卷库/原卷扫描/phy-5y-选填基础-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 98497,
+   "sha256": "47568ea38e4dbc3d6542ccd1c3c94c78a13493a5fa54a957f749238f7d316201",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2016-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2016-zk-math-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 121080,
+   "sha256": "8a767af3ece62350439be6a827e72ebc97a77d71192919c5725a5e45b00102f4",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2016-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2016-zk-math-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 60924,
+   "sha256": "16cc9ca7c4ee7c45347d2a7f04fdf2dfd065f86ecc8f8f29c8f857b31773025d",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2016-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2016-zk-math-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 27148,
+   "sha256": "10f5b0a4bb155ff44869970d00385c4d87d7a8ee52d109d3a3130266d5735fa8",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2016-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2016-zk-math-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 45812,
+   "sha256": "0150c1ecf300b0223021d0795313ec3744a06c0b488ef556d75eb208b13dc163",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2016-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2016-zk-math-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 145080,
+   "sha256": "c9a2ee9b885db6f57851321ca8b80147ada99622dfb5012064a3b6a493b50f57",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2017-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2017-zk-math-p01.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 267210,
+   "sha256": "0a180ddb3e8bb0e0ff13169236e8ca3f3a4a18deba9b39893779bba2d2465c7f",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2017-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2017-zk-math-p02.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 132134,
+   "sha256": "6b374ced114dcafd50e1d308fb29e65491317c8be122d36a21da6770eeafc77e",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2017-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2017-zk-math-p03.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 129685,
+   "sha256": "684c10d916b4e2be39c060ec8133d439ab8c8dcf173021a5fd2f9e1ec9cd5293",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2017-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2017-zk-math-p04.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 142822,
+   "sha256": "be227afedaf03c1ef2af3259134e4ed207d9bacea201d17f4ad427f5f4aaf224",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2017-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2017-zk-math-p05.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 138669,
+   "sha256": "b163e7c74b51b33905d9e949a1ab8058e578b8b44f8fd23ffde4261b745e4827",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2018-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2018-zk-math-p01.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 9227,
+   "sha256": "5d51fd764866e7cc578ca7692a5729809481e271e72db4dd4d04a79c81f8bf6a",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2018-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2018-zk-math-p02.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 79200,
+   "sha256": "86aec46935f98824f261a4c92f02c9bc6d00c159fea94a43838f7ee0f2bbe7af",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2018-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2018-zk-math-p03.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 15489,
+   "sha256": "7aaad33854c25966c77c3cc436c4a14bf4c890898064f1094d467ce90b5a2405",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2018-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2018-zk-math-p04.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 64179,
+   "sha256": "04b966f478577f366fa158894d8876ccbeb407fb79ce651970a95fa83793cbb2",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2018-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2018-zk-math-p05.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 112271,
+   "sha256": "ecf883b523c99a4e618a81c57e34641c043afe5c82e210b662ecd9c42d8b8975",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2019-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2019-zk-math-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 123459,
+   "sha256": "ea26073e9eefb46f367ce8c3ca8b67e0f7179712eff82a1d072a02ec99f20745",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2019-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2019-zk-math-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 74040,
+   "sha256": "b309cae4ba2d1dffe425269db50d974f189ae91ec078e7767e003e5adda612e5",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2019-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2019-zk-math-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 86893,
+   "sha256": "5a107b472831e13e7a7b96de4c4835a1c8fc2396ab69ff0282a262f163ca64c7",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2019-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2019-zk-math-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 21023,
+   "sha256": "a35b2aa71ff607885ce206c6b409c92a6be6158eca013922043be3f52a6ac93d",
+   "width": 1240,
+   "height": 1754,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2019-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2019-zk-math-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 91131,
+   "sha256": "dbbd73e46ffdff3aaf4c8f3261bfeab2ade2aa1eefd66ede5855f7e2a1e8885b",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-c（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-c-p01.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 91068,
+   "sha256": "abd98906213ffe2cffb71e71b09ecb67be414cffca6df1984cedfb8f14c6402a",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-c（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-c-p02.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 69609,
+   "sha256": "98d02841388866297b6a7566034e9150db0f32e37ecb70024ef53f46b59db7f0",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-c（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-c-p03.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 75080,
+   "sha256": "bf774953a01fa73e2cdea9bff375d038b814fb2aeaa96587c78effc706759433",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-c（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-c-p04.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 41170,
+   "sha256": "71a81cf5bb5576125c9c5db556f8550f5f306d572c6e79aedfabf24c49d62a8a",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-c（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-c-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 167318,
+   "sha256": "c400e851a62df4568d32aecbe67de9b3dc98a9548f9164a168540d30d23023cf",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-d（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-d-p01.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 175653,
+   "sha256": "1eed6025059d92b9dd810df6514fd910a830cad7f3d218281e225ae7d298f6ce",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-d（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-d-p02.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 140567,
+   "sha256": "436c447de8d1980f36b8b4b71389356c0d0f13460d9a2caa9ba4c6dbe235dc35",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-d（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-d-p03.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 159275,
+   "sha256": "61b882112048548b260bfe9f5f3a559da31057ae277987d355308ab4bf4d50ac",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-d（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-d-p04.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 34468,
+   "sha256": "392533da37097f31f13ee862d42deebc430bd92a4f17128294f4e46ca8a179c7",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-d（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-d-p05.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 209560,
+   "sha256": "3c9a115ab03653b1e84713d1beac4ce8d184a2d0bc9438c64d5ea86e6af69345",
+   "width": 1991,
+   "height": 2818,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-e（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-e-p01.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 396863,
+   "sha256": "0399ce93d74a8727fa7484dccbd9ec569820d31a09df1d6e63977627a3ff7d51",
+   "width": 1991,
+   "height": 2818,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-e（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-e-p02.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 109505,
+   "sha256": "ff0515060a6d79e7309df26fd4ad8dfda3c593eff508a47a753b1e9919477ecb",
+   "width": 1991,
+   "height": 2818,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-e（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-e-p03.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 106510,
+   "sha256": "19b29f6519c5209e5a7f4675a13891a09a278068b538e4fb65cc6d59202d733a",
+   "width": 1991,
+   "height": 2818,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math-e（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-e-p04.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 158568,
+   "sha256": "2e253b87a48e4318247dd858ae4e1837dedaf580530c50da700278869ea4081a",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-p01.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 252204,
+   "sha256": "719115f8ab109f8b1b76ccdf589991a7e4c9149962c240cc168601e76d6e2c5d",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-p02.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 75249,
+   "sha256": "5b7b5ab645ebf36dfbfa3affd8335eafd882025d3c0f3cd9ae86daf8b5d87e00",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-p03.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 157053,
+   "sha256": "6c6832373bb7c253609d10ab8d0d08798e4ab85243c606a1b1e58f8ec335c629",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-p04.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 144473,
+   "sha256": "8410399fbb0e557c0c30631c75c0edae6ac659328ce3556292679a034249a310",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2020-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2020-zk-math-p05.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 182719,
+   "sha256": "54e9b174d94d1050cca520046d47089b4021b6f9913a7bb94b5de47f3bee2a22",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2021-zk-math-b（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2021-zk-math-b-p01.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 166210,
+   "sha256": "c50b0642cc5300cf01e096d710cf15ed3ea8e4089918e405f668419989214d49",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2021-zk-math-b（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2021-zk-math-b-p02.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 173012,
+   "sha256": "cd8bb80eca9145ae29b1011cbc54dee82d1e338cca2970282190b8d208eabc5f",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2021-zk-math-b（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2021-zk-math-b-p03.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 128041,
+   "sha256": "66e1803d06793c48d87a074e3e27b553a6b95deb717739e035f913431d517df0",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2021-zk-math-b（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2021-zk-math-b-p04.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 92355,
+   "sha256": "0bb598de760e3368ccc66522e9af0dc66905c1abe69fe16294f326a3ef7b037a",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2021-zk-math-b（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2021-zk-math-b-p05.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 82186,
+   "sha256": "dc5a55b4902cfbe2df43bc97df29511134ca7f4c32f883499733e465e3791dac",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 59619,
+   "sha256": "47e01d534c8e821058fc241e7c70e7f190e366570f4d4842149d1d633b25dc31",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 80290,
+   "sha256": "03ee5cfdae1ebf80367b2cfa0699e799b483493c5f4129ecfc2569082cb0fed4",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p03.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 39039,
+   "sha256": "bb8d6bf57d51bde9a8ae0288166efe9f2acc4ea15c888da5f6a4e2e0c92541ba",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p04.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 79348,
+   "sha256": "c7de421f43d1c1d3e89a58998b11ec7df569a491ea5ad3342f30d6c56e39966f",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p05.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 68724,
+   "sha256": "d83f8bba3b92df41dae60d8278430f1d8059c12f844163e0fac8e29521efc67a",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p06.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 83961,
+   "sha256": "f8e26ceba2bbb1caf7e3aeb48fe57f3adf99b8a9577e83983ea0f19664056d1e",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p07.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 54950,
+   "sha256": "f506a465c85b43a6c6c3bdbe73168c2a60d3603680c228200cc99eaa09ba9005",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p08.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 50124,
+   "sha256": "c0ff252ef4ae699c431db4507cdaf677f0e73c73bcc0add24d6db86d413ea43c",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p09.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 65123,
+   "sha256": "e9aa89c956995f1e7bcee44752f71a47b771349a84ca158d37a4709649d1de91",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p10.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 82283,
+   "sha256": "98f2356457f12029b4862941d4afc013091128b9f0ae7ef99896a4802a6db56d",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math-solution（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-solution-p05.jpg"
+  },
+  {
+   "kind": "image",
+   "bytes": 73447,
+   "sha256": "5f361959f25e4071a454cc45c5bb5d00b11c71ac89103194618e0cb974f778a8",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math-w（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 65852,
+   "sha256": "52c46c8174837a1d6490c85f43daa31ecd6a402e7ebc94216a8d610ecab27c57",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math-w（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 43539,
+   "sha256": "f7706c03b7ae32252d8777d2db91c9b0c200dd21061d40eba02aebb1449dacd2",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2022-zk-math-w（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p03.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 122608,
+   "sha256": "50b3b0aa8acfbac0b8d8a83d6d311e6a315c9abb98f925ec05c66f8b1f98909a",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math-d（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-d-p01.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 277374,
+   "sha256": "0188a0293f200f8435fcc4bac7f6756f1005594b7279f4eb0f848eb87e5b6482",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math-d（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-d-p02.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 149952,
+   "sha256": "be4d0a436b752ffab0bfba986f9c2b8eba194aacc72c7af7ee2824182b2b9a00",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math-d（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-d-p03.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 78052,
+   "sha256": "1780d28e791b18b6e0af37878df5e631484c87b05f6bafd275b032845ec5e581",
+   "width": 1243,
+   "height": 1756,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math-d（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-d-p04.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 96504,
+   "sha256": "619b75c45a2727e1b216da551e8ef13026a8836d883b5280843a216893621308",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math-d（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-d-p05.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 97933,
+   "sha256": "4b7c147cf9137893e5f0090d6bf1c4d1515b7d46272e1697fff3a5a15911ea8b",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math-e（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-e-p01.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 208892,
+   "sha256": "d7d4db88294696601ac771eedb6f99c824f4822aeaa86f4940c10a989d73e965",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math-e（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-e-p02.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 158127,
+   "sha256": "2b8a2a269e738f5e7bc1bd5cb21b80f0ad4677d3b8c4baf0295b006b8d99129a",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math-e（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-e-p03.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 114360,
+   "sha256": "74c1011aba402c7e563263188beaa97735b89b4ffc85e8be29261b524bab5ec5",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math-e（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-e-p04.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 81246,
+   "sha256": "d6348b23e49d318f418219e2cb25128bb8e7f77c41356b20b6d04771a50d9ec6",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math-e（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-e-p05.gif"
+  },
+  {
+   "kind": "image",
+   "bytes": 84056,
+   "sha256": "525bb8f92ad50b13a649206163d41a83732f48c9174271c0b8b8bbdf4c216047",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 79629,
+   "sha256": "0c3f8a79746cc2930b004ed1d1009046875293ab3d9b1c1357857f2ee95a05cd",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2023-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 228408,
+   "sha256": "c40d3028835dcaeb0047c05ecea9209edc8cc7fce08c3a1110e3d9faa56c5e94",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-yimo-minhang-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 259693,
+   "sha256": "8846f33c127c50dc91cf939b941e8f6be536cc57774b9f6eb1aa2ef7a2328864",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-yimo-minhang-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 226276,
+   "sha256": "c0e027fefa3b905eb761b89d95dd13eaac69af22996b6defbd214461a64d436b",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-yimo-minhang-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p03.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 257396,
+   "sha256": "37a00d300468431af20ad78ab4c3e8fd002769128cc9dba885b39549ecef8fe2",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-yimo-minhang-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p04.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 256355,
+   "sha256": "eeae25fa093721d09f31b70686f69cbe2d2fb121689bffd6341b5fc8d8ae5595",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-yimo-xuhui-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 208044,
+   "sha256": "aa8485bdcc2a51d6e5b5f1b554dfebec70427601ae5aaf2e66b36ead39d7b1f8",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-yimo-xuhui-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 224542,
+   "sha256": "ef9a7f777ed033499d774347c3df41fc70a6e8e8866dcdb359ab4ac1119c5d95",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-yimo-xuhui-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p03.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 193265,
+   "sha256": "0930737d8d48bac2a726c51de24e71f4cc0e125eb33b59e8374f819dc72e34ce",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-yimo-xuhui-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p04.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 190600,
+   "sha256": "e5fdb7f9e6da2a6da3a9f4e9780dcc1d1c0a018cb8986e513bb8c7cc2a8c057f",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-biology（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 213559,
+   "sha256": "9cf0573c5b149df14e747b7849f8ee8691d8c813103c228dcdcab6a80fc74b79",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-biology（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 192689,
+   "sha256": "e8cfdbb3eb6b74e004f46a9d488479ae9afcffae5407d27558314e796f597082",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-biology（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p03.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 238992,
+   "sha256": "66a723e9dd601a907a48b7343c57aa10ba37898ab3b90aadf5332dc6b59e49d9",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-biology（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p04.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 280684,
+   "sha256": "938d3f5f1795ae943ee1d676f54c69b2d33b56952f7170db33a05974fd39794b",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-biology（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p05.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 68272,
+   "sha256": "a48f8df938149b9bee1fce7474386db49dc3f5a4503aceda1903104a76605a26",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chemistry（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 78962,
+   "sha256": "97eac0b3db9445e3e700d9f7aea9dc765a39b1e34550b9a2484cf93bc1e14c85",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chemistry（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 50638,
+   "sha256": "5576f90d475be87d08e8b7deaa7914084317d2371c036d669da1db1b819044a8",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chemistry（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p03.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 70856,
+   "sha256": "65bd75f264880bd26d1f3a3c2eb4e5a68b6888a4cb583e2bdd298e41b084c16b",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chemistry（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p04.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 88108,
+   "sha256": "e2d8270847fa283c842ae1082162aa6dfadb334d607db2eb61c025ed824459ea",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chemistry（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p05.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 70138,
+   "sha256": "6795ca171d1f326e819dee13da8e35b628d3b6badc62a212a03004515d504ee1",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chemistry（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p06.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 75269,
+   "sha256": "2fc03d2961adf2581e6c07b22ab334cbc7cf4327a0102c41787257b760471dd6",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chemistry（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p07.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 84677,
+   "sha256": "257de88c81082a9663f8d10067071f527598f7397dfa7a786381a047ec6f6b77",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chemistry（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p08.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 88534,
+   "sha256": "90f09ec51302265b7de67358d400468d5c263280d7f90d10f9101b12e66f732b",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chemistry（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p09.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 88010,
+   "sha256": "395bdb9959be48878acf0d7a45b3e179e354237875cca8cdee3c0ed26a906887",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chinese（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 80064,
+   "sha256": "f2f3d372752b674fdcd65aff11610ee5ff1a5177bd9403bdfef1eca020cda564",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chinese（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 91232,
+   "sha256": "36957dc7103ea66f5020f624d55c6cc664f1f39f8df23d51f32fd92482252f87",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chinese（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p03.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 121464,
+   "sha256": "a4ac1655654d8e2c7ab10a7c94df8fd81219b2f12086d1c1db8310c5f5314fa8",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chinese（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p04.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 84673,
+   "sha256": "e0fecaa1895f57712d3b0400cc6e34db91383eaaeab32b5307fabb36334d5de1",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chinese（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p05.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 89537,
+   "sha256": "57ea385fdc6c3e738ede73f637e1a26d59d86e6379cbdc6ba10f754f3d54b45a",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chinese（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p06.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 80445,
+   "sha256": "620c8016d55d0bf858c8cb7275a523dbda2eb4fb3a750b93bab128cd65b82ec7",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chinese（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p07.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 119907,
+   "sha256": "764b6e0a2308fea5667fac61b4ecc07f1b3ae00282d7b4774b49fcd42bef138e",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chinese（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p08.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 112961,
+   "sha256": "d99f62bab0103cf91c1c5cc7bfdda9b05b5b2ec1d9087696134abc36a63da8eb",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-chinese（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p09.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 64664,
+   "sha256": "d9fb3e122fe432b8d18b9169b7a4196c324acd5fa40d3d472b64c86761207515",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 92062,
+   "sha256": "e5c4165202e9938906fdda7bbf0428cb1c4b876358a7ddf01e2749f1c6eb000c",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 66363,
+   "sha256": "3cfa42d1643bd622a7f1596d7acb1a3a2446d87c96a33597b70ace1e87ca5b37",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p03.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 43931,
+   "sha256": "b6067622560fed8ac159bbbf513092b2c279b19d482e5d8579052a70e156987d",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p04.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 21148,
+   "sha256": "926f63a07334874aaab557b2e89674cac3fe1e1c93207c2dff94d536793047c0",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk-math（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p05.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 74967,
+   "sha256": "f0d23d36d875d943cf10fb1fa1f97f1102e736ebae0e8c64ff3df5b7ac2c7ebc",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 91797,
+   "sha256": "8b7e53152f8a751de22fc3dd8b5176d4b7997f4eb624fe3b14259eef5d7434e5",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 73570,
+   "sha256": "6b14a04d9c1c148e245ee10baa1b621128c5f0da9e8005eac0e18a4a5ffe02e1",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p03.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 66083,
+   "sha256": "b6e59ec6bea01fb53c9b978535b033dd5150819d9bf1eed72c6e1960d16c3887",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p04.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 75623,
+   "sha256": "cd727dd229d3a6175af1d2cac618472c04d8054a52ec3a950eec2f15a3dac1f0",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p05.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 93230,
+   "sha256": "5e23e452ab489fb3cfd394213aca6b0a11aa908f67bcd1ba3c012c9f998fbc92",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p06.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 89436,
+   "sha256": "e835734048f5b7749f74d0135534f04d6c29ee1627b250729aac4191941951c9",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2025-zk（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p07.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 98934,
+   "sha256": "3df7088170e64c97ba909324df648e20fc83f1e1166c71da1b2a6ae5fb52be0c",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2026-zk-daofa（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p01.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 82184,
+   "sha256": "b852bb07cb7e7dd72ad5deb690936255f750cebdcf0e0a27a07f084449a986bb",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2026-zk-daofa（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p02.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 35792,
+   "sha256": "5a1bc1d7a614690b57ff6614b4d28cbe5e0a0a24ac079e917777fda0ccccefde",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2026-zk-daofa（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p03.png"
+  },
+  {
+   "kind": "image",
+   "bytes": 98985,
+   "sha256": "e1e7982d1af252c274d2a2b37be109219453fd04c4fe7635fdf21548a2529bb1",
+   "width": 0,
+   "height": 0,
+   "source": "https://www.renrendoc.com/",
+   "fetched": "2026-10-04 22:52",
+   "note": "人人文库批量采集 sh-2026-zk-daofa（补登记）",
+   "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p04.png"
   }
  ]
 }

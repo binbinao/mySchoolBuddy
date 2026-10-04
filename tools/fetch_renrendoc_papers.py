@@ -65,7 +65,7 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
 #   2022 卷 → //file4.renrendoc.com/view/81f3…/81f3….gif     ← view 不是 view12，且是 gif
 # 第一版只写 view12 + jpg，2022 那份直接报「页面结构可能变了」。
 VIEW_IMG = re.compile(
-    r'<img[^>]+src=["\']([^"\']*file4\.renrendoc\.com/view[^"\']*?\.(?:jpg|gif|png))["\']',
+    r'<img[^>]+src=["\']([^"\']*file\d+\.renrendoc\.com/(?:view|fileroot_temp3)[^"\']*?\.(?:jpg|gif|png|jpeg))["\']',
     re.I)
 
 
@@ -174,7 +174,7 @@ def main():
             print(f"  [{i}/{len(imgs)}] ✅ {len(d):>7} 字节  {w}×{h}  "
                   f"→ {os.path.basename(dst)}")
             records.append({
-                "path": os.path.relpath(dst, ROOT),
+                "file": os.path.relpath(dst, ROOT),
                 "bytes": len(d), "width": w, "height": h,
                 "source": page, "sourceImg": u,
             })
@@ -198,11 +198,11 @@ def append_manifest(records, pid):
             data = json.load(f)
     items = data.setdefault("items", [])
     for r in records:
-        p = os.path.join(ROOT, r["path"])
+        p = os.path.join(ROOT, r["file"])
         if not os.path.exists(p):
             continue
         items.append({
-            "path": r["path"],
+            "file": r.get("file") or r.get("path"),
             "kind": "image",
             "bytes": r["bytes"],
             "sha256": sha256(p),
