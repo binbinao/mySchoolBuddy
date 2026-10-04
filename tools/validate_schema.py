@@ -521,14 +521,32 @@ def check_cause_enum(rep):
     if os.path.exists(rdm):
         with open(rdm, encoding="utf-8") as f:
             r = f.read()
-        m = re.search(r'"cause":\s*"?([^"\n]*?)"?\s*,?\n', r)
-        if m:
+        m = re.search(r'"cause":\s*"([^"\n]*)"', r)
+        if not m:
+            # 第十八轮修。原先写 `if m:`，正则失配时**静默放过**——
+            # 把 cause 与 causeSecondary 合并成一行就会让整行不匹配，
+            # 于是「0 错误」而 README 里的枚举清单已经不存在了。
+            # 判据的前提不能是「违规内容本不具备的性质」：认不出来的东西要**报错**，
+            # 不是放过（MEMORY 闸门铁律 6）。
+            rep.warn("README.md",
+                     "读不出 schema 示例里的 cause 枚举清单",
+                     "枚举比对点对本文件失效。可能是 JSON 示例被重排、"
+                     '"cause" 后面不再紧跟值，或示例被删——确认后改回单行独立写法')
+        else:
             listed = {x.strip() for x in m.group(1).split("|")}
             listed = {x for x in listed if x and not x.startswith("…")}
-            if listed and listed != CAUSES:
+            if listed != CAUSES:
+                missing = [c for c in sorted(CAUSES) if c not in listed]
+                extra = [c for c in sorted(listed) if c not in CAUSES]
+                parts = []
+                if missing:
+                    parts.append("缺 " + "、".join(missing) + "，按纪律补上")
+                if extra:
+                    parts.append("枚举外有 " + "、".join(extra) + "，删掉")
                 rep.err("README.md",
-                        f"schema 示例的 cause 写了 {'/'.join(sorted(listed))}，与五类枚举不一致",
-                        "README 是新人第一份参照，照着抄就会录错")
+                        f"schema 示例的 cause 写了 {'/'.join(sorted(listed))}，"
+                        f"与五类枚举不一致",
+                        "README 是新人第一份参照，照着抄就会录错。" + "；".join(parts))
             rep.ok()
 
 
