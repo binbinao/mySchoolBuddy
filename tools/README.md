@@ -37,14 +37,29 @@ tools/pipeline.sh --help
 
 ## 脚本清单
 
+### 主管道
+
 | 脚本 | 用途 | 状态 |
 |---|---|---|
 | `pipeline.sh` | 主管道：入库 → 生成 → 校验 → 提交推送 | ✅ 已实测 |
 | `ingest-raw.sh` | RAW 原件压缩（长边 2000px / JPEG q50）、备份原图、更新 manifest | ✅ 已实测 |
-| `build_skeletons.py` | 生成精讲页 / 试卷拆解页骨架 | ✅ 已实测 |
-| `validate_schema.py` | 校验分值/溯源/原件三条纪律 | ✅ 已实测（抓出真实数据错误） |
+| `build_skeletons.py` | 生成精讲页 / 试卷拆解页骨架（**只写 `docs/实战表/<学科>/`**） | ✅ 已实测 |
+| `validate_schema.py` | 数据闸门，18 项检查 | ✅ 已实测（抓出真实数据错误） |
 | `fix-manifest-sha.sh` | 订正 manifest 里记错的指纹 | ✅ 已实测 |
-| `install-launchd.sh` | 部署/卸载定时任务 | ⚠️ 见下方说明 |
+| `install-launchd.sh` | 部署/卸载定时任务 | ⚠️ 沙箱内无法注册，见下方说明 |
+
+### 上海卷库采集（独立于主管道，手动跑）
+
+| 脚本 | 用途 | 状态 |
+|---|---|---|
+| `fetch_shanghai_papers.py` | 从 `shanghai_papers_source.json` 抓卷库元数据 → `data/resources/` | ✅ 已入库 21 套索引 |
+| `scan_zujuan_papers.py` | 扫描目标站可得文本全文 → `RAW/试卷库/*.txt` | ✅ 已入库 11 份全文 |
+| `fetch_paper_images.py` | 下载原卷扫描页 → `RAW/试卷库/原卷扫描/` | ✅ 已入库 62 张 |
+| `shanghai_papers_source.json` | 采集源清单（人工维护的种子数据，非派生量） | ✅ 静态输入 |
+
+> ⚠️ **规模化批量采集被目标站点反爬封锁**，脚本已就绪，冷却后可直接跑。
+> 现状与阻塞详情见 `docs/试卷库建设/上海试卷采集-现状与阻塞.md`。
+
 
 ### build_skeletons.py
 
@@ -79,25 +94,38 @@ tools/build_skeletons.py --dry-run
 
 额外检查：模块满分之和 = 试卷总分、逐题失分之和 = 总失分、错因在五类之内、已判错因但没附中间步骤判读。
 
-覆盖的**数据入口**共 5 个（漏掉任何一个入口，该入口的数据就等于无约束）：
+覆盖的**数据入口**共 6 个（漏掉任何一个入口，该入口的数据就等于无约束）：
 
 | 入口 | 查什么 |
 |---|---|
 | `data/raw-manifest.json` | sha256 与文件一致 |
-| `data/wrong/` | 分值纪律、溯源 |
+| `data/wrong/` | 分值纪律、溯源、答案字段、题干拆解、已做对/做错 |
 | `data/exams/` | 分值纪律、**模块 got 不得与本模块确定失分题矛盾** |
 | `data/tasks/` | 标记 done 的任务，其 `fields` 在数据层不得为空；`meta.pending` 与实际待办数一致 |
 | `data/resources/` | `count` 对条数、`stats` 三项之和恒等、`fetched` 对实际 rawFile 数、**`unchanged` 即报错** |
+| `data/README.md` | 规范源本身（分值纪律 / 字段细则 / 能力边界是否写明） |
 
-另有 4 项跨层闸门：
+`main()` 里的调用顺序：`check_raw` → `check_wrong` → `check_exams` → `check_tasks` →
+`check_resources` → `check_cause_enum` → `check_embedded_snapshots` → `check_no_fabricated_score` →
+`check_module_got_grounded` → `check_page_matches_data` → `check_five_stage_paradigm` →
+`check_breakdown_faithful` → `check_done_right_faithful` → `check_cause_reasoning` →
+`check_answer_fields` → `check_papers_derived` → `check_doc_numbers` → `check_data_readme`。
+
+**共 18 项检查。** 另有页面级与跨层闸门若干：
 
 - **`check_cause_enum()`** — 错因五类枚举在 7 处定义点（方法论表格 / `CAUSES` / 两个 `<select>` / `app` 的 `ci` 着色表 / README 示例 / 生成器 `CAUSE_TONE`）必须逐字一致。缺项会静默退化成灰色 chip，**属「看起来正常、实际失效」**。
+- **`check_cause_reasoning()`** — 错因判定的**推理纪律**：存疑与定论互斥（`causePending: true` ⇒ `cause` 必须为空）、副因必须是五类之一且与主因不同、「粗心。」这类没指向任何步骤的套话非法。
 - **`check_embedded_snapshots()`** — 页面内嵌的数据副本（如试卷地图页的 `const DATA`）必须与数据层**逐字节相同**。副本一旦漂移，页面不会报错，只会让内容静默过期。
+- **`check_five_stage_paradigm()`** — 错题精讲页的五段范式：变式配比（简单 + 同类型 + **问答对调**）、想五题末题必须是「什么情况下这方法会失效」、steps 至少一步带断点。
+- **`check_breakdown_faithful()`** — 拆解表左边必须是**题干原句**不是概括，且能在数据层逐行找到；页数与数据层一致。
+- **`check_done_right_faithful()`** — 精讲页「已做对」表每一行（**✓ 与 ✗ 都算**）都能在数据层找到。比对**事实标记**（数学式/坐标/选项字母）而非整句字面。
 - **`check_no_fabricated_score()`** — 页面不得对**数据层 `got` 为 null 的模块**给出 `X/Y` 实得分数（那些模块是纪律已判定「无卷面依据」的）。**只审这些模块**是有意收窄：扫全站 `X/Y` 会把数学比例 2:3、选择项 A. 3/2、题号 35/36 全误报。合法引用必须在**同一句**内写明为何不折算——窗口开太宽会让上一段的免责说明替下一段的违规数字豁免。
 - **派生量恒等** — 能被算出来的数字不要手写。`meta.stats` 由 `papers` 现算，三项之和恒等于 `count`。
 
-> ⚠️ **闸门出假阳性 = 把真错误淹掉。** 上线前先跑一次看它报什么：已踩过三次坑（`startswith` 匹配模块名让「I」误命中「III」凭空多报 2 条；把筛选器哨兵值 `value=""`／文本「全部」当枚举外值误报；扫全站 `X/Y` 误报 9 条数学/题号/基线分）。
+> ⚠️ **闸门出假阳性 = 把真错误淹掉。** 上线前先跑一次看它报什么：已踩过多次坑（`startswith` 匹配模块名让「I」误命中「III」凭空多报 2 条；把筛选器哨兵值 `value=""`／文本「全部」当枚举外值误报；**把「尚未定论」误判成「已定论」**；按 `<br>` 当换行符拆内容；扫全站 `X/Y` 误报 9 条数学/题号/基线分）。
 > ⚠️ **回退法自证**：改完闸门要手动制造违规，确认它**立刻**抓得出；抓不出说明检查根本没生效。**同轮要验正反两面**——既验「违规能抓出」，也验「合法内容不误报」。
+> ⚠️ **回退法自己会出事**：用 `git checkout` 还原测试文件会连带抹掉同文件里的合法修复。**先 `cp` 备份、还原后逐字节比对 sha256**（`json.dump` 会丢文件末尾换行）——别拿 git 恢复当撤销键。
+
 
 ```bash
 tools/validate_schema.py           # 有错误 exit 1
@@ -155,12 +183,16 @@ tools/install-launchd.sh uninstall    # 卸载
 
 ```
 tools/
-├── pipeline.sh                    主管道
+├── pipeline.sh                    主管道（唯一入口）
 ├── ingest-raw.sh                  原件入库
 ├── build_skeletons.py             骨架生成
-├── validate_schema.py             数据校验
+├── validate_schema.py             数据闸门（18 项检查）
 ├── fix-manifest-sha.sh            指纹订正
 ├── install-launchd.sh             定时任务部署
+├── fetch_shanghai_papers.py       卷库元数据采集
+├── scan_zujuan_papers.py          卷库文本全文扫描
+├── fetch_paper_images.py          原卷扫描页下载
+├── shanghai_papers_source.json    采集源清单（静态输入）
 ├── assets/coach.css               讲义样式（从精讲页抽取，保证视觉一致）
 └── launchd/*.plist.template       定时任务模板
 ```
