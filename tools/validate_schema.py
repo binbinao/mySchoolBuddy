@@ -187,14 +187,9 @@ def check_wrong(rep, rawmap):
                 if pending is False and (full is None or lost is None):
                     rep.err(where, "scoreConfirmed=false 但分值仍为空", "两个标记语义冲突")
 
-            # 错因
-            cause = it.get("cause")
-            if cause and cause not in CAUSES:
-                rep.warn(where, f"错因不在五类之内：{cause}",
-                         f"应为 {'/'.join(sorted(CAUSES))} 之一，否则统计归类会漏")
-            if cause and not (it.get("myThought") or it.get("causeNote")):
-                rep.warn(where, "已判错因但没有中间步骤判读",
-                         "只看最终答案会误判——「方法没想到」和「概念不清」救法完全相反")
+            # 错因（枚举、推理链、套话、存疑矛盾）全部交给 check_cause_reasoning()，
+            # 那里是 err 级并覆盖 wrong 与 exams 两侧。第十七次核验把这里的
+            # 两条 warn 降级删除：warn 不阻断管道，枚举外的值能一路提交进 Git。
 
             # 溯源纪律
             # sourceRaw 允许是字符串（单张错题照片）或数组（跨页/多张原卷）。
@@ -324,7 +319,9 @@ def check_exams(rep, rawmap):
                     rep.err(where, f"第{wq}题 失分 {wl} > 满分 {wf}", "数值不合法")
                 c = w.get("cause")
                 if c and c not in CAUSES:
-                    rep.warn(where, f"第{wq}题 错因不在五类之内：{c}", "")
+                    # 枚举检查已由 check_cause_reasoning() 以 err 级统一处理，
+                    # 此处不重复报告（否则同一问题会被计两条，闸门自身出假阳性）。
+                    pass
 
             if not ex.get("verdictHtml") and not ex.get("verdict"):
                 rep.warn(where, "缺诊断结论", "「主要失分在哪、下一步先补什么」是报告的价值所在")
@@ -2002,6 +1999,184 @@ def check_done_right_faithful(rep, rawmap):
     rep.ok()
 
 
+def _cause_is_settled(rec):
+    """错因是否**已定论**。
+
+    判据沿用 check_answer_fields 的口径（第十四轮踩过一次坑）：
+    `causePending: true` 表示这道题的病因**尚未判出来**。
+    存疑题即使填了 `cause`（那只是一个暂记的猜测），也不能进统计。
+    """
+    return rec.get("cause") and rec.get("causePending") is not True
+
+
+def check_cause_reasoning(rep, rawmap):
+    """判错因的推理链：cause / causeNote / myThought / causeSecondary / causePending。
+
+    2026-10-04 第十七次核验抓到的缺陷，是**第十四类（源头无闸门）家族的第四个成员**：
+
+      第十四轮 `answerKey`/`childAnswer` · 第十五轮 `stem`/`breakdown` ·
+      第十六轮 `doneRight`/`doneWrong` · **本轮 判错因的推理链**。
+
+    为什么它比前三轮任何一个都严重：`cause` 决定**救法**。
+    MEMORY 写着「方法没想到」与「概念不清」**救法完全相反**，混淆即无效刷题；
+    而在第十四轮之前，**没有任何一道闸门读过 cause 的依据**——
+    校验器对 `cause` 只做了一件事：查它在不在五类之内（还是 warn，不是 err），
+    另外一条 warn 查「有没有 myThought/causeNote」，**但只看存不存在、不看写得对不对**。
+
+    回退法自证（发现手段）——**九例注入，八例全漏网**：
+
+      正向（应抓出，实际全部 0 错误）：
+        A 把 q19 的 myThought 整段改成与题目无关的胡话
+        B 把 q5 的中间步骤判读压缩成「粗心。」两个字
+        E 把 `causeSecondary` 写成枚举外的「时间不够」
+        F 把 `causeSecondary` 写成自由文本「手感不好」
+        G 把 `causeSecondary` 写成数组（类型漂移）
+        H 存疑题（causePending=true、causeNote 明说「不下定论」）
+          却把 `cause` 改成定论性的「计算失误」
+        D 存疑题 `cause=概念不清`，`causeNote` 却写「概念完全清楚」——自相矛盾
+      唯一被抓出的：
+        I 删掉 `causePending`/`uncertain` 标记——被**第十四轮那道闸门**
+          间接抓到（causePending 缺失 ⇒ answerKey 变必填）。
+          **这正说明两道闸门不能互相替代**：第十四轮那道抓的是「答案」，
+          本轮要抓的是「推理链」，即使被连带命中也不能算覆盖。
+
+    本轮发现的**第四层，比前三轮更深**：不是「字段错了没人查」，
+    而是**下游统计直接把存疑题算进了错因分布**。
+    `build_skeletons.py` 的错因分布表遍历全部 `wrongs`，
+    只判 `w.get("cause")` 是否为空，**完全不看 `causePending`**——
+    7 道失分题全部计入，而实际只有 4 道错因已定论（36/58/61 存疑）。
+    ⇒ 报告上的「错因分布」有 3/7 是猜的。**本闸门同时修生成器根因。**
+
+    覆盖范围：**`data/wrong/*.json` 的 items 与 `data/exams/*.json` 的 wrongs 两侧**。
+
+    能力边界（勿误以为已被守住）：
+      · **机器查不出「推理是否成立」**。`cause=概念不清` + `causeNote` 写
+        「读的时候理解错了」在字面上完全通顺，本闸门通过——但它其实该是
+        「审题错误」。**推理链的语义只能靠核卷**（看孩子的中间步骤）。
+        本闸门能抓的是**结构性违规**：枚举外值、类型漂移、自相矛盾、
+        套话敷衍、存疑却定论。**语义靠人，结构靠机器。**
+      · 「套话」判据是**可自动判定的窄口径**（见下方 `_is_boilerplate`），
+        不是「读起来像不像敷衍」——第九轮已证明全文关键词扫描 11 条里 9 条假阳性。
+    """
+    # 套话判定：**只认「极短 + 无任何具体步骤痕迹」这一种形态**。
+    #
+    # ⚠️ 本闸门自身踩过两次坑（铁律六第 4 条形态：豁免条件恒真）：
+    #   首版加了「必须出现主因名字才判套话」这个前提，
+    #   而套话恰恰**不含**类目名（「粗心」里没有「方法没想到」）
+    #   ⇒ 该条件对全部真实套话恒为假，等于给它们发免死金牌。
+    #   **判据的前提不能是「套话本来就不具备的性质」**——那是在给自己开免死金牌。
+    #   二版补了「敷衍词表」，仍漏「与题目无关的占位句」这一形态：
+    #   它既不短到 4 字、也不含任何已知敷衍词，却同样零信息量。
+    # 三版去掉词表依赖：**判据收敛为「够短 + 不含任何具体步骤痕迹」**——
+    # 无信息量的判读在这两个条件下必然被抓住，且不必穷举敷衍词。
+    #
+    # 为什么阈值定在 24 字而不是更严：第九轮已证明全文关键词扫描假阳性 9/11。
+    # 第 35 题的合法 causeNote「句子结构意识够，只是落笔时漏了」只有 22 字，
+    # 若把阈值压到 20 以下就会误报真实数据。**宁可漏，不可淹。**
+    # （「句型/宾语/主语/标点」这几个词是刻意留的具体痕迹词：
+    #   它们让短句能通过，正是第 35 题这类合法短判读不被误报的关键。）
+
+    def _is_boilerplate(text):
+        """是否属于「无信息量的套话/占位句」。只在**能自动判定**时返回 True。"""
+        t = _norm_text(text)
+        # 有实质长度的一律不判：判据只能是窄口径（第九轮教训）
+        if len(t) >= 24:
+            return False
+        # 出现了具体步骤的痕迹（公式/语法点/题型词）⇒ 在讲具体步骤，不算套话
+        if re.search(r"[=＝≈≠≤≥]|\d|函数|方程|顶点|根|抛物线|比例|相似|全等|"
+                     r"平行|选项|问句|疑问词|连读|时态|单词|句型|宾语|主语|"
+                     r"标点|公式|定理|定义|条件|读音|拼写|草图|红笔|原卷|审题|回读",
+                     str(text)):
+            return False
+        # 够短、且不含任何具体痕迹 ⇒ 判为无信息量。
+        # 短到 4 字（无论内容）必判；更长一些的也判——因为它既然不含任何
+        # 具体步骤痕迹，短到这个程度就只能是套话或占位句。
+        return True
+
+    for rel_j in sorted(glob.glob(os.path.join(ROOT, "data", "wrong", "*.json"))):
+        rel = os.path.relpath(rel_j, ROOT)
+        d = load(rel_j, rep, rel)
+        if not d:
+            continue
+        for it in d.get("items", []):
+            where = f"{rel}#{it.get('id', '?')}"
+            _check_one_cause(rep, where, it, _is_boilerplate)
+
+    for rel_j in sorted(glob.glob(os.path.join(ROOT, "data", "exams", "*.json"))):
+        rel = os.path.relpath(rel_j, ROOT)
+        d = load(rel_j, rep, rel)
+        if not d:
+            continue
+        for ex in d.get("exams", []) or []:
+            eid = ex.get("id", "?")
+            for w in ex.get("wrongs", []) or []:
+                _check_one_cause(rep, f"{rel}#{eid}", w, _is_boilerplate,
+                                 prefix=f"第{w.get('qno', '?')}题 ")
+    rep.ok()
+
+
+def _check_one_cause(rep, where, rec, is_boilerplate, prefix=""):
+    """单条错因记录的推理链检查。wrong 侧与 exams 侧共用。"""
+    cause = rec.get("cause")
+    sec = rec.get("causeSecondary")
+    note = rec.get("causeNote")
+    thought = rec.get("myThought")
+    pending = rec.get("causePending") is True
+
+    # —— ① 副因必须是五类之一（只选一个，不接受数组/自由文本）——
+    if sec not in (None, ""):
+        if not isinstance(sec, str):
+            rep.err(where, f"{prefix}causeSecondary 不是字符串",
+                    "副因**只能选一个**（MEMORY：只选一个主因，副因同理）。"
+                    f"实际类型：{type(sec).__name__}。"
+                    "写成数组会让「主因唯一」这条纪律在数据层失效")
+        elif sec not in CAUSES:
+            rep.err(where, f"{prefix}副因不在五类之内：{sec}",
+                    f"副因必须与主因同口径，应为 {'/'.join(sorted(CAUSES))} 之一。"
+                    "自由文本副因无法统计，会在错因分布里凭空多出一类")
+        elif cause and sec == cause:
+            rep.err(where, f"{prefix}副因与主因相同：{sec}",
+                    "副因必须是一个**不同的**病因，否则归类没有信息量")
+
+    # —— ② 主因不在五类之内：这是 **err 不是 warn** ——
+    # 第十四轮把它设成 warn，理由当时写的是「统计归类会漏」。
+    # 但 warn 不会阻断管道 ⇒ 枚举外的错因能一路提交进 Git。
+    if cause and cause not in CAUSES:
+        rep.err(where, f"{prefix}错因不在五类之内：{cause}",
+                f"应为 {'/'.join(sorted(CAUSES))} 之一（定义源 {CAUSE_DOC}）。"
+                "**这是 err 不是 warn**——枚举外的值会让错因分布凭空多一类，"
+                "而「方法没想到」与「概念不清」落进不同类目，救法正好相反。"
+                "另：若此题确实判不出来，用 `causePending: true` 标明存疑，"
+                "不要硬凑一个类目")
+
+    # —— ③ 已定论却没写推理链 / 写的是套话 ——
+    if _cause_is_settled(rec):
+        if not note and not thought:
+            rep.err(where, f"{prefix}错因已定论但没有推理链",
+                    "只看最终答案会误判——「方法没想到」和「概念不清」救法完全相反。"
+                    "必须写下**回看中间步骤**得到的判读（`causeNote` 或 `myThought`）")
+        else:
+            # 套话检测只在「极短 + 无具体步骤痕迹」时报，判据窄口径宁漏勿淹
+            for fld, val in (("causeNote", note), ("myThought", thought)):
+                if val and is_boilerplate(val):
+                    rep.err(where,
+                            f"{prefix}{fld} 是无信息量的套话",
+                            f"内容仅「{str(val)[:20]}」，没有指向任何具体步骤。"
+                            "推理链必须写明**回看了孩子哪一步中间过程**才得出这个错因——"
+                            "这正是「方法没想到」与「概念不清」能分开的唯一依据")
+
+    # —— ④ 存疑题却把错因写成定论（自相矛盾）——
+    if pending and cause:
+        rep.err(where, f"{prefix}causePending=true 但仍填了定论错因",
+                "`causePending: true` 的含义是**病因尚未判出来**。"
+                f"当前填的是「{cause}」——若它只是猜测，应清空 `cause` "
+                "只保留 `causeNote` 写明为什么定不了；"
+                "若确已定论，就去掉 `causePending`。"
+                "两者并存会让统计把猜测当成结论（生成器按 `cause` 计数，"
+                "存疑题会混进错因分布）")
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -2024,6 +2199,7 @@ def main():
     check_five_stage_paradigm(rep, rawmap)
     check_breakdown_faithful(rep, rawmap)
     check_done_right_faithful(rep, rawmap)
+    check_cause_reasoning(rep, rawmap)
     check_answer_fields(rep, rawmap)
     check_papers_derived(rep)
     check_doc_numbers(rep)

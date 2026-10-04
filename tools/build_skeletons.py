@@ -864,13 +864,29 @@ def build_exam_page(exam, out_path, q):
     </tbody>
   </table>"""
         # 病因聚合：按病因数错题数量分布（分值未确认时只能数题数）
+        #
+        # ⚠️ 2026-10-04 第十七次核验修：必须**跳过 causePending 的存疑题**。
+        # 原来只判 `w.get("cause")` 是否为空，于是 causePending=true 的题
+        # 照样按它的暂记猜测计入分布 ⇒ 7 道失分题全进表，
+        # 而实际只有 4 道错因已定论，**表里 3/7 是猜的**。
+        # 数据层已改为「存疑题不填 cause」，但生成器仍要独立守一道：
+        # 存量数据尚未清干净时，页面不能继续把猜测当结论印出来。
         cause_count = {}
+        uncertain_n = 0
         for w in wrongs:
+            if w.get("causePending") is True:
+                uncertain_n += 1
+                continue
             c = w.get("cause", "") or "未判定"
             cause_count[c] = cause_count.get(c, 0) + 1
         cause_rows = "".join(
             f'<tr><td>{esc(c)}</td><td>{n} 题</td></tr>'
             for c, n in sorted(cause_count.items(), key=lambda x: -x[1]))
+        # 存疑题单列一行而不是悄悄消失——「有 3 道没归类」本身是要看见的信息。
+        if uncertain_n:
+            cause_rows += (
+                f'<tr><td style="color:var(--ink3)">存疑（未定论，不计入任何一类）</td>'
+                f'<td style="color:var(--ink3)">{uncertain_n} 题</td></tr>')
         cause_table = f"""  <h3>错因分布</h3>
   <table>
     <thead><tr><th>错因</th><th style="width:22%">数量</th></tr></thead>
