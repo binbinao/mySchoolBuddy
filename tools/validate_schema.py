@@ -1603,6 +1603,168 @@ def check_five_stage_paradigm(rep, rawmap):
     rep.ok()
 
 
+# ── 16. 题干拆解表：页数声明 + 逐条对应 + breakdownKey 引用完整性 ──
+def _strip_tags(s):
+    """去掉 HTML 标签与实体，只留可读文本（用于跨格式比对）。"""
+    import html as _html
+    s = re.sub(r"<[^>]+>", "", str(s))
+    return _html.unescape(s)
+
+
+def _norm_text(s):
+    """归一化题干原句：中文标点/空白/引号差异不算内容差异。
+
+    只归一化**排版噪声**，不做模糊匹配——一旦开了模糊，
+    「两条其实不一样」就会被当成「差不多」，闸门自动失效（铁律六）。
+    """
+    s = _strip_tags(s)
+    s = s.replace("　", "")
+    s = re.sub(r"\s+", "", s)
+    for a, b in (("，", ","), ("。", "."), ("：", ":"), ("；", ";"),
+                 ("（", "("), ("）", ")"), ("“", '"'), ("”", '"'),
+                 ("‘", "'"), ("’", "'"), ("＝", "="), ("－", "-"),
+                 ("−", "-"), ("√", ""), ("△", "")):
+        s = s.replace(a, b)
+    return s
+
+
+def _token_set(s):
+    """把一句话切成可比较的语义片段（按标点与连接词切）。"""
+    t = _norm_text(s)
+    parts = re.split(r"[,.!:;()\"']|并且|同时|而且", t)
+    return [p for p in parts if len(p) >= 2]
+
+
+def check_breakdown_faithful(rep, rawmap):
+    """题干拆解表（② 段）：页数声明、逐条对应、breakdownKey 引用完整性。
+
+    2026-10-04 第十五次核验抓到的缺陷，是**第十四类（源头无闸门）家族的第二个成员**：
+
+    第十四轮补上了 `answerKey`/`childAnswer` 的结构闸门，但**题干拆解表**
+    （`breakdown` + `breakdownKey`）同样是事实源头级的教学事实——
+
+      · `breakdown` 的每一行左边必须是**题干里的原句**。左边一旦被改写或替换，
+        整张表就不再是「把这道题翻译成条件」，变成自说自话，
+        而孩子正是照着这张表建立题感。
+      · `breakdownKey`（收尾点明「最容易漏的是第 N 条」）是 MEMORY 五段范式
+        对②段的**硬性标准**。指向不存在的条号 ⇒ 收尾结论失效。
+      · 页面标题「题干拆成 N 个已知」的 N 与数据层 `len(breakdown)` 必须一致。
+        两边各自自洽时单看任一处都「像对的」——第九轮铁律五同型。
+
+    回退法自证（发现手段）：把 q19 的 breakdown 第 1 条原句替换成与题目无关的内容、
+    删掉一条（6→5）、把 breakdownKey 改成「第 9 条」，
+    校验器报 **99 项通过 · 0 错误**。三处全是教学事故级：
+    拆解表内容失控 + 页面与数据层条数打架 + 收尾结论指向虚空。
+
+    为什么不能只查「非空」：`breakdown` 有一条和六条同样「非空」，
+    页面和数据层也能各自自洽——**非空检查与条数一致性检查通过，
+    恰恰是这类缺陷最容易存活的环境**。
+
+    覆盖范围：**仅 `data/wrong/*.json` 的 items（错题精讲页）**。
+    试卷侧 `verdictHtml` 是自由散文，不适用逐条比对，按设计不管。
+    """
+    for rel_j in sorted(glob.glob(os.path.join(ROOT, "data", "wrong", "*.json"))):
+        rel = os.path.relpath(rel_j, ROOT)
+        d = load(rel_j, rep, rel)
+        if not d:
+            continue
+        for it in d.get("items", []):
+            iid = it.get("id", "?")
+            where = f"{rel}#{iid}"
+            bd = it.get("breakdown") or []
+            if not bd:
+                rep.warn(where, "缺 breakdown（题干拆解表）",
+                         "五段范式 ② 段要求把题干逐句翻译成数学条件。"
+                         "缺了它，孩子只能自己读题干，而读不懂正是这类题的根因")
+                continue
+
+            # —— ① 结构：每条必须是 [题干原句, 翻译] 二元组 ——
+            for idx, row in enumerate(bd, 1):
+                if not isinstance(row, (list, tuple)) or len(row) < 2:
+                    rep.err(where,
+                            f"breakdown 第 {idx} 条不是 [题干原句, 翻译] 二元组",
+                            "拆解表的形状必须固定，否则表格渲染与自动比对都会失准。"
+                            f"实际类型：{type(row).__name__}")
+                    continue
+                if not str(row[0]).strip() or not str(row[1]).strip():
+                    rep.err(where, f"breakdown 第 {idx} 条有空的单元格",
+                            "左边是题干原句，右边是翻译成数学条件的写法，"
+                            "两者都必须有内容")
+
+            # —— ② breakdownKey 必须指向真实存在的条号 ——
+            key = it.get("breakdownKey")
+            if key:
+                # 只在**「第 N 条」这个语法位置**上取条号，
+                # 否则说明文里出现的其它数字（d=6、b₂=5/2…）会被误当条号。
+                refs = re.findall(r"第\s*(\d+)\s*条", str(key))
+                if not refs:
+                    rep.err(where,
+                            "breakdownKey 没有点明「最容易漏的是第几条」",
+                            "MEMORY 五段范式要求 ② 段收尾必须点明"
+                            "「最容易漏的是第几条」——这是整张表唯一被强调的那一条，"
+                            "写不出条号等于没收尾")
+                else:
+                    for r in refs:
+                        n = int(r)
+                        if not (1 <= n <= len(bd)):
+                            rep.err(where,
+                                    f"breakdownKey 指向「第 {n} 条」，但拆解表只有 {len(bd)} 条",
+                                    "收尾结论指向了一条不存在的条目，等于整段失效。"
+                                    f"改回 1–{len(bd)} 之间的实际条号，或先补齐拆解表")
+
+            # —— ③ 页数声明与逐条对应（HTML 侧）——
+            page = it.get("page")
+            if not page:
+                continue
+            ap_ = os.path.join(ROOT, page)
+            if not os.path.exists(ap_):
+                continue  # 文件缺失已由 check_five_stage_paradigm 报错
+            try:
+                src = open(ap_, encoding="utf-8").read()
+            except Exception:
+                continue
+
+            heads = re.findall(r"题干拆(?:成|解成)\s*(\d+)\s*个", src)
+            if heads and int(heads[0]) != len(bd):
+                rep.err(where,
+                        f"页面写「题干拆成 {heads[0]} 个已知」，数据层 breakdown 有 {len(bd)} 条",
+                        "同一张拆解表的事实散落在两处，改一处就会漏另一处。"
+                        "要改就两边一起改；若页面把两条并成一行展示，"
+                        "请把数据层拆细到与页面一致，别让页数声明说谎")
+
+            # 逐条：页面表格第一列的每一行都必须能在数据层找到对应原句。
+            # 用**分片包含**而非全等——页面可能把 HTML 实体与子标签折行，
+            # 但每一行的可读文本必须是某条题干原句的连续片段（不得改词序/增词）。
+            tbl = re.search(r"<h3[^>]*>[^<]*题干拆(?:成|解成)[^<]*</h3>\s*<table.*?</table>",
+                            src, re.S)
+            if not tbl:
+                continue
+            col1 = []
+            for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", tbl.group(0), re.S):
+                tds = re.findall(r"<td[^>]*>(.*?)</td>", tr, re.S)
+                if tds:
+                    col1.append(tds[0])
+            if not col1:
+                continue
+            have = [_norm_text(r[0]) for r in bd if isinstance(r, (list, tuple)) and r]
+            for ci, cell in enumerate(col1, 1):
+                # 页面把两条并进同一格展示时用 <br> 分行。必须**先拆再比**——
+                # 首版只按 "\n" 拆，而 <br> 不是换行符，两行被粘成
+                # 「直线 MN 与 x 轴正半轴交于 Dtan∠MDO」这种现实中不存在的串，
+                # 于是每一条都匹配不上 → 闸门自身失效且报的是假阳性。
+                for piece in re.split(r"<br\s*/?>", cell, flags=re.I):
+                    piece = _strip_tags(piece).strip()
+                    if len(_norm_text(piece)) < 4:
+                        continue
+                    if not any(_norm_text(piece) in h for h in have):
+                        rep.err(where,
+                                f"页面拆解表第 {ci} 行的「{piece[:24]}」在数据层 breakdown 里找不到",
+                                "拆解表左边必须是**题干原句**。这一行被改写过或替换了，"
+                                "整张表就不再是「把题干翻译成条件」，而是自说自话——"
+                                "孩子正是照着这张表建立题感的")
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -1623,6 +1785,7 @@ def main():
     check_module_got_grounded(rep, rawmap)
     check_page_matches_data(rep, rawmap)
     check_five_stage_paradigm(rep, rawmap)
+    check_breakdown_faithful(rep, rawmap)
     check_answer_fields(rep, rawmap)
     check_papers_derived(rep)
     check_doc_numbers(rep)

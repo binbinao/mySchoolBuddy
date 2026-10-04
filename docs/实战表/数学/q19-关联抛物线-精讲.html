@@ -186,9 +186,7 @@ summary:hover{color:var(--ink)}
   <p class="sub">先自己读一遍，再往下看。题干里的每一句话后面都有用。</p>
 
   <div class="stmt">
-    <b>19.</b> 已知顶点 <i>A</i> 在抛物线 <i>y</i><sub>1</sub> 上，则称抛物线 <i>y</i><sub>1</sub> 与抛物线 <i>y</i><sub>2</sub> 互为"关联抛物线"（<span class="hl">顶点 <i>A</i> 在抛物线 <i>y</i><sub>2</sub> 上，且两抛物线互为"关联抛物线"</span>）。
-    已知顶点为 <i>M</i> 的抛物线 <i>y</i> = (<i>x</i>−2)<sup>2</sup> + 3 与顶点为 <i>N</i> 的抛物线互为"关联抛物线"，直线 <i>MN</i> 与 <i>x</i> 轴正半轴交于点 <i>D</i>，
-    如果 tan∠<i>MDO</i> = 3/4，那么顶点为 <i>N</i> 的抛物线的解析式是 ________。
+    <b>19.</b> 若抛物线 <i>y</i><sub>1</sub> = <i>ax</i><sup>2</sup> + <i>b</i><sub>1</sub><i>x</i> + <i>c</i><sub>1</sub> 的顶点为 <i>A</i>，抛物线 <i>y</i><sub>2</sub> = −<i>ax</i><sup>2</sup> + <i>b</i><sub>2</sub><i>x</i> + <i>c</i><sub>2</sub> 的顶点为 <i>B</i>，<span class="hl">且满足顶点 <i>A</i> 在抛物线 <i>y</i><sub>2</sub> 上、顶点 <i>B</i> 在抛物线 <i>y</i><sub>1</sub> 上</span>，则称抛物线 <i>y</i><sub>1</sub> 与抛物线 <i>y</i><sub>2</sub> 互为"关联抛物线"。已知顶点为 <i>M</i> 的抛物线 <i>y</i> = (<i>x</i>−2)<sup>2</sup> + 3 与顶点为 <i>N</i> 的抛物线互为"关联抛物线"，直线 <i>MN</i> 与 <i>x</i> 轴正半轴交于点 <i>D</i>，如果 <span class="hl">tan∠<i>MDO</i> = 3/4</span>，那么顶点为 <i>N</i> 的抛物线的解析式是 ________。
   </div>
 
   <details>
@@ -202,20 +200,22 @@ summary:hover{color:var(--ink)}
     </div>
   </details>
 
-  <h3>题干拆成 4 个已知</h3>
+  <h3>题干拆成 6 个已知</h3>
   <table>
     <thead><tr><th style="width:30%">题干说的</th><th>翻译过来</th></tr></thead>
     <tbody>
-      <tr><td>互为"关联抛物线"</td><td><b>两个方向都要成立</b>，不只是 A 在 y₂ 上</td></tr>
-      <tr><td>顶点为 M 的抛物线 y=(x−2)²+3</td><td>这条抛物线是<b>已知的</b>，M 的坐标能直接读出来</td></tr>
-      <tr><td>顶点为 N 的抛物线</td><td>这条是<b>要求的</b>，用 y₂ 表示</td></tr>
-      <tr><td>直线 MN 与 x 轴正半轴交于 D<br>tan∠MDO = 3/4</td><td>用来<b>定 D 的位置</b>，进而定直线 MN 的斜率</td></tr>
+      <tr><td>若抛物线 y₁ 与抛物线 y₂ 互为"关联抛物线"</td><td><b>两个方向都要成立</b>：A（y₁ 的顶点）在 y₂ 上，且 B（y₂ 的顶点）在 y₁ 上。只做一个方向不算关联</td></tr>
+      <tr><td>已知顶点为 M 的抛物线 y=(x−2)²+3</td><td>这条抛物线是<b>已知的</b>。配方式直接读出 M(2, 3)，并展开为 y₁=x²−4x+7</td></tr>
+      <tr><td>与顶点为 N 的抛物线互为"关联抛物线"</td><td>这条是<b>要求的</b>，记 y₂=−x²+b₂x+c₂（题图给出 a₂=−1，即开口向下）。M 在 y₂ 上、N 在 y₁ 上，两条都要用</td></tr>
+      <tr><td>直线 MN 与 x 轴正半轴交于点 D</td><td>D 在正半轴，所以 D 的横坐标 d&gt;0。由 tan∠MDO=3/4 反解出 d，再定直线 MN 的斜率与截距</td></tr>
+      <tr><td>如果 tan∠MDO = 3/4</td><td>∠MDO 是 M 关于 DO（即 x 轴）的仰角，故 tan = M 的纵坐标 ÷(d−2) = 3/(d−2)，直接解出 d=6</td></tr>
+      <tr><td>求顶点为 N 的抛物线的解析式</td><td>求 y₂ 的一般式。两个条件各给一个方程，加上斜率条件正好定死未知数</td></tr>
     </tbody>
   </table>
 
   <div class="note blue">
-    <b>最容易漏掉的是第一条。</b>很多人只做到"A 在 y₂ 上"就以为完了——但题目说的是"<b>互为</b>关联抛物线"，说明<b>反过来也成立</b>。<br>
-    这就是这道题全部的难点。
+    <b>最容易漏掉的是第 1 条。</b>很多人只做到"A 在 y₂ 上"就以为完了——但题目说的是"<b>互为</b>关联抛物线"，说明<b>反过来也成立</b>。<br>
+    <b>第 5 条是第二道关</b>：tan∠MDO 中的 ∠MDO 是 M 关于 DO（即 x 轴）的仰角，不是任意两线的夹角，角度认错整条斜率链都会崩。
   </div>
 </div>
 
