@@ -1102,6 +1102,31 @@ def check_answer_fields(rep, rawmap):
     rep.ok()
 
 
+def _md_section(txt, keyword):
+    """从 markdown 里取出标题含 keyword 的**那一节**（到下一个同级或更高级标题为止）。
+
+    ⚠️ 2026-10-04 第十八次核验踩坑：首版写 `txt[m.start():]`，
+    于是「答案字段纪律」这一节的切片一路取到**文末**（9602/13559 字符），
+    后面 4 个章节里的「能力边界」字样替它豁免了边界检查
+    —— 与第九轮「上一条免责说明替下一条豁免」**完全同型**，
+    回退法注入后删光本章边界词仍报 0 错误。
+    ⇒ 章节切片**必须按标题层级截断**，不能取到文末。
+    """
+    m = re.search(r"^#{2,6}\s*(.+?)\s*$", txt, flags=re.M)
+    if not m:
+        return ""
+    for mm in re.finditer(r"^(#{2,6})\s*(.+?)\s*$", txt, flags=re.M):
+        if keyword in mm.group(2):
+            level = len(mm.group(1))
+            nxt = len(txt)
+            for m3 in re.finditer(r"^(#{1,6})\s*", txt[mm.end():], flags=re.M):
+                if len(m3.group(1)) <= level:
+                    nxt = mm.end() + m3.start()
+                    break
+            return txt[mm.start():nxt]
+    return ""
+
+
 def check_data_readme(rep):
     """data/README.md 是**写入方的 schema 规范**，它的口径错了会污染下轮数据。
 
@@ -1223,8 +1248,15 @@ def check_data_readme(rep):
     # 2026-10-04 第十四次核验：答案字段的语义边界必须写在规范里。
     # 只写「有闸门」而不写「闸门管不到答案对错」，下一个人会误以为
     # 答案正确性已被机器守住 —— 而实测第 11 题改成完全不同的答案也不报错。
-    if "check_answer_fields" in txt:
-        has_limit = ("管不住" in txt) or ("判不了" in txt) or ("能力边界" in txt)
+    if True:  # 恒真：边界必须写，无条件检查
+        # ⚠️ 判据在第十八次核验一并修正：原写法 `if "check_answer_fields" in txt:`
+        #   条件**恒假** —— README 是给人看的规范，**从来不写函数名**，
+        #   于是这道检查从未真正生效（把边界说明整段删掉也不报错）。
+        #   **判据的前提不能是「正确内容本不具备的性质」**（铁律六第 4 条形态）。
+        #   改为按章节标题定位：边界必须写在它自己的章节里。
+        _asec = _md_section(txt, "答案字段纪律")
+        has_limit = (not _asec) or (("管不住" in _asec) or ("判不了" in _asec)
+                                   or ("能力边界" in _asec))
         if not has_limit:
             rep.err(rel, "写了答案字段闸门，却没写明它管不住「答案对错」",
                     "自由文本答案（英语/语文）机器判不了语义。"
@@ -1240,6 +1272,38 @@ def check_data_readme(rep):
                     "第十四次核验发现：README 完全没有答案字段定义，"
                     "而答案是数据层的事实源头。教人写数据的文档缺字段定义"
                     "＝持续产出没人认的键（第十一类：规范教人把纪律写反）。")
+
+    # 2026-10-04 第十八次核验：变式与想五题的规范必须写进文档，
+    # 且必须写明能力边界。
+    # 为什么这道闸门是必需的（第十一类同型）：`variants` / `thinkQuestions`
+    # 在此之前**只被检查过「非空」**，README 里也**完全没有它们的字段定义**——
+    # 于是没人知道 `answer` 是「判题关键词集合」还是「标准答案」，
+    # 也不知道它能不能写「略。」。规范缺定义 = 纪律无从遵守。
+    #
+    # ⚠️ 判据踩坑（回退法逼出）：首版写成
+    #   `if "check_variants_faithful" in txt:` 才检查，
+    #   而 README 里**从来没有出现过这个函数名** ⇒ 条件恒假
+    #   ⇒ 删掉整节也不报错（**给自己发免死金牌**，铁律六第 4 条形态）。
+    # 改成按**章节标题**判定，标题才是规范里真实存在的锚点。
+    _vsec = _md_section(txt, "变式与想五题字段纪律")
+    if not _vsec:
+        rep.err(rel, "README 缺少「变式与想五题字段纪律」章节",
+                "第十八次核验发现：README 完全没有 variants/thinkQuestions 的"
+                "字段定义。`answer` 到底是判题关键词还是标准答案、"
+                "能不能写占位符，都没写——教人写数据的文档缺字段定义，"
+                "就是持续产出没人认的键（第十一类）。")
+    else:
+        for need in ("variants", "thinkQuestions"):
+            if need not in _vsec:
+                rep.err(rel, f"变式/想五题字段规范未定义 `{need}`",
+                        "章节在，但字段本身没写——等于没写。")
+        has_limit = ("能力边界" in _vsec) or ("机器管不到" in _vsec) or ("管不到" in _vsec)
+        if not has_limit:
+            rep.err(rel, "写了变式闸门，却没写明它管不到「变式答案对错」",
+                    "本闸门只能判结构（占位符/重复/所求量是否真变），"
+                    "**判不出变式的数学答案对不对**——hint 与 answer 一起改错会放行。"
+                    "规范里必须写明这条边界，否则下一个人会误以为"
+                    "变式答案的正确性已被机器守住。")
     rep.ok()
 
 
@@ -1510,7 +1574,8 @@ def check_five_stage_paradigm(rep, rawmap):
             # —— ① 变式固定配比 ——
             vs = it.get("variants") or []
             if vs:
-                kinds = [KIND_PAT.search(str(v.get("type", ""))) for v in vs]
+                kinds = [KIND_PAT.search(str(v.get("type", "")) if isinstance(v, dict) else "")
+                         for v in vs]
                 found = [k.group(1) if k else "" for k in kinds]
                 blob = " ".join(found)
                 has_easy = bool(re.search(r"(简单变式|只改一个数值|原题变式)", blob))
@@ -1529,7 +1594,7 @@ def check_five_stage_paradigm(rep, rawmap):
                 # 简单变式必须真的「只改一个数值」：类型里写「只改一个数值」
                 # 却没有任何数字变化，是自我声明与内容打架
                 for v in vs:
-                    t = str(v.get("type", ""))
+                    t = str(v.get("type", "")) if isinstance(v, dict) else ""
                     if re.search(r"(只改一个数值)", t) and not re.search(r"\d", str(v.get("change", ""))):
                         rep.err(where,
                                 f"变式标称「{t}」，但 change 里没有任何数值变化",
@@ -1596,7 +1661,7 @@ def check_five_stage_paradigm(rep, rawmap):
                 norm = lambda s: ("简单" if re.search(r"(简单变式|只改一个数值|原题变式)", s)
                                   else "同类型" if re.search(r"(同类型|换个考点|换考点)", s)
                                   else "对调" if re.search(r"(问答对调|对调)", s) else "")
-                a, b = norm(h), norm(str(v.get("type", "")))
+                a, b = norm(h), norm(str(v.get("type", "")) if isinstance(v, dict) else "")
                 if not a:
                     # ⚠️ 这个分支是回退法逼出来的：首版写成
                     #    `if norm(a) != norm(b) and a and b`，
@@ -1612,7 +1677,7 @@ def check_five_stage_paradigm(rep, rawmap):
                             "尤其不能拿它顶替问答对调那一题。")
                 elif a != b:
                     rep.err(where,
-                            f"页面第「{h}」题与数据层「{v.get('type')}」类型不一致",
+                            f"页面第「{h}」题与数据层「{b}」类型不一致",
                             "页面与数据层说的不是同一件事。以数据层为准，"
                             "或两边一起改——不要只改一处。")
     rep.ok()
@@ -2278,6 +2343,285 @@ def check_math_keypoints(rep):
     rep.ok()
 
 
+# ══════════════════════════════════════════════════════════════════════
+# 第 19 道闸门 · 第十八类缺陷：五段范式第 ④⑤ 段（variants / thinkQuestions）
+#                       的**内容正确性**无闸门
+# ══════════════════════════════════════════════════════════════════════
+
+# 页面与数据层做**不等式数值断言**比对时用的形态。
+# ⚠️ 只认 `≥N` / `≤N` 这两种**闭式**形态，且必须紧跟「数字」——
+#    `>1` / `<2` 一律不认。这是本闸门**首跑时 7 条假阳性里的一处**：
+#    页面 HTML 里的 `</b>`、`<sup>2</sup>`、SVG 的 `y="466"` 全被
+#    「`>` 后面跟个数字」匹配上，把标签当成数学断言。
+#    第九轮已证明「覆盖广」的判据假阳性会淹掉真错误，这里收窄到宁可漏不可淹。
+_REL_CLAIM = re.compile(r"([≥≤])\s*(\d+(?:\.\d+)?)")
+
+
+def _strip_html(text):
+    """剥掉 HTML 标签后再做数值断言比对。
+
+    ⚠️ 这不是洁癖：页面上的数学断言都在正文里，标签（`</b>`、`<sup>`、
+    `<text y="466">`）不是断言。不剥掉就是把标签当数学结论。
+    """
+    s = re.sub(r"<(script|style)\b.*?</\1>", " ", str(text),
+               flags=re.S | re.I)
+    s = re.sub(r"<[^>]+>", " ", s)
+    return s
+
+
+def _rel_claims(text):
+    """抽出文本里全部不等式数值断言，归一化成 {(符号, 数值)} 集合。"""
+    return {(op, _norm_num(val)) for op, val in _REL_CLAIM.findall(_strip_html(text))}
+
+
+def _norm_num(val):
+    v = str(val).strip()
+    try:
+        f = float(v)
+        return str(int(f)) if f == int(f) else str(f)
+    except ValueError:
+        return v
+
+
+def check_variants_faithful(rep, rawmap):
+    """三题变式与想五题：答案必须有**可判定的内部自洽**，且页面的数值断言不得多于数据层。
+
+    2026-10-04 第十八次核验抓到的缺陷，是**第十四类（源头无闸门）家族的第五个成员**：
+      第十四轮 answerKey/childAnswer · 第十五轮 stem/breakdown ·
+      第十六轮 doneRight/doneWrong · 第十七轮 判错因的推理链 · **本轮 变式与想五题**。
+
+    上一轮留的候选方向就是它。回退法自证（发现手段）——**八例注入，八例全漏网**
+    （校验器报 0 错误）：
+
+      正向（应抓出，实际全部漏网）：
+        A 变式答案改成与正确结论矛盾的值
+        B 变式答案压成「略。」
+        C 变式 hint 清空
+        D 简单变式的 stem 抄成**另一道题**的（简单变式却与本题完全无关）
+        E 想五题答案写成「不知道」
+        F 想五题答案字段类型漂移成数组
+        G 变式答案退化成直接抄 answerKey
+        H 问答对调变式的 change 改成「把问的方向反过来」——与第 1 题同一手法
+      原因很直接：`check_five_stage_paradigm()` 查的是**配比与结构**，
+      `check_tasks()` 查的是**字段非空**，**没有任何一道闸门读过答案本身**。
+      而变式答案错了 = 孩子照着错答案练，与第 14 轮「答案错了整套教学判断全部反着走」同源。
+
+    判定口径（全部按**可自动判定**的窄口径，不做语义推断）：
+      ① 变式四字段 stem/change/hint/answer 缺一即报错（结构）。
+      ② 变式答案不得为空话：套话判定复用第 17 轮那套
+         「够短 + 无任何具体步骤痕迹」的窄口径，不另立词表。
+      ③ ~~变式答案须在 hint 推导链里~~ **首跑 3 条假阳性后已删除**，
+         理由见代码注释：**判据的前提不能是「正确内容本不具备的性质」**。
+      ④ **变式答案不得与原题 answerKey 的数值集合完全相同**——三题变式的意义
+         就在于换一个数据再走一遍，答案与原题一字不差说明没换。
+      ⑤ **同题内变式答案两两不得完全相同**——变式 1 和变式 3 答案相同，
+         等于两个练习位只覆盖一种能力（第十三轮已在 q5 上踩过这个形态）。
+      ⑥ 问答对调变式的**所求量必须真的变了**（与原题所求不同）。
+      ⑦ 想五题答案必须能拆出**可判题段**（≥2 字的判据至少一个），
+         否则孩子答什么都判对/判错，即时判题形同虚设。
+      ⑧ **页面的不等式数值断言不得多于数据层**（跨层一致，见铁律五）。
+
+    ⚠️ 能力边界（勿误以为已被守住）：
+      · **机器判不出变式答案对不对**，只能判「答案有没有自己的推导依据」。
+        变式 hint 与答案若**一起改错**，⑧ 之外的口径全部放行——
+        这与第 15 轮「两侧一致 ≠ 两侧都对」同源，语义只能靠核卷。
+      · 口径③要求答案的数值能在 hint 里找到，故**纯文字答案的学科（语文/英语）
+        天然不适用**——那里答案不是数值。本闸门对这类记录自动跳过 ③④，
+        只保留结构类检查①②⑤⑥⑦，避免闸门自己变成噪音源。
+    """
+    def _is_empty_answer(t):
+        """变式/想五题的答案是不是**真·占位符**。
+
+        ⚠️ 本函数踩过两次坑，两次都是**回退法逼出来的**：
+
+        坑 1（首跑误报真实数据）：首版直接复用第 17 轮那套「够短 + 无具体痕迹」
+        的套话判据，把 q5 想五题 1 的答案「BD 换 DC / AF 换 FC / 同一条边换段」
+        判成零信息量——**这正是即时判题要用的判据串**。
+        ⇒ 判据串与套话在字面上无法区分（都是「够短的中文」），
+        区别只在**有没有具体名词**。
+
+        坑 2（回退法抓到漏网）：二版改成「必须含数字或字母」才算有内容，
+        而「略。」「不知道」全是**中文** ⇒ 反而被判成「有内容」放过去了。
+        ⇒ 中文本身就是内容信号，不能用它当判据。
+
+        现行口径：**白名单式占位符表**（整串匹配）+ **非字符串直接判违规**。
+        之所以敢用词表：判据是 `fullmatch` 整串相等，不是「含某个词」，
+        不存在「正文里恰好出现『不知道』三个字」这类假阳性。
+        """
+        # 类型漂移：数组/数字/对象都不是答案
+        if t is not None and not isinstance(t, str):
+            return True
+        s = _norm_text(t)
+        if not s:
+            return True
+        # 整串相等的占位符（不是"含"，所以不会误伤正文）
+        # ⚠️ 词表要同时含 `_norm_text` 归一后的形态：它会把中文句号转成 `.`，
+        #    所以「略。」归一后是「略.」。漏了这一点「略。」就会漏网
+        #    （回退法 C2 实测抓到的）。
+        if s in {"略", "略.", "无", "不", "未知", "没", "不知道", "不确定",
+                 "待补", "待补齐", "待补全", "待定", "待填写", "同上",
+                 "见上", "见下", "答案", "答", "?", "？", "答不上来",
+                 "不会", "没思路", "空白"}:
+            return True
+        return False
+
+    def _wanted(text):
+        """取所求量：最后一个「那么」之后，否则最后一个「求」之后。"""
+        s = _norm_text(text)
+        i = s.rfind("那么")
+        if i >= 0:
+            return s[i + 2:]
+        i = s.rfind("求")
+        if i >= 0:
+            return s[i + 1:]
+        return s
+
+    for rel_j in sorted(glob.glob(os.path.join(ROOT, "data", "wrong", "*.json"))):
+        rel = os.path.relpath(rel_j, ROOT)
+        d = load(rel_j, rep, rel)
+        if not d:
+            continue
+        for it in d.get("items", []):
+            where = f"{rel}#{it.get('id', '?')}"
+            vs = it.get("variants") or []
+            tq = it.get("thinkQuestions") or []
+
+            # —— ①② 四字段结构 + 答案不得空话 ——
+            for i, v in enumerate(vs, 1):
+                if not isinstance(v, dict):
+                    rep.err(where, f"第 {i} 个变式不是对象",
+                            f"实际类型：{type(v).__name__}。"
+                            "类型漂移会让下面的字段检查全部静默失效")
+                    continue
+                lack = [k for k in ("stem", "change", "hint", "answer")
+                        if not str(v.get(k, "")).strip()]
+                if lack:
+                    rep.err(where, f"第 {i} 个变式缺 {'/'.join(lack)}",
+                            "变式四件套（题干/改了什么/思路/答案）缺任何一件，"
+                            "孩子就只剩一道没头绪的题——练不成方法。")
+                if _is_empty_answer(v.get("answer")):
+                    rep.err(where, f"第 {i} 个变式的答案是空话",
+                            f"实际：{str(v.get('answer'))[:20]!r}。"
+                            "答案压成「略。」「不知道」这类零信息量内容，"
+                            "等于这一题什么都没练。")
+            for j, t in enumerate(tq, 1):
+                if not isinstance(t, dict):
+                    rep.err(where, f"第 {j} 个想五题不是对象",
+                            f"实际类型：{type(t).__name__}。类型漂移会让判题关键词检查失效")
+                    continue
+                if not str(t.get("q", "")).strip():
+                    rep.err(where, f"第 {j} 个想五题没有题面",
+                            "想五题的「问」不能为空——没有问就没有递进")
+                if _is_empty_answer(t.get("answer")):
+                    rep.err(where, f"第 {j} 个想五题的答案是空话",
+                            f"实际：{str(t.get('answer'))[:20]!r}。"
+                            "即时判题靠这些关键词判定孩子答对没答对，空话判不了。")
+
+            # —— ③⑤⑥ 需要数值型答案，纯文字学科（语文/英语）不适用 ——
+            ans_marks = {}
+            for i, v in enumerate(vs, 1):
+                if not isinstance(v, dict):
+                    continue
+                am = _num_marks(v.get("answer"))
+                if not am:
+                    continue
+                ans_marks[i] = am
+                # ⚠️ 这里**曾经**有第三条口径「答案的数值必须在 hint 推导链里出现」，
+                #   首跑即 3 条假阳性，**已删除**——它的前提是错的：
+                #     · q19 变式 3 的答案是**负向答案**（「b 无法唯一确定」），
+                #       其中的 3/4 只是引述原题条件，不是本题的推导结论；
+                #     · q5 变式 1 的答案是选项 B（4/3），而 hint 的推导链
+                #       止于 AF/AC=4/7、FC=3/7，**不必重写最终比值**——
+                #       答案本来就是「把推导链的结果写成一句话」。
+                #   ⇒ 「答案 ⊆ 推导链」把**合法的精简**判成了抄错。
+                #   **判据的前提不能是「正确内容本不具备的性质」**（铁律六第 4 条形态）。
+                #   若 hint 与答案一起改错，这类检查同样会放行，收益本就有限。
+                # ⑤ 同题内答案两两不得完全相同
+                for j2, am2 in ans_marks.items():
+                    if j2 < i and am2 == am:
+                        rep.err(where,
+                                f"第 {i} 个与第 {j2} 个变式的答案完全相同：{sorted(am)[:4]}",
+                                "两个练习位给同一个答案，等于只练了一种能力。"
+                                "第十三轮在 q5 上已踩过这个形态（变式 1 与变式 3 答案都是 A）。")
+            # ④ 变式答案不得与原题答案一字不差
+            akm = _num_marks(it.get("answerKey"))
+            for i, am in ans_marks.items():
+                if akm and am == akm:
+                    rep.err(where,
+                            f"第 {i} 个变式的答案与原题答案完全相同：{sorted(am)[:4]}",
+                            "三题变式的全部意义就是「换一个数据再走一遍同一手法」。"
+                            "答案与原题一字不差，说明这个变式其实没换数据，"
+                            "只是在同一个答案上多花了孩子五分钟。")
+            # ⑥ 问答对调的所求量必须真的变了
+            w0 = _wanted(it.get("stem", ""))
+            for i, v in enumerate(vs, 1):
+                if not isinstance(v, dict):
+                    continue
+                if not re.search(r"(问答对调|对调)", str(v.get("type", ""))):
+                    continue
+                wv = _wanted(v.get("stem", ""))
+                if w0 and wv == w0:
+                    rep.err(where,
+                            f"第 {i} 个问答对调变式，所求量与原题完全相同",
+                            f"两边都是：{w0[:30]!r}。"
+                            "问答对调的硬性标准是**已知与所求互换**——"
+                            "所求没换，就不是对调，只是把原题重抄了一遍。")
+
+            # —— ⑦ 想五题必须能拆出可判题段 ——
+            for j, t in enumerate(tq, 1):
+                if not isinstance(t, dict):
+                    continue
+                segs = [s for s in re.split(r"[|/、,，]", str(t.get("answer", "")))
+                        if len(_norm_text(s)) >= 2]
+                if not segs:
+                    rep.err(where,
+                            f"第 {j} 个想五题拆不出任何可判题段",
+                            f"实际：{str(t.get('answer'))[:24]!r}。"
+                            "即时判题靠「孩子输入里出现了哪个判据」来给反馈，"
+                            "判据为空 = 答什么都算对，这一题对练习没有任何约束力。")
+
+            # —— ⑧ 页面不等式断言不得多于数据层（跨层一致，铁律五）——
+            page = it.get("page")
+            if not page:
+                continue
+            ap_ = os.path.join(ROOT, page)
+            if not os.path.exists(ap_):
+                continue
+            try:
+                src = open(ap_, encoding="utf-8").read()
+            except Exception:
+                continue
+            data_claims = set()
+            for t in tq:
+                if isinstance(t, dict):
+                    data_claims |= _rel_claims(t.get("q", ""))
+                    data_claims |= _rel_claims(t.get("answer", ""))
+            data_claims |= _rel_claims(it.get("methodBoundary", ""))
+            for s in it.get("steps") or []:
+                if isinstance(s, dict):
+                    data_claims |= _rel_claims(json.dumps(s, ensure_ascii=False))
+            page_claims = _rel_claims(src)
+            extra = sorted(page_claims - data_claims)
+            if extra:
+                rep.err(where,
+                        f"页面出现数据层无据的不等式断言：{'、'.join(a + b for a, b in extra)}",
+                        "同一事实散落两处时，以数据层为准（铁律五）。"
+                        "本闸门只审**可自动判定**的数值断言（≥N/≤N 这类闭式形态），"
+                        "不做全文数字扫描——第九轮已证明那样假阳性 9/11。"
+                        "实际修法：把数值改对，或把这个结论补进数据层。")
+    rep.ok()
+
+
+def _num_marks(text):
+    """抽出文本里的数值标记（分数优先，整数次之），用于跨字段比对。"""
+    t = str(text or "")
+    marks = {x.replace(" ", "") for x in
+             re.findall(r"[−\-]?\d+\s*/\s*\d+", t)}
+    marks |= {x.replace(" ", "") for x in
+              re.findall(r"(?<![/\d])[−\-]?\d+(?:\.\d+)?(?!\s*/)", t)}
+    return marks
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -2301,6 +2645,7 @@ def main():
     check_breakdown_faithful(rep, rawmap)
     check_done_right_faithful(rep, rawmap)
     check_cause_reasoning(rep, rawmap)
+    check_variants_faithful(rep, rawmap)
     check_answer_fields(rep, rawmap)
     check_papers_derived(rep)
     check_doc_numbers(rep)
