@@ -557,13 +557,22 @@ def build_wrong_page(item, out_path, manifest, qno=None):
 
     # ── 开场：已做对 / 断点 ──
     done_right = item.get("doneRight")
+    # 2026-10-04 第十六次核验修正：新增 doneWrong（做错的那一步 = 断点直接证据）。
+    # 原先只渲染 doneRight（全是 ✓ 行），页面里那条 ✗ 行是人工手写的——
+    # 数据层没有字段承载 ⇒ **重新生成会静默丢掉断点证据**。
+    # 两组的分工：doneRight 证明「方法对」，doneWrong 证明「错在哪一步」。
+    done_wrong = item.get("doneWrong") or []
     if done_right:
         rows = "".join(
             f'<tr><td>{esc(s)}</td><td class="tick">✓</td><td>{esc(n)}</td></tr>'
             for s, n in done_right)
+        # ✗ 行排在 ✓ 行之后：先看清楚做对了什么，再看错在哪一步。
+        rows += "".join(
+            f'<tr><td>{esc(s)}</td><td class="cross">✗</td><td>{esc(n)}</td></tr>'
+            for s, n in done_wrong)
         right_html = f"""<div class="card">
   <h2><span class="n">1</span>你已经做对的部分</h2>
-  <p class="sub">先把这部分看清楚——这不是安慰，是事实。</p>
+  <p class="sub">先把这部分看清楚——这不是安慰，是事实。最后一行是错在哪。</p>
   <table>
     <thead><tr><th style="width:46%">你写的</th><th style="width:10%">对不对</th><th>说明</th></tr></thead>
     <tbody>
@@ -575,7 +584,8 @@ def build_wrong_page(item, out_path, manifest, qno=None):
         right_html = f"""<div class="card">
   <h2><span class="n">1</span>你已经做对的部分</h2>
   {todo_block("已做对的部分逐项对照", "需要读他手写的中间步骤才能填，不能只看最终答案。"
-                                      "JSON 里补 doneRight 字段：[步骤描述, 说明] 数组。")}
+                                      "JSON 里补 doneRight 字段：[步骤描述, 说明] 数组；"
+                                      "做错的那一步另记 doneWrong。")}
 </div>"""
 
     correct = item.get("answerKey")

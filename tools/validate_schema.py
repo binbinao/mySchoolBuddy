@@ -1635,6 +1635,100 @@ def _token_set(s):
     return [p for p in parts if len(p) >= 2]
 
 
+# 事实标记：这一行里**机器判得了**的硬事实（数学式、点坐标、选项字母…）。
+# 「已做对」表与 doneRight 常有近义改写（「展开成」vs「展开为」），
+# 整句字面比对必然假阳性（铁律三）；但**这些标记必须一致**——
+# 「y₁ 展开成 x²−4x+7」与「y₁ 展开成 x²−5x+7」是同义句却不同事实。
+_CJK_PUNCT = re.compile(r"[、。：；，？！]")
+
+_FACT_MARKS = re.compile(
+    r"[A-Za-z][A-Za-z0-9]*\s*=\s*[^,，;；]+"                    # y=...  a₂=...
+    r"|[A-Za-z][0-9]?\s*[（(]\s*[^)）]*\s*[)）]"                # M(2, 3) / (6, −3)
+    r"|[−\-+]?\d+(?:\.\d+)?\s*/\s*\d+"                          # 3/4
+    r"|\d+\s*:\s*\d+"                                            # AE:EB
+    r"|[A-E]\s*[.、）)]"                                          # 选项 A.
+    # 裸多项式/代数式（无等号）：x²−4x+7、4x²−13x+10。
+    # 必须含**加减号**才认——否则「D、E、F」「M、N」这类纯罗列也会被当标记，
+    # 抽出噪声后子集判据会失灵（闸门自身假阳性/漏网）。
+    r"|(?<![A-Za-z0-9])[0-9a-zA-Z²³²]*(?:\s*[−+]\s*[0-9a-zA-Z²³²]+)+"
+    # 裸坐标对 (6, −3)：无字母前缀时前面常是中文「顶点写成 」，故不要求首字符为数字
+    r"|\([−\-+]?\d+(?:\.\d+)?\s*,\s*[−\-+]?\d+(?:\.\d+)?\)"
+)
+
+
+def _fact_marks(s):
+    """抽出事实标记集合（归一化后）。空集 = 该行不含可判定的硬事实。"""
+    t = _norm_text(s)
+    out = set()
+    for m in _FACT_MARKS.finditer(t):
+        g = m.group(0).strip()
+        if not g or _CJK_PUNCT.search(g):
+            continue  # 「D、E、F」这类纯罗列不是硬事实，别当标记
+        if len(_norm_text(g)) >= 2:
+            out.add(g)
+    return out
+
+
+def _rows_correspond(page_cell, data_cell):
+    """页面的「他写了什么」与数据层对应条目是否指同一件事。
+
+    **为什么不用整句字面包含**：实测页面写「主动重画 △ABC，把 D、E、F 标在对应边上」、
+    数据层写「主动重画△ABC，把D、E、F标在对应边」——近义改写让字面包含必然失败，
+    首版闸门 5 条里 4 条是假阳性。**假阳性会把真错误淹掉**（铁律三）。
+
+    **为什么不能开模糊匹配**：一旦开了模糊，「两条其实不一样」会被当成「差不多」，
+    闸门自动失效（铁律六）。所以只比**事实标记**——数学式、点坐标、选项字母，
+    这些机器判得了、且一旦不同就是教学事故。
+
+    三级判据，**前两级一旦判否就到此为止**（不做兜底）：
+      ① 归一化后字面包含                       —— 最强，直接判真
+      ② 事实标记：页面的每个标记都在数据层出现   —— 数学事故防线（x²−4x+7 ≠ x²−5x+7）
+      ③ 实词覆盖：**仅当两侧都抽不出任何标记**时启用 —— 纯文字行的兜底
+
+    为什么 ② 不许兜底：首版在 ② 判否后接了 ③，于是把数据层的
+    「顶点写成 (6, 3)」也算成页面的「顶点写成 (6, −3)」——
+    两字窗里 (6 这个片段共有，坐标符号一错反而蒙混过关（回退法自证抓出）。
+    **放宽必须严格限定在「无标记可判」的场景，否则防线自己就漏了。**
+    """
+    p, dd = _norm_text(page_cell), _norm_text(data_cell)
+    if p and p in dd:
+        return True
+    pm, dm = _fact_marks(page_cell), _fact_marks(data_cell)
+    if pm and dm:
+        return pm <= dm          # 判否即否：坐标/系数不符就是不符
+    if pm or dm:
+        # 只有一侧有标记 ⇒ 页面把硬事实写漏了，或数据层漏记，同样判否
+        return False
+    return _word_cover(page_cell, data_cell)   # 两侧皆无标记，才走词元兜底
+
+
+def _word_cover(page_cell, data_cell):
+    """两侧都无硬事实时的兜底：实词**双向**覆盖，取高者。
+
+    为什么双向：数据层允许比页面简略——页面写「标出 DE∥AC、DF∥AB 的平行关系」、
+    数据层写「标出两条平行线关系」，只按页面方向算覆盖率必然偏低而误报。
+
+    为什么只看长度 ≥2 的片段：单字（的/了/把）会出现在任何句子里，
+    共有的「标、出、平、行」就能把两条不相干的句子判成对应。
+    """
+    p, d = _norm_text(page_cell), _norm_text(data_cell)
+
+    def words(s):
+        w = set(x for x in re.findall(r"[A-Za-z]+\d*|\d+(?:\.\d+)?", s) if len(x) >= 2)
+        for i in range(len(s) - 1):
+            seg = s[i:i + 2]
+            if re.fullmatch(r"[一-鿿]{2}", seg):
+                w.add(seg)
+        return w
+
+    pw, dw = words(p), words(d)
+    if not pw or not dw:
+        return False
+    fwd = sum(1 for w in pw if w in d) / len(pw)      # 页面实词被数据层覆盖
+    bwd = sum(1 for w in dw if w in p) / len(dw)      # 数据层实词被页面覆盖
+    return max(fwd, bwd) >= 0.6
+
+
 def check_breakdown_faithful(rep, rawmap):
     """题干拆解表（② 段）：页数声明、逐条对应、breakdownKey 引用完整性。
 
@@ -1765,6 +1859,149 @@ def check_breakdown_faithful(rep, rawmap):
     rep.ok()
 
 
+def check_done_right_faithful(rep, rawmap):
+    """已做对的部分（① 段）：doneRight / doneWrong 结构 + 精讲页逐行对应。
+
+    2026-10-04 第十六次核验抓到的缺陷，是**第十四类（源头无闸门）家族的第三个成员**：
+
+    第十四轮补了 `answerKey`/`childAnswer`，第十五轮补了 `stem`/`breakdown`，
+    但**「已做对的部分」这一族**（`doneRight`/`doneWrong`）同样是事实源头——
+    MEMORY 五段范式的 ① 段全靠它，而「断点到底在哪」全靠 `doneWrong`。
+
+    回退法自证（发现手段）：把 q19 的 doneRight 第 1 条引述改写成与题目无关的内容、
+    把第 2 条退化成字符串、把第 3 条写成三元组、整段清空 q5 的 doneRight——
+
+      · 整段清空 → **被抓出**（第四轮那道「done 但字段为空」的旧闸门）
+      · 另外三种内容级违规 → 校验器报 **100 项通过 · 0 错误**
+
+    只查「非空」是这个家族最容易存活的环境：一行和五行同样「非空」，
+    引述被改写、退化成字符串、写成三元组都不会触发任何现有检查。
+
+    **本轮更严重的一层：数据层根本没有承载 ✗ 行的字段。**
+    两页精讲页的「已做对」表里都有一行 ✗（q19「顶点写成 (6,−3) 拼凑」、
+    q5「括号里填 A 即 3/2」）——那是**断点的直接证据**，
+    而 doneRight 只记 ✓ 行 ⇒ 证据只活在 HTML 里，
+    生成器（build_skeletons.py 只渲染 doneRight）重新生成时会**静默丢掉它**。
+    故本闸门按「事实」而非按「文件」建：**页面表格的每一行（✓ 与 ✗ 都算）
+    都必须在数据层有对应条目。**
+
+    覆盖范围：**仅 `data/wrong/*.json` 的 items（错题精讲页）**。
+
+    回退法自证 12 例（正向 6 全部抓出 + 反向 6 全部判定正确）：
+      正向：展开式改错（x²−4x+7→x²−5x+7，定位到具体行）· doneWrong 清空 ·
+            退化成字符串 · 三元组 · 整个字段缺失 · 坐标改错（(6,−3)→(6,3)）
+      反向：干净基准 0 误报 · 数据层引述更详细 · 页面用近义改写 ·
+            数据层多出一条 · 页面文字比数据层更长 · **数据层丢了具体内容
+            （把「DE∥AC、DF∥AB」压缩成「两条平行线」）——这一条本轮
+            确实报错，且**应当报错**：页面有的事实数据层没有，正是本闸门
+            要抓的形态（重新生成会静默丢失）**。
+
+    本轮自身踩了三次坑，全部靠回退法暴露：
+      ① 首版按整句字面包含比对 ⇒ 5 条里 4 条假阳性（页面「展开成」vs
+         数据层「展开为」）。**假阳性会把真错误淹掉**（铁律三）。
+         改法：比**事实标记**（数学式/坐标/选项字母），不做模糊匹配——
+         一开模糊，「两条其实不一样」会被当成「差不多」，闸门自动失效（铁律六）。
+      ② 事实标记的正则首版漏了**裸多项式**（无等号的 x²−4x+7），
+         抽不出任何标记就退化成字符集重合，「把展开式改错」蒙混过关。
+      ③ 标记判否后又接了词元兜底 ⇒ 把「顶点写成 (6,3)」也算成页面的
+         「顶点写成 (6,−3)」（两字窗里 (6 共有）。**放宽必须严格限定在
+         「两侧都抽不出标记」的场景**，否则防线自己就漏了。
+
+    **能力边界（勿误以为已被守住）**：页面与数据层**同时**改错同一处事实时，
+    两侧一致 ⇒ 本闸门通过。这与第 15 轮 `check_breakdown_faithful` 同源：
+    **两侧一致 ≠ 两侧都对**。要抓这类必须核卷（`sips` 裁切放大逐字读）。
+    """
+    for rel_j in sorted(glob.glob(os.path.join(ROOT, "data", "wrong", "*.json"))):
+        rel = os.path.relpath(rel_j, ROOT)
+        d = load(rel_j, rep, rel)
+        if not d:
+            continue
+        for it in d.get("items", []):
+            iid = it.get("id", "?")
+            where = f"{rel}#{iid}"
+
+            # —— ① 两个字段各自的非空与结构 ——
+            for fld, human in (("doneRight", "已做对的部分"),
+                               ("doneWrong", "做错的那一步（断点直接证据）")):
+                rows = it.get(fld)
+                if not rows:
+                    rep.err(where, f"缺 {fld}（{human}）",
+                            "① 段要求逐项对照原卷手写过程，而不是从最终答案倒推。"
+                            "缺了它，「断点在哪」只能靠推断——而推断会把"
+                            "「方法没想到」误判成「概念不清」，"
+                            "两者的救法完全相反（见 MEMORY 错因判定纪律）")
+                    continue
+                if not isinstance(rows, list):
+                    rep.err(where, f"{fld} 不是数组",
+                            f"实际类型：{type(rows).__name__}")
+                    continue
+                for idx, row in enumerate(rows, 1):
+                    if not isinstance(row, (list, tuple)) or len(row) != 2:
+                        rep.err(where,
+                                f"{fld} 第 {idx} 条不是 [他写下的, 说明] 二元组",
+                                "形状必须固定，否则表格渲染与自动比对都会失准。"
+                                f"实际：{type(row).__name__}，"
+                                f"长度 {len(row) if isinstance(row, (list, tuple)) else '—'}")
+                        continue
+                    if not str(row[0]).strip() or not str(row[1]).strip():
+                        rep.err(where, f"{fld} 第 {idx} 条有空的单元格",
+                                "左边是他写在卷面上的东西，右边是判断依据，两者都要有内容")
+
+            # —— ② 精讲页「已做对」表的每一行都要在数据层找得到 ——
+            # 按「事实」建闸门：✓ 行查 doneRight、✗ 行查 doneWrong，
+            # 只查 ✓ 会让断点证据永远查不出来（这正是本轮发现缺陷的方式）。
+            page = it.get("page")
+            if not page:
+                continue
+            ap_ = os.path.join(ROOT, page)
+            if not os.path.exists(ap_):
+                continue  # 文件缺失已由 check_five_stage_paradigm 报错
+            try:
+                src = open(ap_, encoding="utf-8").read()
+            except Exception:
+                continue
+
+            h2 = src.find("你已经做对的部分")
+            if h2 < 0:
+                continue
+            tbl = re.search(r"<table.*?</table>", src[h2:], re.S)
+            if not tbl:
+                continue
+
+            for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", tbl.group(0), re.S):
+                # 判定格必须连**属性**一起抓：`tds[1]` 只有符号文本（'✓'/'✗'），
+                # class="cross" 落在 <td> 的属性里 —— 只按符号判更稳（页面改配色不改符号）。
+                tds = re.findall(r"<td([^>]*)>(.*?)</td>", tr, re.S)
+                if len(tds) < 3:
+                    continue  # 表头 / 单列行
+                attrs, (said, mark, _note) = tds[0][0], [c[1] for c in tds[:3]]
+                # ✗ = 判定符号是叉。**只看第 2 格**：页面里 <span class="cross">
+                # 常用于行内强调（q5 拆解表就有一处），不是判定标记。
+                is_cross = "✗" in mark or "cross" in attrs
+                pool = [r[0] for r in (it.get("doneWrong") if is_cross
+                                       else it.get("doneRight") or [])
+                        if isinstance(r, (list, tuple)) and r]
+                fld = "doneWrong" if is_cross else "doneRight"
+                # 页面首格可能带 <code>/<b>/换行；按 <br> 拆后逐片比对。
+                # （铁律三第五类假阳性：<br> 不是换行符。）
+                for piece in re.split(r"<br\s*/?>", said, flags=re.I):
+                    piece = _strip_tags(piece).strip()
+                    if len(_norm_text(piece)) < 4:
+                        continue
+                    if not any(_rows_correspond(piece, c) for c in pool):
+                        rep.err(where,
+                                f"页面「已做对」表的{'✗' if is_cross else '✓'}行"
+                                f"「{piece[:24]}」在数据层 {fld} 里找不到",
+                                "这一列是给孩子看的**事实认定**。页面列出来了、数据层没有，"
+                                "意味着重新生成页面时它会被静默丢掉"
+                                "（生成器只渲染 doneRight）。"
+                                + ("✗ 行是**断点的直接证据**，"
+                                   "只记 ✓ 不记 ✗，「断点在哪」就退化成推断。"
+                                   if is_cross else
+                                   "✓ 行必须逐项对照原卷手写过程，不是从最终答案倒推的"))
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -1786,6 +2023,7 @@ def main():
     check_page_matches_data(rep, rawmap)
     check_five_stage_paradigm(rep, rawmap)
     check_breakdown_faithful(rep, rawmap)
+    check_done_right_faithful(rep, rawmap)
     check_answer_fields(rep, rawmap)
     check_papers_derived(rep)
     check_doc_numbers(rep)
