@@ -3,7 +3,7 @@
     "schema": "raw.v1",
     "note": "RAW 原件索引。每条记录指向 RAW/ 下一个已压缩入库的原件；解析产物（错题、卷面结构分析）通过 sourceRaw 字段反向溯源到这里。详见 RAW/README.md",
     "created": "2026-10-02",
-    "updated": "2026-10-03"
+    "updated": "2026-10-04"
   },
   "items": [
     {
@@ -1033,6 +1033,188 @@
       "width": 1668,
       "height": 262,
       "originalBytes": 139963,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-数学九上-封面.jpg",
+      "kind": "image",
+      "bytes": 299167,
+      "sha256": "069e7c24460f9d3462a357c1714ee47bc8ce60d6460ad2b3d403ce83ec62e38b",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 381535,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-数学九上-目录27-28章.jpg",
+      "kind": "image",
+      "bytes": 220243,
+      "sha256": "504eec43f61dbe95b25d4dadd4ed120b84330e12d85a65c01c10da0fbc3b3d7a",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 269640,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-数学九上-目录29-30章.jpg",
+      "kind": "image",
+      "bytes": 201819,
+      "sha256": "874624a751de76c2f3cfbb5c9df9430e30e97575a68da40932984227a87ad7c7",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 248583,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-物理九上-封面.jpg",
+      "kind": "image",
+      "bytes": 325020,
+      "sha256": "e30fb08c8bd3a901bf6fb98ad05004e6af18ae875a2984417967dbb5b190279a",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 413068,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-物理九上-目录10-11章.jpg",
+      "kind": "image",
+      "bytes": 252775,
+      "sha256": "9c632c884fff21d7bace321a39a3f5e0eb5ddeceb0a07bde2f7b329a395eeb4e",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 316649,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-物理九上-目录12-13章.jpg",
+      "kind": "image",
+      "bytes": 268012,
+      "sha256": "ca337303c8ac22df7ac1f167d7555099cf9e0e98689ed1995fb946c84e709da2",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 338418,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-英语九上-封面.jpg",
+      "kind": "image",
+      "bytes": 304120,
+      "sha256": "8c370272cf81b29dc9ac609679e4a1adcd9494a4269c12a0b4d4fe8018acc4b1",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 388168,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-英语九上-目录p1.jpg",
+      "kind": "image",
+      "bytes": 256022,
+      "sha256": "3396a182d90ea07ed75bcc6c0a2bbc3e89f7f6a6a92ce95f24bf2a8ecd86e37b",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 308093,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-英语九上-目录p2.jpg",
+      "kind": "image",
+      "bytes": 274836,
+      "sha256": "6947d067cbd4f29ccd0215dfe67cec2987fcc2b90949e64d64111122d88914d5",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 346975,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-道法九上-封面.jpg",
+      "kind": "image",
+      "bytes": 263935,
+      "sha256": "b974f633f7342a9f9b19518bcfbe71dc46236ebf9335edc934a000a23f884a48",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 329731,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-道法九上-目录p1.jpg",
+      "kind": "image",
+      "bytes": 230219,
+      "sha256": "b777aa07939f2c3b4d1f2c9ea671a19895fb85b658008c9abac6d97ff1091966",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 286270,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-道法九上-目录p2含批注.jpg",
+      "kind": "image",
+      "bytes": 224855,
+      "sha256": "6cc69abef1bb6c4efaa8009eaa303d4b5b1d9a1c64740172d8cb9af46d87bb5d",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 277077,
+      "status": "已入库·待解析",
+      "parsed": {
+        "wrongIds": [],
+        "modules": []
+      }
+    },
+    {
+      "file": "RAW/教材/20261004-道法九上-目录p3.jpg",
+      "kind": "image",
+      "bytes": 190045,
+      "sha256": "6382ed8eb2a122f9621772ef99b900156c57df917af2992303bbce30c1486fb8",
+      "width": 1333,
+      "height": 2000,
+      "originalBytes": 226667,
       "status": "已入库·待解析",
       "parsed": {
         "wrongIds": [],

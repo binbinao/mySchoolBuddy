@@ -7,7 +7,8 @@
     "note": "首次错题入库。两条记录的 full/lost 均为 null —— 照片中未见分值标注，需对照卷面分值表回填后才能计入失分点热区统计。不做估算。",
     "schemaNote": "引用原件统一用 sourceRaw 字段，指向 RAW/ 下已入库文件（见 data/raw-manifest.json）",
     "backfillNote": "2026-10-03 四次核验：q19（w-20261002-01）的 steps/variants/thinkQuestions 此前只存在于人工精讲页 HTML，从未回写 JSON——生成器与一切数据分析都读不到，任务却已标 done。本轮按已核验页面回写，并补 q5 的 stem 与两条 page 绑定。",
-    "updated": "2026-10-04 07:55"
+    "updated": "2026-10-04",
+    "knowledgeNote": "2026-10-04 课本照片核实后归一：module 只放章名，point 落到具体到节。q5 原 point 写「九下」是错的——28.2 在九上。依据 RAW/教材/ 下 4 张数学目录照片。"
   },
   "items": [
     {
@@ -16,7 +17,7 @@
       "title": "第19题 关联抛物线：由顶点M的抛物线 y=(x−2)²+3 求与它互为关联抛物线、且顶点N的抛物线（tan∠MDO=3/4）",
       "subject": "数学",
       "module": "二次函数",
-      "point": "沪教版九年级 二次函数（新定义题型·关联抛物线）",
+      "point": "27.2 二次函数的图象与性质",
       "full": null,
       "lost": null,
       "scorePending": true,
@@ -205,8 +206,8 @@
       "examIdNote": "来源卷次未知。照片为卷面第2~9题区段，拍摄时顶部第1题已被裁掉，无法确认是哪次考试。需要家长补充卷名与日期。",
       "title": "第5题 在△ABC中，点E、D、F分别在边AB、BC、AC上，DE∥AC，DF∥AB，AE:EB=3:2，那么AF:FC的值是",
       "subject": "数学",
-      "module": "相似三角形（平行线分线段成比例）",
-      "point": "九下 · 相似三角形判定与性质 / 平行线分线段成比例（章节号待按孩子课本目录核实）",
+      "module": "相似三角形",
+      "point": "28.2 相似三角形",
       "options": {
         "A": "3/2",
         "B": "2/3",
