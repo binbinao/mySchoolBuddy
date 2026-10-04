@@ -2195,6 +2195,89 @@ def _check_one_cause(rep, where, rec, is_boilerplate, prefix=""):
     rep.ok()
 
 
+def check_math_keypoints(rep):
+    """data/resources/math-keypoints.json 是第 8 个数据入口，2026-10-04 新增。
+
+    **为什么它不能被 check_resources 覆盖**：那个闸门只认
+    `data.get("papers")` 是 list 的结构，碰到本文件（顶层是 `sections`）
+    会 `continue` 跳过——**新增入口落进别人的 if 里，是最隐蔽的漏网**。
+    形态属 MEMORY 记的「② 检查本身抓不到」：闸门在跑、报 0 错误、
+    实际上这个文件一次都没被看过。
+
+    **本闸门查的是「这份数据会被印进给孩子看的 Word」**，所以风险点有三条：
+      1. `meta.count` 与实际条数不符 ⇒ 封面写「共 N 条」而正文不是 N 条
+      2. `code` 重复 ⇒ 两个知识点同名，复习时定位不到
+      3. `exam_evidence` 里引用的真题文件不存在 ⇒ 出处指向空气
+    内容对不对是人的判断（教学判断不进机器闸门），本闸门不越权。
+    """
+    p = os.path.join(ROOT, "data", "resources", "math-keypoints.json")
+    if not os.path.exists(p):
+        return
+    rel = "data/resources/math-keypoints.json"
+    d = load(p, rep, rel)
+    if not d:
+        return
+
+    meta = d.get("meta") or {}
+    sections = d.get("sections") or []
+    if not sections:
+        rep.err(rel, "顶层 sections 为空或缺失",
+                "本文件是「数学学习要点速查手册」的唯一内容源，"
+                "sections 空了手册就是一本空壳，而生成器不会报错")
+        rep.ok()
+        return
+
+    codes, n = [], 0
+    for si, s in enumerate(sections):
+        tier = s.get("tier")
+        if tier not in ("tier1", "tier2", "tier3", "tier4"):
+            rep.err(rel, f"sections[{si}].tier={tier!r} 不在 tier1..tier4 内",
+                    "梯队 id 是生成器 `TIER_COLOR` 的索引，"
+                    "拼错会让该梯队没有配色（标题退化成黑色，视觉分层失效）")
+        for pt in s.get("points") or []:
+            n += 1
+            code = pt.get("code") or "?"
+            codes.append(code)
+            # page 为 null 是合法状态（九下章号待定），
+            # 但 chapter 必须同步说明「待定」——否则页面会印出「章：九下 第 ? 章」
+            pg, ch = pt.get("page"), pt.get("chapter") or ""
+            if pg is None and "待定" not in ch and "综合与实践" not in ch:
+                rep.err(rel, f"{code} page 为 null 但 chapter 未标「章号待定」：{ch}",
+                        "空值必须显式说明「为什么空」，不能静默留白——"
+                        "静默留白会让读者以为是漏印，而真相是「真题反推不出章号」")
+            if pg is not None and "待定" in ch:
+                rep.err(rel, f"{code} chapter 写「待定」却填了页码 p{pg}",
+                        "章号还没确定却有页码，两边自相矛盾——"
+                        "页码比章号更容易被当成事实引用")
+
+    declared = meta.get("count")
+    if declared is not None and declared != n:
+        rep.err(rel, f"meta.count={declared} 与实际知识点 {n} 条不符",
+                "封面直接印这个数字，对不上就是「封面说 29 条、翻完只有 28 条」")
+
+    dup = sorted({c for c in codes if codes.count(c) > 1})
+    if dup:
+        rep.err(rel, f"code 重复：{dup}",
+                "code 是复习时的定位标识（练习入口、真题对照表都引它），"
+                "重复会导致两处引用指向不同内容")
+
+    # 引用的真题文件必须真实存在
+    # ⚠ 判据踩坑（2026-10-04 当场踩到）：evidence_sources 里写的是
+    #   「RAW/试卷库/（5 套上海数学真题：2023 中考 / …）」——
+    #   **带括号描述**，直接 os.path.exists 整串必然 False，
+    #   于是每次跑都报「出处指向空气」，而路径其实是对的。
+    # ⇒ 取第一个括号/书名号前的路径前缀再判存在性。
+    for s in meta.get("evidence_sources") or []:
+        m = re.match(r"\s*((?:RAW|data|docs|tools|app)/[^\s（(【\[]+)", s)
+        if not m:
+            continue
+        path = m.group(1).rstrip("：:")
+        if not os.path.exists(os.path.join(ROOT, path)):
+            rep.err(rel, f"meta.evidence_sources 引用的路径不存在：{path}",
+                    "出处指向不存在的路径 = 出处指向空气")
+    rep.ok()
+
+
 def main():
     ap = argparse.ArgumentParser(description="校验 data/ 数据是否违反项目三条硬纪律")
     ap.add_argument("--quiet", action="store_true", help="只输出问题")
@@ -2222,6 +2305,7 @@ def main():
     check_papers_derived(rep)
     check_doc_numbers(rep)
     check_data_readme(rep)
+    check_math_keypoints(rep)
     rep.print()
     sys.exit(1 if rep.errors and not args.warn else 0)
 
