@@ -1,1225 +1,1555 @@
 {
-  "meta": {
-    "schema": "raw.v1",
-    "note": "RAW 原件索引。每条记录指向 RAW/ 下一个已压缩入库的原件；解析产物（错题、卷面结构分析）通过 sourceRaw 字段反向溯源到这里。详见 RAW/README.md",
-    "created": "2026-10-02",
-    "updated": "2026-10-04"
+ "meta": {
+  "schema": "raw.v1",
+  "note": "RAW 原件索引。每条记录指向 RAW/ 下一个已压缩入库的原件；解析产物（错题、卷面结构分析）通过 sourceRaw 字段反向溯源到这里。详见 RAW/README.md",
+  "created": "2026-10-02",
+  "updated": "2026-10-04"
+ },
+ "items": [
+  {
+   "file": "RAW/错题照片/20261002-数学-第5题.jpg",
+   "kind": "image",
+   "bytes": 293062,
+   "sha256": "d3cf011ab0427c540c65423852628d30fb75db7bc52c9c112344c9d0ca686177",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 366832,
+   "status": "已解析",
+   "parsed": {
+    "wrongIds": [
+     "w-20261002-02"
+    ],
+    "modules": [
+     "相似三角形（平行线分线段成比例）"
+    ]
+   }
   },
-  "items": [
-    {
-      "file": "RAW/错题照片/20261002-数学-第5题.jpg",
-      "kind": "image",
-      "bytes": 293062,
-      "sha256": "d3cf011ab0427c540c65423852628d30fb75db7bc52c9c112344c9d0ca686177",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 366832,
-      "status": "已解析",
-      "parsed": {
-        "wrongIds": [
-          "w-20261002-02"
-        ],
-        "modules": [
-          "相似三角形（平行线分线段成比例）"
-        ]
-      }
-    },
-    {
-      "file": "RAW/错题照片/20261002-数学-第19题.jpg",
-      "kind": "image",
-      "bytes": 332171,
-      "sha256": "356da7708bbca5a4d99625cf584f1d5c17ffd4dae84891a46c1105ed837a8bea",
-      "width": 1828,
-      "height": 1599,
-      "originalBytes": 580006,
-      "status": "已解析",
-      "parsed": {
-        "wrongIds": [
-          "w-20261002-01"
-        ],
-        "modules": [
-          "二次函数"
-        ]
-      }
-    },
-    {
-      "file": "RAW/试卷/20261002-单元测-英语-p1.jpg",
-      "kind": "image",
-      "bytes": 416349,
-      "sha256": "2755fbe7289f070c9ad3e372caa2e763e58740f7bba5b2ad8744704f1eba6c03",
-      "width": 1989,
-      "height": 1600,
-      "originalBytes": 454846,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷/20261002-单元测-英语-p2.jpg",
-      "kind": "image",
-      "bytes": 482186,
-      "sha256": "0893cab2a52a53fb9b9a0e8aae65db85ae1f8719c6ef3c78bb0c4a59866c7970",
-      "width": 2000,
-      "height": 1520,
-      "originalBytes": 618058,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷/20261002-单元测-英语-p3.jpg",
-      "kind": "image",
-      "bytes": 490001,
-      "sha256": "8bfe63084396d0ac89a8967fc172638a2de02e3f2355e8d72e5c2139ee82543b",
-      "width": 2000,
-      "height": 1554,
-      "originalBytes": 596914,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷/20261002-单元测-英语-p4.jpg",
-      "kind": "image",
-      "bytes": 515554,
-      "sha256": "4c06a47f588d6e278282db2766ebce23f469ad9315f6af4f6d404a6063f19fd5",
-      "width": 2000,
-      "height": 1596,
-      "originalBytes": 600908,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2025-中考-全市-数学-2025年上海市中考数学真题试卷(含答案).txt",
-      "kind": "text",
-      "bytes": 10279,
-      "sha256": "0e2a3886d2c87f0ac8cf2027e1c1d7ba49d5e1ce2fb373c2c3c60e73d934d0ae",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2025-中考-全市-物理-2025年上海市中考物理真题(原卷+解析).txt",
-      "kind": "text",
-      "bytes": 26383,
-      "sha256": "5a65db63b653f4df642d46b40a5ac9ee1037a6cfeabc99dad2064f2a61a6e757",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2025-中考-全市-语文-2025年上海市中考语文真题(原卷+解析).txt",
-      "kind": "text",
-      "bytes": 70058,
-      "sha256": "8384eceba8910360204513e8c8fd9d1d5e88c225df5d8e8aa91295309fe528c2",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2025-中考-全市-化学-【精品解析】上海市2025年中考化学真题.txt",
-      "kind": "text",
-      "bytes": 14033,
-      "sha256": "74533b37cdd9461a822e39e5d1cc65a91c9e4ae37799fec3a08e34e91003b80a",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2025-中考-全市-生物-2025年上海市中考生物试卷(含答案).txt",
-      "kind": "text",
-      "bytes": 7600,
-      "sha256": "ea571cb4495d7f03a81a08d59c89ad6005f4f0806b9bb561f580aa2c280632f3",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2025-中考-全市-地理-2025年上海市初中学业水平考试地理试卷(含答案).txt",
-      "kind": "text",
-      "bytes": 13739,
-      "sha256": "ce436a2363525b19c0afaa8ac7f71ef5a33ee1ff3f720d8f0fa37dda2d03a132",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2024-中考-全市-数学-2024年上海市中考数学试题(含部分答案).txt",
-      "kind": "text",
-      "bytes": 3011,
-      "sha256": "057dec2314b65238a364a13df8ffe8113dc317fd5acca759e096e0c0d05af05a",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2023-中考-全市-数学-2023年上海市初中学业水平考试数学试卷.txt",
-      "kind": "text",
-      "bytes": 4620,
-      "sha256": "b3dc4b95cb6d0d92a81184539c88436a6396683890a231e8a6719be163a7a1f1",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2025-一模-徐汇区-数学-2025届上海市徐汇区初三一模数学试卷(含答案).txt",
-      "kind": "text",
-      "bytes": 3348,
-      "sha256": "afb240aa40f84c71f69633517d8f15e4ec57675167dec61bdb34f78b223749d1",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2025-一模-闵行区-数学-上海市闵行区2025-2026学年上学期九年级学业质量(一模)调研数学试题.txt",
-      "kind": "text",
-      "bytes": 4193,
-      "sha256": "107e8eb5d50b475a2049dfe4d89aa4b6fe661b7e0a489cf04cca7e5a70c9df9a",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/2026-中考-全市-物理-2026年上海中考物理真题(含答案)-—-renrendoc-版本.txt",
-      "kind": "text",
-      "bytes": 16103,
-      "sha256": "7a489a91c435caa75ef6c71bdd13e8ee6309905f8ac120a331a5acfbc7826431",
-      "status": "已入库·公开教辅",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p01.png",
-      "kind": "image",
-      "bytes": 82186,
-      "sha256": "dc5a55b4902cfbe2df43bc97df29511134ca7f4c32f883499733e465e3791dac",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p02.png",
-      "kind": "image",
-      "bytes": 59619,
-      "sha256": "47e01d534c8e821058fc241e7c70e7f190e366570f4d4842149d1d633b25dc31",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p03.png",
-      "kind": "image",
-      "bytes": 80290,
-      "sha256": "03ee5cfdae1ebf80367b2cfa0699e799b483493c5f4129ecfc2569082cb0fed4",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p04.png",
-      "kind": "image",
-      "bytes": 39039,
-      "sha256": "bb8d6bf57d51bde9a8ae0288166efe9f2acc4ea15c888da5f6a4e2e0c92541ba",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p05.png",
-      "kind": "image",
-      "bytes": 79348,
-      "sha256": "c7de421f43d1c1d3e89a58998b11ec7df569a491ea5ad3342f30d6c56e39966f",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p06.png",
-      "kind": "image",
-      "bytes": 68724,
-      "sha256": "d83f8bba3b92df41dae60d8278430f1d8059c12f844163e0fac8e29521efc67a",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p07.png",
-      "kind": "image",
-      "bytes": 83961,
-      "sha256": "f8e26ceba2bbb1caf7e3aeb48fe57f3adf99b8a9577e83983ea0f19664056d1e",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p08.png",
-      "kind": "image",
-      "bytes": 54950,
-      "sha256": "f506a465c85b43a6c6c3bdbe73168c2a60d3603680c228200cc99eaa09ba9005",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p09.png",
-      "kind": "image",
-      "bytes": 50124,
-      "sha256": "c0ff252ef4ae699c431db4507cdaf677f0e73c73bcc0add24d6db86d413ea43c",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p10.png",
-      "kind": "image",
-      "bytes": 65123,
-      "sha256": "e9aa89c956995f1e7bcee44752f71a47b771349a84ca158d37a4709649d1de91",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p01.png",
-      "kind": "image",
-      "bytes": 73447,
-      "sha256": "5f361959f25e4071a454cc45c5bb5d00b11c71ac89103194618e0cb974f778a8",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p02.png",
-      "kind": "image",
-      "bytes": 65852,
-      "sha256": "52c46c8174837a1d6490c85f43daa31ecd6a402e7ebc94216a8d610ecab27c57",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p03.png",
-      "kind": "image",
-      "bytes": 43539,
-      "sha256": "f7706c03b7ae32252d8777d2db91c9b0c200dd21061d40eba02aebb1449dacd2",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-p01.png",
-      "kind": "image",
-      "bytes": 84056,
-      "sha256": "525bb8f92ad50b13a649206163d41a83732f48c9174271c0b8b8bbdf4c216047",
-      "width": 860,
-      "height": 1217,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-p02.png",
-      "kind": "image",
-      "bytes": 79629,
-      "sha256": "0c3f8a79746cc2930b004ed1d1009046875293ab3d9b1c1357857f2ee95a05cd",
-      "width": 860,
-      "height": 1217,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p01.png",
-      "kind": "image",
-      "bytes": 228408,
-      "sha256": "c40d3028835dcaeb0047c05ecea9209edc8cc7fce08c3a1110e3d9faa56c5e94",
-      "width": 860,
-      "height": 1217,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p02.png",
-      "kind": "image",
-      "bytes": 259693,
-      "sha256": "8846f33c127c50dc91cf939b941e8f6be536cc57774b9f6eb1aa2ef7a2328864",
-      "width": 860,
-      "height": 1217,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p03.png",
-      "kind": "image",
-      "bytes": 226276,
-      "sha256": "c0e027fefa3b905eb761b89d95dd13eaac69af22996b6defbd214461a64d436b",
-      "width": 860,
-      "height": 1217,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p04.png",
-      "kind": "image",
-      "bytes": 257396,
-      "sha256": "37a00d300468431af20ad78ab4c3e8fd002769128cc9dba885b39549ecef8fe2",
-      "width": 860,
-      "height": 1217,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p01.png",
-      "kind": "image",
-      "bytes": 256355,
-      "sha256": "eeae25fa093721d09f31b70686f69cbe2d2fb121689bffd6341b5fc8d8ae5595",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p02.png",
-      "kind": "image",
-      "bytes": 208044,
-      "sha256": "aa8485bdcc2a51d6e5b5f1b554dfebec70427601ae5aaf2e66b36ead39d7b1f8",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p03.png",
-      "kind": "image",
-      "bytes": 224542,
-      "sha256": "ef9a7f777ed033499d774347c3df41fc70a6e8e8866dcdb359ab4ac1119c5d95",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p04.png",
-      "kind": "image",
-      "bytes": 193265,
-      "sha256": "0930737d8d48bac2a726c51de24e71f4cc0e125eb33b59e8374f819dc72e34ce",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p01.png",
-      "kind": "image",
-      "bytes": 190600,
-      "sha256": "e5fdb7f9e6da2a6da3a9f4e9780dcc1d1c0a018cb8986e513bb8c7cc2a8c057f",
-      "width": 860,
-      "height": 1177,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p02.png",
-      "kind": "image",
-      "bytes": 213559,
-      "sha256": "9cf0573c5b149df14e747b7849f8ee8691d8c813103c228dcdcab6a80fc74b79",
-      "width": 860,
-      "height": 1217,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p03.png",
-      "kind": "image",
-      "bytes": 192689,
-      "sha256": "e8cfdbb3eb6b74e004f46a9d488479ae9afcffae5407d27558314e796f597082",
-      "width": 860,
-      "height": 1112,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p04.png",
-      "kind": "image",
-      "bytes": 238992,
-      "sha256": "66a723e9dd601a907a48b7343c57aa10ba37898ab3b90aadf5332dc6b59e49d9",
-      "width": 860,
-      "height": 1158,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p05.png",
-      "kind": "image",
-      "bytes": 280684,
-      "sha256": "938d3f5f1795ae943ee1d676f54c69b2d33b56952f7170db33a05974fd39794b",
-      "width": 860,
-      "height": 1162,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p01.png",
-      "kind": "image",
-      "bytes": 68272,
-      "sha256": "a48f8df938149b9bee1fce7474386db49dc3f5a4503aceda1903104a76605a26",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p02.png",
-      "kind": "image",
-      "bytes": 78962,
-      "sha256": "97eac0b3db9445e3e700d9f7aea9dc765a39b1e34550b9a2484cf93bc1e14c85",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p03.png",
-      "kind": "image",
-      "bytes": 50638,
-      "sha256": "5576f90d475be87d08e8b7deaa7914084317d2371c036d669da1db1b819044a8",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p04.png",
-      "kind": "image",
-      "bytes": 70856,
-      "sha256": "65bd75f264880bd26d1f3a3c2eb4e5a68b6888a4cb583e2bdd298e41b084c16b",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p05.png",
-      "kind": "image",
-      "bytes": 88108,
-      "sha256": "e2d8270847fa283c842ae1082162aa6dfadb334d607db2eb61c025ed824459ea",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p06.png",
-      "kind": "image",
-      "bytes": 70138,
-      "sha256": "6795ca171d1f326e819dee13da8e35b628d3b6badc62a212a03004515d504ee1",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p07.png",
-      "kind": "image",
-      "bytes": 75269,
-      "sha256": "2fc03d2961adf2581e6c07b22ab334cbc7cf4327a0102c41787257b760471dd6",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p08.png",
-      "kind": "image",
-      "bytes": 84677,
-      "sha256": "257de88c81082a9663f8d10067071f527598f7397dfa7a786381a047ec6f6b77",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p09.png",
-      "kind": "image",
-      "bytes": 88534,
-      "sha256": "90f09ec51302265b7de67358d400468d5c263280d7f90d10f9101b12e66f732b",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p01.png",
-      "kind": "image",
-      "bytes": 88010,
-      "sha256": "395bdb9959be48878acf0d7a45b3e179e354237875cca8cdee3c0ed26a906887",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p02.png",
-      "kind": "image",
-      "bytes": 80064,
-      "sha256": "f2f3d372752b674fdcd65aff11610ee5ff1a5177bd9403bdfef1eca020cda564",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p03.png",
-      "kind": "image",
-      "bytes": 91232,
-      "sha256": "36957dc7103ea66f5020f624d55c6cc664f1f39f8df23d51f32fd92482252f87",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p04.png",
-      "kind": "image",
-      "bytes": 121464,
-      "sha256": "a4ac1655654d8e2c7ab10a7c94df8fd81219b2f12086d1c1db8310c5f5314fa8",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p05.png",
-      "kind": "image",
-      "bytes": 84673,
-      "sha256": "e0fecaa1895f57712d3b0400cc6e34db91383eaaeab32b5307fabb36334d5de1",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p06.png",
-      "kind": "image",
-      "bytes": 89537,
-      "sha256": "57ea385fdc6c3e738ede73f637e1a26d59d86e6379cbdc6ba10f754f3d54b45a",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p07.png",
-      "kind": "image",
-      "bytes": 80445,
-      "sha256": "620c8016d55d0bf858c8cb7275a523dbda2eb4fb3a750b93bab128cd65b82ec7",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p08.png",
-      "kind": "image",
-      "bytes": 119907,
-      "sha256": "764b6e0a2308fea5667fac61b4ecc07f1b3ae00282d7b4774b49fcd42bef138e",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p09.png",
-      "kind": "image",
-      "bytes": 112961,
-      "sha256": "d99f62bab0103cf91c1c5cc7bfdda9b05b5b2ec1d9087696134abc36a63da8eb",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p01.png",
-      "kind": "image",
-      "bytes": 64664,
-      "sha256": "d9fb3e122fe432b8d18b9169b7a4196c324acd5fa40d3d472b64c86761207515",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p02.png",
-      "kind": "image",
-      "bytes": 92062,
-      "sha256": "e5c4165202e9938906fdda7bbf0428cb1c4b876358a7ddf01e2749f1c6eb000c",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p03.png",
-      "kind": "image",
-      "bytes": 66363,
-      "sha256": "3cfa42d1643bd622a7f1596d7acb1a3a2446d87c96a33597b70ace1e87ca5b37",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p04.png",
-      "kind": "image",
-      "bytes": 43931,
-      "sha256": "b6067622560fed8ac159bbbf513092b2c279b19d482e5d8579052a70e156987d",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p05.png",
-      "kind": "image",
-      "bytes": 21148,
-      "sha256": "926f63a07334874aaab557b2e89674cac3fe1e1c93207c2dff94d536793047c0",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p01.png",
-      "kind": "image",
-      "bytes": 74967,
-      "sha256": "f0d23d36d875d943cf10fb1fa1f97f1102e736ebae0e8c64ff3df5b7ac2c7ebc",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p02.png",
-      "kind": "image",
-      "bytes": 91797,
-      "sha256": "8b7e53152f8a751de22fc3dd8b5176d4b7997f4eb624fe3b14259eef5d7434e5",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p03.png",
-      "kind": "image",
-      "bytes": 73570,
-      "sha256": "6b14a04d9c1c148e245ee10baa1b621128c5f0da9e8005eac0e18a4a5ffe02e1",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p04.png",
-      "kind": "image",
-      "bytes": 66083,
-      "sha256": "b6e59ec6bea01fb53c9b978535b033dd5150819d9bf1eed72c6e1960d16c3887",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p05.png",
-      "kind": "image",
-      "bytes": 75623,
-      "sha256": "cd727dd229d3a6175af1d2cac618472c04d8054a52ec3a950eec2f15a3dac1f0",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p06.png",
-      "kind": "image",
-      "bytes": 93230,
-      "sha256": "5e23e452ab489fb3cfd394213aca6b0a11aa908f67bcd1ba3c012c9f998fbc92",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p07.png",
-      "kind": "image",
-      "bytes": 89436,
-      "sha256": "e835734048f5b7749f74d0135534f04d6c29ee1627b250729aac4191941951c9",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p01.png",
-      "kind": "image",
-      "bytes": 98934,
-      "sha256": "3df7088170e64c97ba909324df648e20fc83f1e1166c71da1b2a6ae5fb52be0c",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p02.png",
-      "kind": "image",
-      "bytes": 82184,
-      "sha256": "b852bb07cb7e7dd72ad5deb690936255f750cebdcf0e0a27a07f084449a986bb",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p03.png",
-      "kind": "image",
-      "bytes": 35792,
-      "sha256": "5a1bc1d7a614690b57ff6614b4d28cbe5e0a0a24ac079e917777fda0ccccefde",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p04.png",
-      "kind": "image",
-      "bytes": 98985,
-      "sha256": "e1e7982d1af252c274d2a2b37be109219453fd04c4fe7635fdf21548a2529bb1",
-      "width": 860,
-      "height": 1216,
-      "status": "原卷扫描·公开预览",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/错题照片/20261002-数学-第19题-题干裁切.jpg",
-      "kind": "image",
-      "bytes": 78789,
-      "sha256": "83e93ff4603e53a20f18953fd0fb59163657d71827cc44ab38e248b717315c0f",
-      "width": 1668,
-      "height": 262,
-      "originalBytes": 139963,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-数学九上-封面.jpg",
-      "kind": "image",
-      "bytes": 299167,
-      "sha256": "069e7c24460f9d3462a357c1714ee47bc8ce60d6460ad2b3d403ce83ec62e38b",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 381535,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-数学九上-目录27-28章.jpg",
-      "kind": "image",
-      "bytes": 220243,
-      "sha256": "504eec43f61dbe95b25d4dadd4ed120b84330e12d85a65c01c10da0fbc3b3d7a",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 269640,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-数学九上-目录29-30章.jpg",
-      "kind": "image",
-      "bytes": 201819,
-      "sha256": "874624a751de76c2f3cfbb5c9df9430e30e97575a68da40932984227a87ad7c7",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 248583,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-物理九上-封面.jpg",
-      "kind": "image",
-      "bytes": 325020,
-      "sha256": "e30fb08c8bd3a901bf6fb98ad05004e6af18ae875a2984417967dbb5b190279a",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 413068,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-物理九上-目录10-11章.jpg",
-      "kind": "image",
-      "bytes": 252775,
-      "sha256": "9c632c884fff21d7bace321a39a3f5e0eb5ddeceb0a07bde2f7b329a395eeb4e",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 316649,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-物理九上-目录12-13章.jpg",
-      "kind": "image",
-      "bytes": 268012,
-      "sha256": "ca337303c8ac22df7ac1f167d7555099cf9e0e98689ed1995fb946c84e709da2",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 338418,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-英语九上-封面.jpg",
-      "kind": "image",
-      "bytes": 304120,
-      "sha256": "8c370272cf81b29dc9ac609679e4a1adcd9494a4269c12a0b4d4fe8018acc4b1",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 388168,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-英语九上-目录p1.jpg",
-      "kind": "image",
-      "bytes": 256022,
-      "sha256": "3396a182d90ea07ed75bcc6c0a2bbc3e89f7f6a6a92ce95f24bf2a8ecd86e37b",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 308093,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-英语九上-目录p2.jpg",
-      "kind": "image",
-      "bytes": 274836,
-      "sha256": "6947d067cbd4f29ccd0215dfe67cec2987fcc2b90949e64d64111122d88914d5",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 346975,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-道法九上-封面.jpg",
-      "kind": "image",
-      "bytes": 263935,
-      "sha256": "b974f633f7342a9f9b19518bcfbe71dc46236ebf9335edc934a000a23f884a48",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 329731,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-道法九上-目录p1.jpg",
-      "kind": "image",
-      "bytes": 230219,
-      "sha256": "b777aa07939f2c3b4d1f2c9ea671a19895fb85b658008c9abac6d97ff1091966",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 286270,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-道法九上-目录p2含批注.jpg",
-      "kind": "image",
-      "bytes": 224855,
-      "sha256": "6cc69abef1bb6c4efaa8009eaa303d4b5b1d9a1c64740172d8cb9af46d87bb5d",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 277077,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    },
-    {
-      "file": "RAW/教材/20261004-道法九上-目录p3.jpg",
-      "kind": "image",
-      "bytes": 190045,
-      "sha256": "6382ed8eb2a122f9621772ef99b900156c57df917af2992303bbce30c1486fb8",
-      "width": 1333,
-      "height": 2000,
-      "originalBytes": 226667,
-      "status": "已入库·待解析",
-      "parsed": {
-        "wrongIds": [],
-        "modules": []
-      }
-    }
-  ]
+  {
+   "file": "RAW/错题照片/20261002-数学-第19题.jpg",
+   "kind": "image",
+   "bytes": 332171,
+   "sha256": "356da7708bbca5a4d99625cf584f1d5c17ffd4dae84891a46c1105ed837a8bea",
+   "width": 1828,
+   "height": 1599,
+   "originalBytes": 580006,
+   "status": "已解析",
+   "parsed": {
+    "wrongIds": [
+     "w-20261002-01"
+    ],
+    "modules": [
+     "二次函数"
+    ]
+   }
+  },
+  {
+   "file": "RAW/试卷/20261002-单元测-英语-p1.jpg",
+   "kind": "image",
+   "bytes": 416349,
+   "sha256": "2755fbe7289f070c9ad3e372caa2e763e58740f7bba5b2ad8744704f1eba6c03",
+   "width": 1989,
+   "height": 1600,
+   "originalBytes": 454846,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷/20261002-单元测-英语-p2.jpg",
+   "kind": "image",
+   "bytes": 482186,
+   "sha256": "0893cab2a52a53fb9b9a0e8aae65db85ae1f8719c6ef3c78bb0c4a59866c7970",
+   "width": 2000,
+   "height": 1520,
+   "originalBytes": 618058,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷/20261002-单元测-英语-p3.jpg",
+   "kind": "image",
+   "bytes": 490001,
+   "sha256": "8bfe63084396d0ac89a8967fc172638a2de02e3f2355e8d72e5c2139ee82543b",
+   "width": 2000,
+   "height": 1554,
+   "originalBytes": 596914,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷/20261002-单元测-英语-p4.jpg",
+   "kind": "image",
+   "bytes": 515554,
+   "sha256": "4c06a47f588d6e278282db2766ebce23f469ad9315f6af4f6d404a6063f19fd5",
+   "width": 2000,
+   "height": 1596,
+   "originalBytes": 600908,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2025-中考-全市-数学-2025年上海市中考数学真题试卷(含答案).txt",
+   "kind": "text",
+   "bytes": 10279,
+   "sha256": "0e2a3886d2c87f0ac8cf2027e1c1d7ba49d5e1ce2fb373c2c3c60e73d934d0ae",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2025-中考-全市-物理-2025年上海市中考物理真题(原卷+解析).txt",
+   "kind": "text",
+   "bytes": 26383,
+   "sha256": "5a65db63b653f4df642d46b40a5ac9ee1037a6cfeabc99dad2064f2a61a6e757",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2025-中考-全市-语文-2025年上海市中考语文真题(原卷+解析).txt",
+   "kind": "text",
+   "bytes": 70058,
+   "sha256": "8384eceba8910360204513e8c8fd9d1d5e88c225df5d8e8aa91295309fe528c2",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2025-中考-全市-化学-【精品解析】上海市2025年中考化学真题.txt",
+   "kind": "text",
+   "bytes": 14033,
+   "sha256": "74533b37cdd9461a822e39e5d1cc65a91c9e4ae37799fec3a08e34e91003b80a",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2025-中考-全市-生物-2025年上海市中考生物试卷(含答案).txt",
+   "kind": "text",
+   "bytes": 7600,
+   "sha256": "ea571cb4495d7f03a81a08d59c89ad6005f4f0806b9bb561f580aa2c280632f3",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2025-中考-全市-地理-2025年上海市初中学业水平考试地理试卷(含答案).txt",
+   "kind": "text",
+   "bytes": 13739,
+   "sha256": "ce436a2363525b19c0afaa8ac7f71ef5a33ee1ff3f720d8f0fa37dda2d03a132",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2024-中考-全市-数学-2024年上海市中考数学试题(含部分答案).txt",
+   "kind": "text",
+   "bytes": 3011,
+   "sha256": "057dec2314b65238a364a13df8ffe8113dc317fd5acca759e096e0c0d05af05a",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2023-中考-全市-数学-2023年上海市初中学业水平考试数学试卷.txt",
+   "kind": "text",
+   "bytes": 4620,
+   "sha256": "b3dc4b95cb6d0d92a81184539c88436a6396683890a231e8a6719be163a7a1f1",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2025-一模-徐汇区-数学-2025届上海市徐汇区初三一模数学试卷(含答案).txt",
+   "kind": "text",
+   "bytes": 3348,
+   "sha256": "afb240aa40f84c71f69633517d8f15e4ec57675167dec61bdb34f78b223749d1",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2025-一模-闵行区-数学-上海市闵行区2025-2026学年上学期九年级学业质量(一模)调研数学试题.txt",
+   "kind": "text",
+   "bytes": 4193,
+   "sha256": "107e8eb5d50b475a2049dfe4d89aa4b6fe661b7e0a489cf04cca7e5a70c9df9a",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/2026-中考-全市-物理-2026年上海中考物理真题(含答案)-—-renrendoc-版本.txt",
+   "kind": "text",
+   "bytes": 16103,
+   "sha256": "7a489a91c435caa75ef6c71bdd13e8ee6309905f8ac120a331a5acfbc7826431",
+   "status": "已入库·公开教辅",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p01.png",
+   "kind": "image",
+   "bytes": 82186,
+   "sha256": "dc5a55b4902cfbe2df43bc97df29511134ca7f4c32f883499733e465e3791dac",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p02.png",
+   "kind": "image",
+   "bytes": 59619,
+   "sha256": "47e01d534c8e821058fc241e7c70e7f190e366570f4d4842149d1d633b25dc31",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p03.png",
+   "kind": "image",
+   "bytes": 80290,
+   "sha256": "03ee5cfdae1ebf80367b2cfa0699e799b483493c5f4129ecfc2569082cb0fed4",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p04.png",
+   "kind": "image",
+   "bytes": 39039,
+   "sha256": "bb8d6bf57d51bde9a8ae0288166efe9f2acc4ea15c888da5f6a4e2e0c92541ba",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p05.png",
+   "kind": "image",
+   "bytes": 79348,
+   "sha256": "c7de421f43d1c1d3e89a58998b11ec7df569a491ea5ad3342f30d6c56e39966f",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p06.png",
+   "kind": "image",
+   "bytes": 68724,
+   "sha256": "d83f8bba3b92df41dae60d8278430f1d8059c12f844163e0fac8e29521efc67a",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p07.png",
+   "kind": "image",
+   "bytes": 83961,
+   "sha256": "f8e26ceba2bbb1caf7e3aeb48fe57f3adf99b8a9577e83983ea0f19664056d1e",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p08.png",
+   "kind": "image",
+   "bytes": 54950,
+   "sha256": "f506a465c85b43a6c6c3bdbe73168c2a60d3603680c228200cc99eaa09ba9005",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p09.png",
+   "kind": "image",
+   "bytes": 50124,
+   "sha256": "c0ff252ef4ae699c431db4507cdaf677f0e73c73bcc0add24d6db86d413ea43c",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-p10.png",
+   "kind": "image",
+   "bytes": 65123,
+   "sha256": "e9aa89c956995f1e7bcee44752f71a47b771349a84ca158d37a4709649d1de91",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p01.png",
+   "kind": "image",
+   "bytes": 73447,
+   "sha256": "5f361959f25e4071a454cc45c5bb5d00b11c71ac89103194618e0cb974f778a8",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p02.png",
+   "kind": "image",
+   "bytes": 65852,
+   "sha256": "52c46c8174837a1d6490c85f43daa31ecd6a402e7ebc94216a8d610ecab27c57",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2022-zk-math-w-p03.png",
+   "kind": "image",
+   "bytes": 43539,
+   "sha256": "f7706c03b7ae32252d8777d2db91c9b0c200dd21061d40eba02aebb1449dacd2",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-p01.png",
+   "kind": "image",
+   "bytes": 84056,
+   "sha256": "525bb8f92ad50b13a649206163d41a83732f48c9174271c0b8b8bbdf4c216047",
+   "width": 860,
+   "height": 1217,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2023-zk-math-p02.png",
+   "kind": "image",
+   "bytes": 79629,
+   "sha256": "0c3f8a79746cc2930b004ed1d1009046875293ab3d9b1c1357857f2ee95a05cd",
+   "width": 860,
+   "height": 1217,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p01.png",
+   "kind": "image",
+   "bytes": 228408,
+   "sha256": "c40d3028835dcaeb0047c05ecea9209edc8cc7fce08c3a1110e3d9faa56c5e94",
+   "width": 860,
+   "height": 1217,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p02.png",
+   "kind": "image",
+   "bytes": 259693,
+   "sha256": "8846f33c127c50dc91cf939b941e8f6be536cc57774b9f6eb1aa2ef7a2328864",
+   "width": 860,
+   "height": 1217,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p03.png",
+   "kind": "image",
+   "bytes": 226276,
+   "sha256": "c0e027fefa3b905eb761b89d95dd13eaac69af22996b6defbd214461a64d436b",
+   "width": 860,
+   "height": 1217,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-minhang-math-p04.png",
+   "kind": "image",
+   "bytes": 257396,
+   "sha256": "37a00d300468431af20ad78ab4c3e8fd002769128cc9dba885b39549ecef8fe2",
+   "width": 860,
+   "height": 1217,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p01.png",
+   "kind": "image",
+   "bytes": 256355,
+   "sha256": "eeae25fa093721d09f31b70686f69cbe2d2fb121689bffd6341b5fc8d8ae5595",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p02.png",
+   "kind": "image",
+   "bytes": 208044,
+   "sha256": "aa8485bdcc2a51d6e5b5f1b554dfebec70427601ae5aaf2e66b36ead39d7b1f8",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p03.png",
+   "kind": "image",
+   "bytes": 224542,
+   "sha256": "ef9a7f777ed033499d774347c3df41fc70a6e8e8866dcdb359ab4ac1119c5d95",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-yimo-xuhui-math-p04.png",
+   "kind": "image",
+   "bytes": 193265,
+   "sha256": "0930737d8d48bac2a726c51de24e71f4cc0e125eb33b59e8374f819dc72e34ce",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p01.png",
+   "kind": "image",
+   "bytes": 190600,
+   "sha256": "e5fdb7f9e6da2a6da3a9f4e9780dcc1d1c0a018cb8986e513bb8c7cc2a8c057f",
+   "width": 860,
+   "height": 1177,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p02.png",
+   "kind": "image",
+   "bytes": 213559,
+   "sha256": "9cf0573c5b149df14e747b7849f8ee8691d8c813103c228dcdcab6a80fc74b79",
+   "width": 860,
+   "height": 1217,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p03.png",
+   "kind": "image",
+   "bytes": 192689,
+   "sha256": "e8cfdbb3eb6b74e004f46a9d488479ae9afcffae5407d27558314e796f597082",
+   "width": 860,
+   "height": 1112,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p04.png",
+   "kind": "image",
+   "bytes": 238992,
+   "sha256": "66a723e9dd601a907a48b7343c57aa10ba37898ab3b90aadf5332dc6b59e49d9",
+   "width": 860,
+   "height": 1158,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-biology-p05.png",
+   "kind": "image",
+   "bytes": 280684,
+   "sha256": "938d3f5f1795ae943ee1d676f54c69b2d33b56952f7170db33a05974fd39794b",
+   "width": 860,
+   "height": 1162,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p01.png",
+   "kind": "image",
+   "bytes": 68272,
+   "sha256": "a48f8df938149b9bee1fce7474386db49dc3f5a4503aceda1903104a76605a26",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p02.png",
+   "kind": "image",
+   "bytes": 78962,
+   "sha256": "97eac0b3db9445e3e700d9f7aea9dc765a39b1e34550b9a2484cf93bc1e14c85",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p03.png",
+   "kind": "image",
+   "bytes": 50638,
+   "sha256": "5576f90d475be87d08e8b7deaa7914084317d2371c036d669da1db1b819044a8",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p04.png",
+   "kind": "image",
+   "bytes": 70856,
+   "sha256": "65bd75f264880bd26d1f3a3c2eb4e5a68b6888a4cb583e2bdd298e41b084c16b",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p05.png",
+   "kind": "image",
+   "bytes": 88108,
+   "sha256": "e2d8270847fa283c842ae1082162aa6dfadb334d607db2eb61c025ed824459ea",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p06.png",
+   "kind": "image",
+   "bytes": 70138,
+   "sha256": "6795ca171d1f326e819dee13da8e35b628d3b6badc62a212a03004515d504ee1",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p07.png",
+   "kind": "image",
+   "bytes": 75269,
+   "sha256": "2fc03d2961adf2581e6c07b22ab334cbc7cf4327a0102c41787257b760471dd6",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p08.png",
+   "kind": "image",
+   "bytes": 84677,
+   "sha256": "257de88c81082a9663f8d10067071f527598f7397dfa7a786381a047ec6f6b77",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chemistry-p09.png",
+   "kind": "image",
+   "bytes": 88534,
+   "sha256": "90f09ec51302265b7de67358d400468d5c263280d7f90d10f9101b12e66f732b",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p01.png",
+   "kind": "image",
+   "bytes": 88010,
+   "sha256": "395bdb9959be48878acf0d7a45b3e179e354237875cca8cdee3c0ed26a906887",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p02.png",
+   "kind": "image",
+   "bytes": 80064,
+   "sha256": "f2f3d372752b674fdcd65aff11610ee5ff1a5177bd9403bdfef1eca020cda564",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p03.png",
+   "kind": "image",
+   "bytes": 91232,
+   "sha256": "36957dc7103ea66f5020f624d55c6cc664f1f39f8df23d51f32fd92482252f87",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p04.png",
+   "kind": "image",
+   "bytes": 121464,
+   "sha256": "a4ac1655654d8e2c7ab10a7c94df8fd81219b2f12086d1c1db8310c5f5314fa8",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p05.png",
+   "kind": "image",
+   "bytes": 84673,
+   "sha256": "e0fecaa1895f57712d3b0400cc6e34db91383eaaeab32b5307fabb36334d5de1",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p06.png",
+   "kind": "image",
+   "bytes": 89537,
+   "sha256": "57ea385fdc6c3e738ede73f637e1a26d59d86e6379cbdc6ba10f754f3d54b45a",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p07.png",
+   "kind": "image",
+   "bytes": 80445,
+   "sha256": "620c8016d55d0bf858c8cb7275a523dbda2eb4fb3a750b93bab128cd65b82ec7",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p08.png",
+   "kind": "image",
+   "bytes": 119907,
+   "sha256": "764b6e0a2308fea5667fac61b4ecc07f1b3ae00282d7b4774b49fcd42bef138e",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-chinese-p09.png",
+   "kind": "image",
+   "bytes": 112961,
+   "sha256": "d99f62bab0103cf91c1c5cc7bfdda9b05b5b2ec1d9087696134abc36a63da8eb",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p01.png",
+   "kind": "image",
+   "bytes": 64664,
+   "sha256": "d9fb3e122fe432b8d18b9169b7a4196c324acd5fa40d3d472b64c86761207515",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p02.png",
+   "kind": "image",
+   "bytes": 92062,
+   "sha256": "e5c4165202e9938906fdda7bbf0428cb1c4b876358a7ddf01e2749f1c6eb000c",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p03.png",
+   "kind": "image",
+   "bytes": 66363,
+   "sha256": "3cfa42d1643bd622a7f1596d7acb1a3a2446d87c96a33597b70ace1e87ca5b37",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p04.png",
+   "kind": "image",
+   "bytes": 43931,
+   "sha256": "b6067622560fed8ac159bbbf513092b2c279b19d482e5d8579052a70e156987d",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-math-p05.png",
+   "kind": "image",
+   "bytes": 21148,
+   "sha256": "926f63a07334874aaab557b2e89674cac3fe1e1c93207c2dff94d536793047c0",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p01.png",
+   "kind": "image",
+   "bytes": 74967,
+   "sha256": "f0d23d36d875d943cf10fb1fa1f97f1102e736ebae0e8c64ff3df5b7ac2c7ebc",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p02.png",
+   "kind": "image",
+   "bytes": 91797,
+   "sha256": "8b7e53152f8a751de22fc3dd8b5176d4b7997f4eb624fe3b14259eef5d7434e5",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p03.png",
+   "kind": "image",
+   "bytes": 73570,
+   "sha256": "6b14a04d9c1c148e245ee10baa1b621128c5f0da9e8005eac0e18a4a5ffe02e1",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p04.png",
+   "kind": "image",
+   "bytes": 66083,
+   "sha256": "b6e59ec6bea01fb53c9b978535b033dd5150819d9bf1eed72c6e1960d16c3887",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p05.png",
+   "kind": "image",
+   "bytes": 75623,
+   "sha256": "cd727dd229d3a6175af1d2cac618472c04d8054a52ec3a950eec2f15a3dac1f0",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p06.png",
+   "kind": "image",
+   "bytes": 93230,
+   "sha256": "5e23e452ab489fb3cfd394213aca6b0a11aa908f67bcd1ba3c012c9f998fbc92",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2025-zk-physics-p07.png",
+   "kind": "image",
+   "bytes": 89436,
+   "sha256": "e835734048f5b7749f74d0135534f04d6c29ee1627b250729aac4191941951c9",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p01.png",
+   "kind": "image",
+   "bytes": 98934,
+   "sha256": "3df7088170e64c97ba909324df648e20fc83f1e1166c71da1b2a6ae5fb52be0c",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p02.png",
+   "kind": "image",
+   "bytes": 82184,
+   "sha256": "b852bb07cb7e7dd72ad5deb690936255f750cebdcf0e0a27a07f084449a986bb",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p03.png",
+   "kind": "image",
+   "bytes": 35792,
+   "sha256": "5a1bc1d7a614690b57ff6614b4d28cbe5e0a0a24ac079e917777fda0ccccefde",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/试卷库/原卷扫描/sh-2026-zk-daofa-p04.png",
+   "kind": "image",
+   "bytes": 98985,
+   "sha256": "e1e7982d1af252c274d2a2b37be109219453fd04c4fe7635fdf21548a2529bb1",
+   "width": 860,
+   "height": 1216,
+   "status": "原卷扫描·公开预览",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/错题照片/20261002-数学-第19题-题干裁切.jpg",
+   "kind": "image",
+   "bytes": 78789,
+   "sha256": "83e93ff4603e53a20f18953fd0fb59163657d71827cc44ab38e248b717315c0f",
+   "width": 1668,
+   "height": 262,
+   "originalBytes": 139963,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-数学九上-封面.jpg",
+   "kind": "image",
+   "bytes": 299167,
+   "sha256": "069e7c24460f9d3462a357c1714ee47bc8ce60d6460ad2b3d403ce83ec62e38b",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 381535,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-数学九上-目录27-28章.jpg",
+   "kind": "image",
+   "bytes": 220243,
+   "sha256": "504eec43f61dbe95b25d4dadd4ed120b84330e12d85a65c01c10da0fbc3b3d7a",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 269640,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-数学九上-目录29-30章.jpg",
+   "kind": "image",
+   "bytes": 201819,
+   "sha256": "874624a751de76c2f3cfbb5c9df9430e30e97575a68da40932984227a87ad7c7",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 248583,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-物理九上-封面.jpg",
+   "kind": "image",
+   "bytes": 325020,
+   "sha256": "e30fb08c8bd3a901bf6fb98ad05004e6af18ae875a2984417967dbb5b190279a",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 413068,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-物理九上-目录10-11章.jpg",
+   "kind": "image",
+   "bytes": 252775,
+   "sha256": "9c632c884fff21d7bace321a39a3f5e0eb5ddeceb0a07bde2f7b329a395eeb4e",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 316649,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-物理九上-目录12-13章.jpg",
+   "kind": "image",
+   "bytes": 268012,
+   "sha256": "ca337303c8ac22df7ac1f167d7555099cf9e0e98689ed1995fb946c84e709da2",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 338418,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-英语九上-封面.jpg",
+   "kind": "image",
+   "bytes": 304120,
+   "sha256": "8c370272cf81b29dc9ac609679e4a1adcd9494a4269c12a0b4d4fe8018acc4b1",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 388168,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-英语九上-目录p1.jpg",
+   "kind": "image",
+   "bytes": 256022,
+   "sha256": "3396a182d90ea07ed75bcc6c0a2bbc3e89f7f6a6a92ce95f24bf2a8ecd86e37b",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 308093,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-英语九上-目录p2.jpg",
+   "kind": "image",
+   "bytes": 274836,
+   "sha256": "6947d067cbd4f29ccd0215dfe67cec2987fcc2b90949e64d64111122d88914d5",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 346975,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-道法九上-封面.jpg",
+   "kind": "image",
+   "bytes": 263935,
+   "sha256": "b974f633f7342a9f9b19518bcfbe71dc46236ebf9335edc934a000a23f884a48",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 329731,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-道法九上-目录p1.jpg",
+   "kind": "image",
+   "bytes": 230219,
+   "sha256": "b777aa07939f2c3b4d1f2c9ea671a19895fb85b658008c9abac6d97ff1091966",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 286270,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-道法九上-目录p2含批注.jpg",
+   "kind": "image",
+   "bytes": 224855,
+   "sha256": "6cc69abef1bb6c4efaa8009eaa303d4b5b1d9a1c64740172d8cb9af46d87bb5d",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 277077,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "file": "RAW/教材/20261004-道法九上-目录p3.jpg",
+   "kind": "image",
+   "bytes": 190045,
+   "sha256": "6382ed8eb2a122f9621772ef99b900156c57df917af2992303bbce30c1486fb8",
+   "width": 1333,
+   "height": 2000,
+   "originalBytes": 226667,
+   "status": "已入库·待解析",
+   "parsed": {
+    "wrongIds": [],
+    "modules": []
+   }
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p01.jpg",
+   "kind": "image",
+   "bytes": 108640,
+   "sha256": "80ecfaa6857551026b02bdd9b4c9c21b55fa2e2e942c09121179f8cc4859652a",
+   "width": 1239,
+   "height": 1752,
+   "source": "https://m.renrendoc.com/paper/333654107.html",
+   "fetched": "2026-10-04 22:15",
+   "note": "人人文库原卷扫描 2024-zk-math"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p02.jpg",
+   "kind": "image",
+   "bytes": 133112,
+   "sha256": "b46b53d2b61b599e3d2f10c9352d8030f15942c9b4bce92ec8028bf81e3e6c90",
+   "width": 1239,
+   "height": 1752,
+   "source": "https://m.renrendoc.com/paper/333654107.html",
+   "fetched": "2026-10-04 22:15",
+   "note": "人人文库原卷扫描 2024-zk-math"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p03.jpg",
+   "kind": "image",
+   "bytes": 94603,
+   "sha256": "25baa1bd93f7caf8d460daf05886f6260ecec253c89d59a768e60e4bb3f3dbce",
+   "width": 1239,
+   "height": 1752,
+   "source": "https://m.renrendoc.com/paper/333654107.html",
+   "fetched": "2026-10-04 22:15",
+   "note": "人人文库原卷扫描 2024-zk-math"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p04.jpg",
+   "kind": "image",
+   "bytes": 101853,
+   "sha256": "230ea09af16cb67e1bc9ff824c733e18072774ddbacfe33740992ec439bee2a2",
+   "width": 1239,
+   "height": 1752,
+   "source": "https://m.renrendoc.com/paper/333654107.html",
+   "fetched": "2026-10-04 22:15",
+   "note": "人人文库原卷扫描 2024-zk-math"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2024-zk-math-p05.jpg",
+   "kind": "image",
+   "bytes": 29351,
+   "sha256": "31bcf3ebc9bc4fc10e45f2cec47d93d302ce53f5f6d22852b348abb1107da7ae",
+   "width": 1239,
+   "height": 1752,
+   "source": "https://m.renrendoc.com/paper/333654107.html",
+   "fetched": "2026-10-04 22:15",
+   "note": "人人文库原卷扫描 2024-zk-math"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p01.gif",
+   "kind": "image",
+   "bytes": 108203,
+   "sha256": "e3cae63ca53353c72c0121eb0e065f365788158ddb6c8da472b3befafdd8f2b6",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/paper/231655589.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2022-zk-math-b"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p02.gif",
+   "kind": "image",
+   "bytes": 156899,
+   "sha256": "f3abc860bc16f365695248f20e1a6f66994c9dc9a243662a04c7b09cf56939dc",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/paper/231655589.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2022-zk-math-b"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p03.gif",
+   "kind": "image",
+   "bytes": 103465,
+   "sha256": "1e651bb98f3b5b4ed85de33ef8ce0a04a39e356a15b4bdd850cea1033f7429be",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/paper/231655589.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2022-zk-math-b"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p04.gif",
+   "kind": "image",
+   "bytes": 80781,
+   "sha256": "9ac45f73f5844b1521b30e098142f0bd99a6909ae01b850c2bfb3b7b801c0ab0",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/paper/231655589.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2022-zk-math-b"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2022-zk-math-b-p05.gif",
+   "kind": "image",
+   "bytes": 28220,
+   "sha256": "f0a1f806c4f65e5f05b513532c87c488cc8aceb9503ec8b73e21d4efd2665bec",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://www.renrendoc.com/paper/231655589.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2022-zk-math-b"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p01.gif",
+   "kind": "image",
+   "bytes": 98545,
+   "sha256": "8fa1e68720597afcbaa696b106a82ae1022417b72a6815a856f91e26aab972c9",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/280332427.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-a"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p02.gif",
+   "kind": "image",
+   "bytes": 222895,
+   "sha256": "bc06842a250659210ef06c432d0335a53666ae2eeaa96d94a1107d499e61344e",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/280332427.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-a"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p03.gif",
+   "kind": "image",
+   "bytes": 72436,
+   "sha256": "bd2280799b57ec87662b8674fa8c94792fb3e3a4a78118c2837cb01dd4742d6d",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/280332427.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-a"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p04.gif",
+   "kind": "image",
+   "bytes": 71184,
+   "sha256": "8350009c36bbd1044467a1bf74cc7195ce2474fb17d25937bf2e9b12d4d1caa6",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/280332427.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-a"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-a-p05.gif",
+   "kind": "image",
+   "bytes": 67186,
+   "sha256": "e616842010f39651d4dc818346eb31279ba3e8481669035ee817c091847108d0",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/280332427.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-a"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p01.gif",
+   "kind": "image",
+   "bytes": 134321,
+   "sha256": "74ac551b9f431387bbaa462eb8d1377ab4db3a4bac66e818072c7df352cd732c",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/255152205.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-b"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p02.gif",
+   "kind": "image",
+   "bytes": 258185,
+   "sha256": "65edad308aa91fe5c6522e0d0d5012aaa7842e4039a22c391e810a2d3427725c",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/255152205.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-b"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p03.gif",
+   "kind": "image",
+   "bytes": 142655,
+   "sha256": "c433ae92ecc67c15ca79c66f7a21da024aac30e4538ff49c399e42e49edffb3b",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/255152205.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-b"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p04.gif",
+   "kind": "image",
+   "bytes": 130379,
+   "sha256": "77b1001894db8dd6418702b24e6fb85ed15d2a4d5afdb8ee8bf860facef24987",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/255152205.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-b"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-b-p05.gif",
+   "kind": "image",
+   "bytes": 127905,
+   "sha256": "e67a1e2ba7a3ceab46175b4eeed78dc218253f18356606128fe1fb9c77338d02",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/255152205.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-b"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p01.gif",
+   "kind": "image",
+   "bytes": 87182,
+   "sha256": "bdd441cc97824f1afdc3e1299a975371589d8600810f31a972b50faefa385bae",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/284917035.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-c"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p02.gif",
+   "kind": "image",
+   "bytes": 200311,
+   "sha256": "33111efe0d0b0c100e8946319869672c6fa7ad36fecd76de733903a1641bd372",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/284917035.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-c"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p03.gif",
+   "kind": "image",
+   "bytes": 54858,
+   "sha256": "aaa298064b2825ed1ef7a41f122ef521446bebd97c71d061ccea6620a9006c5b",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/284917035.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-c"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p04.gif",
+   "kind": "image",
+   "bytes": 75877,
+   "sha256": "8a8e8c446aac3e92d2a0ce77c11643034d2f63fa9d2d6268f246d7a2281bb59f",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/284917035.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-c"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2023-zk-math-c-p05.gif",
+   "kind": "image",
+   "bytes": 65003,
+   "sha256": "03b644779445363638a99a3ebcfe02dcda11e4036dff2aa17b23b76e1cda536d",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/284917035.html",
+   "fetched": "2026-10-04 22:16",
+   "note": "人人文库原卷扫描 2023-zk-math-c"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p01.jpg",
+   "kind": "image",
+   "bytes": 60524,
+   "sha256": "02cee567b6f01b4e753aad2c19b3415faee4f5806dc6c7fc068bce5876394e74",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/342085199.html",
+   "fetched": "2026-10-04 22:17",
+   "note": "人人文库原卷扫描 2021-zk-math-a"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p02.jpg",
+   "kind": "image",
+   "bytes": 72676,
+   "sha256": "f58424d64d2435b5b60b934bd74bbcad7e08ecc92b9baf33dc9dc886f649892a",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/342085199.html",
+   "fetched": "2026-10-04 22:17",
+   "note": "人人文库原卷扫描 2021-zk-math-a"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p03.jpg",
+   "kind": "image",
+   "bytes": 51160,
+   "sha256": "ca015896431ae425751c83b12d64cb0a4cfcde488b141be09c6eeabc053a8fce",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/342085199.html",
+   "fetched": "2026-10-04 22:17",
+   "note": "人人文库原卷扫描 2021-zk-math-a"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p04.jpg",
+   "kind": "image",
+   "bytes": 53550,
+   "sha256": "119369ba4d1eb3b4792c06f7f6e777eb2e1cb4a97c41786d0282e8d7ec0e8a20",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/342085199.html",
+   "fetched": "2026-10-04 22:17",
+   "note": "人人文库原卷扫描 2021-zk-math-a"
+  },
+  {
+   "path": "RAW/试卷库/原卷扫描/sh-2021-zk-math-a-p05.jpg",
+   "kind": "image",
+   "bytes": 66924,
+   "sha256": "ff9bbfcf2607d8f3751bbef95dd8188b93c55defad967be6f082d8f372cc8d91",
+   "width": 1240,
+   "height": 1753,
+   "source": "https://renrendoc.com/paper/342085199.html",
+   "fetched": "2026-10-04 22:17",
+   "note": "人人文库原卷扫描 2021-zk-math-a"
+  }
+ ]
 }
